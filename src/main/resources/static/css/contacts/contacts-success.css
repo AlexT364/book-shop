@@ -1,0 +1,33 @@
+section {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0 4rem 0;
+}
+
+section > div {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 1rem;
+}
+section > div h2 {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-size: 2rem;
+}
+section > div a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  font-size: 1.5rem;
+}
+section > div a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+section > div a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+section > div a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}

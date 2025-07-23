@@ -1,0 +1,117 @@
+#order-container {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+}
+#order-container > div {
+  flex: 1;
+  box-shadow: 0 0 5px #8F8F8F;
+  border-radius: 10px;
+}
+
+#order-books {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-height: 50rem;
+  overflow-y: scroll;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+
+#book {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1rem;
+  box-shadow: 0 0 5px #8F8F8F;
+}
+#book > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#book img {
+  width: 7rem;
+  height: 11rem;
+  object-fit: contain;
+}
+#book a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  font-size: 1.3rem;
+}
+#book a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#book a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#book a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+#book #subtotal-price {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+#order-total {
+  padding: 2rem;
+  display: flex;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+#order-total p {
+  margin-left: auto;
+  padding-right: 1rem;
+}
+
+#order-info-container {
+  align-self: start;
+  min-height: 20rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  padding: 1rem 2rem;
+  margin: 0 1rem;
+}
+#order-info-container #order-info {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+}
+
+#order-info > div {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  border-bottom: 1px solid rgb(181.25, 181.25, 181.25);
+}
+#order-info > div label, #order-info > div p {
+  flex: 1;
+}
+
+form {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+}
+
+#form-fields {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+}
+
+#form-fields > div {
+  display: flex;
+  flex: 0;
+}
+#form-fields > div input, #form-fields > div select, #form-fields > div p {
+  margin-left: auto;
+}

@@ -1,0 +1,213 @@
+section {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+section > div {
+  flex: 1;
+  margin: 3rem 0;
+}
+
+.book-info-review-form-container {
+  display: flex;
+  flex-flow: column nowrap;
+  border-right: 1px solid rgb(181.25, 181.25, 181.25);
+}
+
+.book-cover-info-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+.book-cover-info-container div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-cover-container {
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  border-radius: 15px;
+  margin-left: 2rem;
+}
+
+.book-cover-container > img {
+  padding: 2rem 5rem;
+  max-width: 21rem;
+  max-height: 31rem;
+  object-fit: contain;
+  justify-self: end;
+}
+
+.book-info {
+  padding: 2rem;
+}
+
+.book-info-list > li {
+  display: flex;
+  flex-flow: row wrap;
+}
+.book-info-list > li:nth-of-type(2) {
+  margin: 0.5rem 0;
+}
+.book-info-list > li h2 {
+  font-size: 2.3rem;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+.book-info-list > li span {
+  font-size: 1.3rem;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+
+.review-form-container {
+  margin: 2rem 2rem;
+  display: flex;
+  flex-flow: column;
+}
+
+.review-form-container > a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  display: block;
+  align-self: center;
+  font-size: 1.5rem;
+}
+.review-form-container > a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.review-form-container > a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.review-form-container > a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+
+.review-form-container > form {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+}
+.review-form-container > form textarea {
+  padding: 1rem;
+  resize: vertical;
+  border-radius: 10px;
+  max-height: 30rem;
+  min-height: 17rem;
+}
+.review-form-container > form button {
+  margin-left: auto;
+}
+
+.book-rating-container {
+  display: flex;
+  color: #055F76;
+  align-self: self-start;
+  align-items: center;
+  margin: 1rem 0;
+}
+.book-rating-container > label {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.book-rating-input {
+  display: flex;
+  margin: 0 1rem;
+}
+.book-rating-input input[type=radio] {
+  appearance: none;
+}
+.book-rating-input label {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  text-align: center;
+  flex-grow: 1;
+  border: 1px solid #055F76;
+  cursor: pointer;
+  padding: 0.2rem 1rem;
+  font-weight: bold;
+  transition-duration: 0.2s;
+}
+.book-rating-input label:nth-of-type(3) {
+  border-left: none;
+  border-right: none;
+}
+.book-rating-input label:first-of-type {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+}
+.book-rating-input label:last-of-type {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: none;
+}
+.book-rating-input input[type=radio]:checked + label {
+  background-color: #055F76;
+  color: white;
+  box-shadow: inset 0 0 10px rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+
+.reviews-section ul {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+}
+
+.review {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgb(181.25, 181.25, 181.25);
+  margin: 0 2rem;
+  padding: 1rem;
+}
+
+.review.user-review {
+  background-color: whitesmoke;
+  margin-bottom: 1rem;
+}
+.review.user-review .username-header > p:first-child {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.no-reviews-container {
+  text-align: center;
+}
+.no-reviews-container h2 {
+  font-size: 2rem;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+
+.username-header {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  border-bottom: 1px solid rgb(181.25, 181.25, 181.25);
+  padding-bottom: 0.5rem;
+  gap: 1rem;
+}
+.username-header .review-author {
+  font-size: 1.2rem;
+}
+.username-header .review-score {
+  background-color: #055F76;
+  color: white;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+.username-header span {
+  margin-left: auto;
+}
+
+.review-text-container {
+  padding: 0.2rem;
+  white-space: pre-line;
+  max-height: 20rem;
+  overflow-y: scroll;
+}

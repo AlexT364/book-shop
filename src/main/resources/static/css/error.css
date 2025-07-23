@@ -1,0 +1,37 @@
+#error-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 5rem 5rem;
+}
+#error-container div {
+  flex: 1;
+}
+
+#error-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#error-image-container img {
+  width: 20rem;
+  height: 20rem;
+}
+
+#error-desc-container {
+  display: flex;
+  flex-flow: column;
+  align-items: start;
+}
+#error-desc-container p:first-of-type {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  margin-bottom: 1rem;
+}
+#error-desc-container p:last-of-type {
+  color: #055F76;
+  font-weight: bold;
+  font-size: 1.5rem;
+}

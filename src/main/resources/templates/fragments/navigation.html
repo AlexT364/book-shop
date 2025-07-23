@@ -1,0 +1,55 @@
+<header>
+	<div class="pre-header">
+		<ul>
+			<li>Need any help? Call us +112233344455</li>
+			<li>
+				Summer sale discount off 60% off!
+				<a th:href="@{/shop}">Shop Now</a>
+			</li>
+			<li>2-3 business days delivery & free returns</li>
+		</ul>
+	</div>
+	<div class="main-header">
+		<nav>
+			<div id="nav-logo-link">
+				<a class="link" th:href="@{/}">
+					<img alt="logo" style="height: 3rem" th:src="@{/images/icons/logo.png}">
+				</a>
+			</div>
+			<div id="nav-main-links">
+				<ul>
+					<li>
+						<a th:classappend="${requestUri} == '/' ? link-current" th:href="@{/}">Home</a>
+					</li>
+					<li>
+						<a th:classappend="${requestUri} == '/shop' ? link-current" th:href="@{/shop}">Shop</a>
+					</li>
+					<li>
+						<a th:classappend="${requestUri} == '/authors' ? link-current" th:href="@{/authors}">Authors</a>
+					</li>
+					<li>
+						<a th:classappend="${requestUri} == '/contacts'? link-current" th:href="@{/contacts}">Contacts</a>
+					</li>
+				</ul>
+			</div>
+			<div sec:authorize="!isAuthenticated()" id="nav-user-link">
+				<a th:href="@{/login}">Log in</a>
+			</div>
+			<div sec:authorize="isAuthenticated()" id="nav-user-link">
+				<div id="user-actions">
+					<a href="#" th:href="''" sec:authentication="name">username</a>
+					<div id="user-dropdown">
+						<a th:href="@{/favourite}">Favorite</a>
+						<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/orders}">My orders</a>
+						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/orders}">Orders</a>
+						<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/contacts/inbox}">Inbox</a>
+					</div>
+				</div>
+						<a href="#" th:classappend="${requestUri} == '/cart'? link-current" th:href="@{/cart}">Cart</a>
+				<div>
+					<a th:href="@{/logout}">Log out</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+</header>

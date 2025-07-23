@@ -1,0 +1,82 @@
+@import "../variables.scss";
+
+#author-edit-container{
+	margin: 4rem 6rem;
+	color: clr(primary, dark);
+	
+	label{
+		font-size: 1.5rem;
+		color: clr(primary, darker);
+		font-weight: bold;
+	}
+}
+
+.author-edit-form{
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 1rem;
+	button{
+		align-self: self-start;
+	}
+}
+
+.author-image-form{
+	display: flex;
+	flex-flow: column nowrap;
+	
+	img{
+		height: 18rem;
+		width: 18rem;
+		object-fit: cover;
+		border-radius: 50%;
+		align-self: center;
+	}
+	
+	button{
+		margin: .2rem;
+		align-self: center;
+	}
+}
+
+.author-info-container{
+	display: flex;
+	flex-flow: column nowrap;
+	gap: .5rem;
+	
+	input, textarea{
+		font-size: 1.2rem;
+	}
+}
+
+.bio-input{
+	display: flex;
+	flex-flow: column nowrap;
+	gap: .5rem;
+	textarea{
+		resize: vertical;
+		height: 15rem;
+		min-height: 5rem;
+		max-height: 30rem;
+		padding: 1rem;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

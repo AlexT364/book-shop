@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reply to your message</title>
+</head>
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333;">Thank you for your message!</h2>
+        <p>We have reviewed your request and prepared a response:</p>
+        
+        <div style="background-color: #f5f5f5; padding: 15px; border-left: 4px solid #055F76; margin: 20px 0;">
+            <p th:text="${messageText}" style="margin: 0;"></p>
+        </div>
+        
+        <p>If you have any questions, you can contact us via the contact form on the website or by phone.</p>
+        
+        <p style="margin-top: 30px; color: #777; font-size: 0.9em;">
+            Best regards,<br>
+            Support Team
+        </p>
+    </div>
+</body>
+</html>

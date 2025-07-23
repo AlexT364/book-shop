@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/error.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Error</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<div id="error-container">
+			<div id="error-image-container"><img alt="error image" th:src="@{/images/icons/error.png}"></div>
+			<div id="error-desc-container">
+				<p>Error: <span th:text="${errorCode}"></span></p>
+				<p th:text="${errorMessage}">Error description</p>
+				<div></div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

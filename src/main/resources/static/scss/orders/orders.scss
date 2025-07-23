@@ -1,0 +1,103 @@
+@import "../variables.scss";
+
+section{
+	display: flex;
+	margin: 4rem 8rem;
+}
+
+table{
+	flex-grow: 1;
+	border-collapse: collapse;
+}
+
+thead {
+	tr{
+		border-top: 1px solid clr(my-gray, light);
+		border-bottom: 1px solid clr(my-gray, light);
+	}
+	th {
+		font-size: 1.7rem;
+		font-weight: bold;
+		color: clr(primary, darker);
+		padding: .5rem 0;
+	}
+}
+tbody {
+	tr {
+		text-align: center;
+		border-bottom: 1px solid clr(my-gray, light);
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: clr(primary, dark);
+	}
+	td {
+		padding: 2rem 1rem;
+
+		&:first-child {
+			width: 14rem;
+		}
+
+		&:last-child {
+			width: 14rem;
+		}
+	}
+}
+
+tbody a{
+	@include regular-link;
+}
+
+#page-container{
+	display: flex;
+	flex-flow: column;
+}
+
+#page-container .pagination{
+	display: flex;
+	gap: .5rem;
+	margin: 0 auto;
+	align-items: end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+.book-description-container {
+  margin: 5rem 10%;
+  display: flex;
+  justify-content: center;
+}
+.book-description-container > div {
+  flex: 1;
+}
+.book-description-container #book-cover-container {
+  display: flex;
+  justify-content: center;
+  align-self: start;
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  border-radius: 15px;
+}
+.book-description-container #book-cover-container img {
+  max-width: 21rem;
+  max-height: 31rem;
+  object-fit: contain;
+  align-self: center;
+  justify-self: center;
+  padding: 2rem 4rem;
+}
+.book-description-container #book-info {
+  display: flex;
+  flex-flow: column;
+  padding: 1rem;
+}
+.book-description-container #book-info h2 {
+  padding: 0.5rem;
+  font-size: 4rem;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+.book-description-container #book-info h4 {
+  padding: 0.5rem;
+  font-size: 2rem;
+  border-bottom: 2px solid rgb(232.25, 232.25, 232.25);
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+.book-description-container #book-info ul > li {
+  margin: 0.5rem 0;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.book-description-container #book-info ul > li span {
+  color: #055F76;
+}
+.book-description-container #book-info ul > li a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+}
+.book-description-container #book-info ul > li a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.book-description-container #book-info ul > li a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.book-description-container #book-info ul > li a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+.book-description-container #book-info #book-actions-container {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+.book-description-container #book-info #book-actions-container .number-input {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.book-description-container #book-info #book-actions-container .number-input label {
+  margin: 0.5rem 0;
+}
+.book-description-container #book-info #book-actions-container .number-input input {
+  text-align: center;
+  width: fit-content;
+}
+.book-description-container #book-info #book-actions-container #book-actions {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+#book-description {
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  border-radius: 20px;
+  margin: 0 4rem;
+}
+#book-description p {
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  padding: 1rem;
+}
+
+#reviews-link-container {
+  margin: 1rem 0;
+  text-align: center;
+}
+#reviews-link-container a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  font-size: 2rem;
+}
+#reviews-link-container a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#reviews-link-container a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#reviews-link-container a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}

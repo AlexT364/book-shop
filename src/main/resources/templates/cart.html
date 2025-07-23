@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/cart.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Cart</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+
+		<div id="empty-cart" th:if="${#lists.isEmpty(cart)}">
+			<p>Your cart is empty :(</p>
+			<a th:href="@{/shop}">Go shopping</a>
+		</div>
+		<section id="cart-items" th:unless="${#lists.isEmpty(cart)}">
+
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Product</th>
+						<th>Quantity</th>
+						<th>Subtotal</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${cart}">
+						<td>
+							<div id="img-container">
+								<img alt="book-cover" th:src="@{/images/books/{isbn} (isbn = ${item.isbn})}">
+							</div>
+						</td>
+						<td>
+							<a th:href="@{book/{id} (id = ${item.id})}" th:text="${item.title}"></a>
+						</td>
+						<td th:text="${item.quantity}"></td>
+						<td class="book-price" th:text="'$' + ${item.subtotalPrice}"></td>
+						<td>
+							<form th:action="@{cart/{bookId} (bookId=${item.id})}" th:method="DELETE">
+								<input type="image" alt="remove" th:src="@{/images/icons/cart-remove-item.png}">
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Total Price:</td>
+						<td></td>
+						<td th:text="'$' + ${totalPrice}"></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="cart-actions">
+				<a class="btn" th:href="@{/checkout}">Checkout</a>
+				<a class="btn-link btn-link-clr" th:href="@{/shop}">Continue shopping</a>
+			</div>
+		</section>
+	</div>
+
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

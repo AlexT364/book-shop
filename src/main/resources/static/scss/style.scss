@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import "normalize.scss";
+@import "variables.scss";
+
+
+body {
+	font-family: "Nunito", "Noto Sans", sans-serif;
+	min-height: 100vh;
+}
+
+header {
+	.pre-header>ul {
+		display: flex;
+		flex-flow: row nowrap;
+		text-align: center;
+		align-items: center;
+		color: clr(my-gray);
+
+		li {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: .5rem;
+			padding: .5rem 0;
+			border: 1px solid clr(my-gray, lighter);
+			flex: 1 1 auto;
+
+			a {
+				@include regular-link();
+				text-transform: uppercase;
+				margin: 0 .5rem;
+			}
+		}
+	}
+
+}
+
+.main-header {
+	border-bottom: 2px solid clr(my-gray, lighter);
+
+	nav {
+		height: 4rem;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		
+		&>div{
+			flex: 1;
+		}
+		
+		#nav-main-links{
+			display: flex;
+			justify-content: center;
+		}
+		
+		#nav-user-link {
+			display: flex;
+			align-items: center;
+			position: relative;
+			justify-content: end;
+			div {
+				flex: 0;
+			}
+		}
+
+		#user-dropdown {
+			display: none;
+			border-radius: 10px;
+			box-shadow: 2px 2px 10px clr(my-gray, light);
+
+		}
+
+
+		#user-actions:hover #user-dropdown {
+			display: flex;
+			flex-flow: column;
+			position: absolute;
+			z-index: 1;
+			background-color: clr(my-gray, lightest);
+
+			a {
+				text-transform: capitalize;
+			}
+		}
+
+
+		div {
+			margin: 0 2rem;
+			flex: 1;
+
+			ul {
+				display: flex;
+				flex-flow: row nowrap;
+
+				li {
+					margin: 0 2rem;
+				}
+			}
+		}
+
+		a {
+			@include regular-link();
+			text-transform: uppercase;
+			padding: .5rem;
+			margin: 0 .5rem;
+			text-wrap: nowrap;
+			
+		}
+
+	}
+}
+
+
+
+#page-container {
+	position: relative;
+	min-height: 100vh;
+}
+
+footer {
+	margin-top: 5rem;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+
+
+	#footer-main {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-around;
+		min-height: 15rem;
+
+		&>div {
+			font-size: 1.2rem;
+			min-width: 10rem;
+			max-width: 20rem;
+		}
+
+	}
+
+	#footer-container-1 {
+		display: flex;
+		flex-flow: column nowrap;
+		padding: .5rem;
+
+		#f-logo {
+			width: 7rem;
+			height: 4rem;
+		}
+
+		p {
+			margin-top: 1rem;
+			text-align: right;
+		}
+
+		#social-media-links {
+			min-height: 2rem;
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-evenly;
+			margin-top: auto;
+
+			li {
+				margin: .5rem 1rem;
+
+				img {
+					width: 1.5rem;
+					height: 1.5rem;
+					transition: filter;
+					transition-duration: .2s;
+					filter: invert(52%) sepia(6%) saturate(0%) hue-rotate(203deg) brightness(96%) contrast(84%);
+
+					&#f-facebook:hover {
+						filter: invert(36%) sepia(98%) saturate(3317%) hue-rotate(204deg) brightness(98%) contrast(92%);
+					}
+
+					&#f-youtube:hover {
+						filter: invert(15%) sepia(49%) saturate(6849%) hue-rotate(355deg) brightness(103%) contrast(93%);
+					}
+
+					&#f-twitter:hover {
+						filter: invert(52%) sepia(83%) saturate(2073%) hue-rotate(175deg) brightness(94%) contrast(94%);
+					}
+
+					&#f-instagram:hover {
+						filter: invert(30%) sepia(20%) saturate(4076%) hue-rotate(299deg) brightness(108%) contrast(100%);
+					}
+
+					&#f-vk:hover {
+						filter: invert(41%) sepia(52%) saturate(7470%) hue-rotate(202deg) brightness(102%) contrast(106%);
+					}
+				}
+			}
+		}
+	}
+
+	#footer-container-2 {
+		padding: 1rem;
+
+		li {
+			margin-top: .5rem;
+
+			a {
+				@include regular-link;
+				font-weight: normal;
+				text-transform: capitalize;
+				font-size: 1rem;
+			}
+		}
+
+		h4 {
+			font-weight: normal;
+		}
+	}
+
+	#footer-container-3 {
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 1rem;
+
+		h4 {
+			font-weight: normal;
+			margin-bottom: 1rem;
+		}
+
+		p {
+			margin-top: .5rem;
+			font-size: 1rem;
+		}
+
+		a {
+			@include regular-link();
+		}
+	}
+
+
+
+	#footer-bottom {
+		border-top: 2px solid clr(my-gray, lighter);
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		color: clr(my-gray);
+
+		div {
+			margin: .5rem 3rem;
+			display: flex;
+			flex-flow: row wrap;
+			align-items: center;
+
+			img {
+				margin: 0 .5rem;
+				height: 45px;
+				width: 45px;
+				filter: invert(52%) sepia(6%) saturate(0%) hue-rotate(203deg) brightness(96%) contrast(84%);
+			}
+
+			&:last-child {
+				margin-left: auto;
+				margin-right: 4rem;
+			}
+
+			&:first-child {
+				margin-left: 4rem;
+			}
+		}
+	}
+
+}
+
+.btn {
+	padding: .5rem 1rem;
+	font-weight: bold;
+	color: white;
+	background-color: $primary;
+	border: 1px solid $primary;
+	border-radius: 10px;
+	cursor: pointer;
+	transition-duration: .2s;
+
+	&.btn-clr {
+		background-color: transparent;
+		color: $primary;
+	}
+
+	&:hover {
+		background-color: clr(primary, light);
+		border-color: clr(primary, light);
+		color: white;
+	}
+
+	&:active {
+		background-color: clr(primary, lighter);
+		border-color: clr(primary, lighter);
+		color: white;
+		transition-duration: 0s;
+	}
+}
+
+.btn-link {
+	padding: .5rem 1rem;
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+	background-color: $primary;
+	border: 1px solid $primary;
+	border-radius: 10px;
+	transition-duration: .2s;
+
+	&.btn-link-clr {
+		background-color: transparent;
+		color: $primary;
+	}
+
+	&:hover {
+		background-color: clr(primary, light);
+		border-color: clr(primary, light);
+		color: white;
+	}
+
+	&:active {
+		background-color: clr(primary, lighter);
+		border-color: clr(primary, lighter);
+		color: white;
+		transition-duration: 0s;
+	}
+}
+
+.btn-link.disabled,
+.btn.disabled {
+	cursor: default;
+	pointer-events: none;
+}
+
+.btn-link.current-page {
+	background-color: clr(primary, light);
+	border-color: clr(primary, light);
+}
+
+.field-error {
+	font-weight: bold;
+	display: block;
+	color: red;
+}
+
+.order-status{
+	font-weight: bold;
+	&.NEW{
+		color: clr(primary, dark);
+	}
+	
+	&.CONFIRMED{
+		color: clr(primary);
+	}
+	
+	&.SHIPPED{
+		color: rgb(246, 211, 45);
+	}
+	
+	&.COMPLETE{
+		color: #078E07;
+	}
+	
+	&.CANCELLED{
+		color: red;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

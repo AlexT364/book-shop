@@ -1,0 +1,124 @@
+@import "../variables.scss";
+
+section {
+	display: flex;
+	margin: 4rem;
+}
+
+section>div {
+	flex: 1;
+	padding: 2rem;
+	border-right: 1px solid clr(my-gray, light);
+}
+
+section>div:last-child{
+	border-right: none;
+}
+
+#reply-form-container {
+
+	input[type=text] {
+		position: relative;
+		margin: .4rem;
+		font-size: 1.2rem;
+		padding: .4rem;
+		border-radius: 10px;
+		outline: none;
+		border: 1px solid clr(my-gray, light);
+		transition-duration: .2s;
+
+		&:read-only{
+			background: clr(my-gray, lighter);
+		}
+	
+		&:focus {
+			outline: none;
+			border: 1px solid clr(primary, dark);
+
+		}
+	}
+}
+
+#reply-form-container>form {
+	display: flex;
+	flex-flow: column nowrap;
+	label{
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: clr(primary, dark);
+	}
+	button{
+		align-self: flex-end;
+	}
+}
+
+#name-email-inputs {
+	display: flex;
+	flex-flow: row nowrap;
+
+	div {
+		flex: 1;
+	}
+}
+
+#message-inputs {
+	display: flex;
+	flex-flow: column nowrap;
+	
+	textarea {
+		margin: .5rem;
+		font-size: 1.2rem;
+		padding: .4rem;
+		border-radius: 10px;
+		outline: none;
+		border: 1px solid clr(my-gray, light);
+		resize: none;
+		min-height: 15rem;
+		transition-duration: .2s;
+
+		&:focus {
+			outline: none;
+			border: 1px solid clr(primary, dark);
+		}
+	}
+}
+
+#user-message-container{
+	p{
+		padding: 2rem;
+		border-radius: 20px;
+		box-shadow: 5px 5px 8px 10px clr(my-gray, lighter);
+		white-space: pre-wrap;
+		font-size: 1.1rem;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

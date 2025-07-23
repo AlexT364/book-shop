@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/authors/author-add-edit.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Add author</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section id="author-edit-container">
+			<h1>Add new author:</h1>
+			<form class="author-edit-form" th:object="${author}" th:action="@{/admin/authors}" th:method="POST"
+				enctype="multipart/form-data">
+				<div class="author-image-input">
+					<label>Image:</label>
+					<input type="file" accept="image/*" name="authorImage"/>
+					<span class="field-error" th:if="${authorImageError}" th:text="${authorImageError}">ERROR</span>
+				</div>
+				<div class="author-info-container">
+					<div>
+						<label>First Name:</label>
+						<input type="text" th:field="*{firstName}">
+						<span class="field-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">ERROR</span>
+					</div>
+					<div>
+						<label>Last Name:</label>
+						<input type="text" th:field="*{lastName}">
+						<span class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">ERROR</span>
+					</div>
+					<div class="bio-input">
+						<label>Biography:</label>
+						<textarea th:field="*{bio}"></textarea>
+					</div>
+				</div>
+				<button class="btn" type="submit">Add</button>
+			</form>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

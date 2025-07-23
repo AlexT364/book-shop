@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/checkout.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Checkout</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<div id="empty-cart" th:if="${#lists.isEmpty(cart)}">
+			<p>Your cart is empty :(</p>
+			<a th:href="@{/shop}">Go shopping</a>
+		</div>
+		<section th:unless="${#lists.isEmpty(cart)}" id="checkout-container">
+			<div>
+				<div id="checkout-books">
+					<div id="book" th:each="cartItem : ${cart}" th:object="${cartItem}">
+						<div>
+							<img alt="book cover" th:src="@{/images/books/{isbn} (isbn = *{isbn})}">
+						</div>
+						<div>
+							<a th:href="@{/book/{bookId} (bookId = *{id})}" th:text="*{title}"></a>
+<!-- 							<p th:each="author : *{book.authors}" th:text="'Author: ' + ${author.name}"> -->
+							<p id="quantity" th:text="'Qantity: ' + *{quantity}">
+							<p id="subtotal-price" th:text="'$' + *{subtotalPrice}">
+						</div>
+					</div>
+				</div>
+				<div id="checkout-total">
+					<label>Total price:</label>
+					<p th:text="'$' + ${totalPrice}">
+				</div>
+			</div>
+			<div id="checkout-form">
+				<form th:action="@{/checkout}" method="post" th:object="${checkoutForm}">
+					<div>
+						<label>Phone Number*: </label>
+						<input type="text" placeholder="+7(123)456-78-90" th:field="*{phone}">
+					</div>
+					<span class="field-error" 
+						th:if="${#fields.hasErrors('phone')}" 
+						th:errors="*{phone}">INCORRECT_PHONE</span>
+					<div>
+						<label>Ship Address:</label>
+						<input type="text" th:field="*{shipAddress}">
+					</div>
+					<div>
+						<label>Ship City:</label>
+						<input type="text" th:field="*{shipCity}">
+					</div>
+					<div>
+						<label>Ship Country:</label> <select name="shipCountry">
+							<option value="Russia">Russia</option>
+							<option value="Kazakhstan">Kazakhstan</option>
+							<option value="Belarus">Belarus</option>
+						</select>
+					</div>
+					<button th:if="${not #lists.isEmpty(cart)}" class="btn" type="submit">Place Order</button>
+					<p th:if="${#lists.isEmpty(cart)}">Some text</p>
+				</form>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

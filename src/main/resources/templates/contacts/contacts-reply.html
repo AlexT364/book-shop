@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/contacts/contacts-reply.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Contacts</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div id="reply-form-container">
+				<form th:action="@{/admin/contacts/inbox/{messageId} (messageId=${message.id})}" 
+				th:object="${reply}"
+				method="POST">
+					<div id="name-email-inputs">
+						<div>
+							<label>Name:</label>
+							<input type="text" th:value="${message.name}" readonly="readonly">
+						</div>
+						<div>
+							<label>Email:</label>
+							<input id="test" type="text" th:value="${message.email}" readonly="readonly">
+						</div>
+					</div>
+					<div id="message-inputs">
+						<div>
+							<label>Phone:</label>
+							<input type="text" th:value="${message.phone} == null ? 'N/A' : ${message.phone}" readonly="readonly">
+						</div>
+						<div>
+							<label>Subject:</label>
+							<input type="text" name="subject" th:value="${message.subject} == null ? '' : ${message.subject}">
+						</div>
+						<textarea rows="5" th:field="*{message}" placeholder="Reply message*"></textarea>
+					</div>
+					<button class="btn" type="submit">Reply via Email</button>
+				</form>
+			</div>
+			<div id="user-message-container">
+				<div>
+					<p  th:text="${message.message}"></p>
+				</div>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

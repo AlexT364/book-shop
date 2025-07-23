@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/authors/authors.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Authors</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<div class="sorting-container">
+			<form class="sorting-form" th:action="@{/authors}" method="GET" th:object="${authorFilter}">
+				<label>Author order:</label> <select id="date-order-select" th:field="*{authorOrder}">
+					<option value="LAST_NAME_ASC">Last Name A-Z</option>
+					<option value="LAST_NAME_DESC">Last Name Z-A</option>
+				</select> <label for="name-input">Last Name:</label>
+				<input id="name-input" type="text" th:field="*{lastName}">
+				<label for="page-size-select">Page size:</label> <select id="page-size-select" name="pageSize">
+					<option value="18">18</option>
+					<option value="36">36</option>
+				</select>
+				<button class="btn" type="submit">Apply</button>
+			</form>
+		</div>
+		<div id="add-author-container" sec:authorize="hasRole('ROLE_ADMIN')" >
+			<a th:href="@{/admin/authors/add}">Add author</a>
+		</div>
+		<section id="authors-container">
+			<div class="author-card" th:each="author : ${authors}" th:object="${author}">
+				<div class="author-image-container">
+					<img alt="author image" th:src="@{/images/authors/{authorId} (authorId = *{id})}" />
+				</div>
+				<div class="author-info">
+					<a th:href="@{/authors/{authorId} (authorId=*{id})}" class="author-name" th:text="*{name}"></a>
+				</div>
+			</div>
+		</section>
+		<div class="pagination" th:unless="${authors.getTotalPages() <= 1}">
+
+			<!-- 		First-Page -->
+			<a th:if="${authors.hasPrevious()}" th:href="@{/authors(pageNumber=0, pageSize=${pageSize})}"
+				th:text="'First'" class="btn-link"></a>
+			<span th:unless="${authors.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'First'"></span>
+
+			<!-- 		Previous-Page -->
+			<a th:if="${authors.hasPrevious()}"
+				th:href="@{/authors(pageNumber=${authors.number-1}, pageSize=${pageSize})}" th:text="'<'"
+				class="btn-link"></a>
+			<span th:unless="${authors.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'<'"></span> <span
+				th:if="${authors.number > 2}">...</span>
+
+			<!-- Current page and neighboring pages -->
+			<a
+				th:each="page : ${#numbers.sequence(authors.number > 2 ? authors.number - 2 : 1, authors.number + 2 < authors.getTotalPages() ? authors.number + 2 : authors.getTotalPages())}"
+				th:text="${page}" class="btn-link" th:classappend="${page}-1 == ${authors.number} ? 'current-page'"
+				th:href="@{/authors(pageNumber=${page-1}, pageSize=${pageSize})}"> </a>
+
+
+			<span th:if="${authors.number + 2 < authors.getTotalPages()}">...</span>
+
+			<!-- 		Next-Page -->
+			<a th:if="${authors.hasNext()}"
+				th:href="@{/authors(pageNumber=${authors.number+1}, pageSize=${pageSize})}" th:text="'>'"
+				class="btn-link"></a>
+			<span th:unless="${authors.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'>'"></span>
+
+			<!-- 		Last-Page -->
+			<a th:if="${authors.hasNext()}"
+				th:href="@{/authors(pageNumber=${authors.getTotalPages()-1}, pageSize=${pageSize})}" th:text="'Last'"
+				class="btn-link"></a>
+			<span th:unless="${authors.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'Last'"></span>
+
+		</div>
+
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

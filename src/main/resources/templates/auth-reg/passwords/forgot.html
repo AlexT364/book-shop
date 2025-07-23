@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/passwords/forgot.css}">
+<title>Forgot password</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section id="email-form-container">
+			<form th:action="@{/password/forgot}" method="POST">
+				<h2>Change password:</h2>
+				<div>
+					<div class="email-input">
+						<input type="text" name="email" autofocus="autofocus" placeholder=" " />
+						<label>Email</label>
+					</div>
+				</div>
+				<div>
+					<button class="btn" type="submit">Send password reset link</button>
+				</div>
+			</form>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/books/book.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<script type="text/javascript" th:src="@{/js/book-actions.js}"></script>
+<title>[[${book.title}]]</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+
+		<div class="book-description-container">
+			<div id="book-cover-container">
+				<img th:src="@{/images/books/{isbn} (isbn = ${book.isbn})}" alt="cover" />
+			</div>
+			<div id="book-info">
+				<h2 th:text="${book.title}">TITLE</h2>
+				<h4 th:text="'$' + ${book.price}"></h4>
+				<ul>
+					<li>
+						<label>Author: </label> <a th:each="author : ${book.authors}" th:text="${author.name}" th:href="@{/authors/{authorId} (authorId = ${author.id})}"></a>
+					</li>
+					<li>
+						<label>ISBN: </label> <span th:text="${book.isbn}"></span>
+					</li>
+					<li>
+						<label>Genres: </label><span th:each="genre : ${book.genres}" th:text="${genre.name} + ' '"></span>
+					</li>
+					<li>
+						<label>Rating: </label><span th:text="'★ ' + ${book.score}"></span>
+					</li>
+				</ul>
+
+				<div id="book-actions-container">
+					<div class="number-input">
+						<label>Quantity: </label>
+						<input th:if="${book.unitsAvailable}" class="quantity" min="1" th:max="${book.unitsAvailable}" placeholder="0"
+							id="bookQuantity" value="1" type="number">
+						<span th:if="${book.unitsAvailable} < 10 and ${book.unitsAvailable} != 0"
+							th:text="${book.unitsAvailable} + ' book(s) left!'"></span> <span style="color: red;"
+							th:unless="${book.unitsAvailable} > 0" th:text="'OUT OF STOCK'"></span>
+					</div>
+					<div id="book-actions">
+						<form th:unless="${book.unitsAvailable} == 0" id="cartForm" th:action="@{/cart}" method="POST">
+							<input type="hidden" name="bookId" th:value="${book.id}">
+							<input type="hidden" id="quantityCart" name="quantity">
+							<button class="btn" type="submit">Add to cart</button>
+						</form>
+						<form th:unless="${book.favourite}" th:action="@{/favourite/{bookId} (bookId=${book.id})}" method="POST">
+							<input type="hidden" name="bookId" th:value="${book.id}">
+							<button type="submit" class="btn btn-clr">Add to favourite</button>
+						</form>
+						<form th:if="${book.favourite}" th:action="@{/favourite/{bookId} (bookId=${book.id})}" th:method="DELETE">
+							<input type="hidden" name="bookId" th:value="${book.id}">
+							<button type="submit" class="btn btn-clr">Remove from Favorite</button>
+						</form>
+						
+						
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn-link" th:href="@{/admin/book/{bookId}/edit (bookId=${book.id})}">Edit</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="book-description" >
+			<p style="white-space: pre-line;" th:text="${book.description}"></p>
+		</div>
+		<div id="reviews-link-container">
+			<a th:href="@{/book/{bookId}/reviews (bookId=${book.id})}">Book reviews</a>
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

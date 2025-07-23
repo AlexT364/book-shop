@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm your registration</title>
+    <style>
+        .button {
+            background-color: #055F76;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        <h2 style="color: #333;">Welcome to our service!</h2>
+        <p>Thank you for registering. Please confirm your email address to complete your registration.</p>
+        
+        <div style="text-align: center; margin: 25px 0;">
+            <a th:href="${confirmationLink}" class="button">Confirm Email Address</a>
+        </div>
+        
+        <p>This link will expire in 24 hours. If you didn't request this registration, please ignore this email.</p>
+        
+        <p style="margin-top: 30px; color: #777; font-size: 0.9em;">
+            Best regards,<br>
+            The Support Team
+        </p>
+    </div>
+</body>
+</html>

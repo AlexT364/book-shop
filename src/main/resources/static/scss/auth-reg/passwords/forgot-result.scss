@@ -1,0 +1,41 @@
+@import "../../variables.scss";
+
+section{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+#result-info{
+		margin-top: 6rem;
+		padding: 4rem 4rem;
+		box-shadow: 2px 2px 15px 2px clr(my-gray, light);
+		border-radius: 10px;
+		display: flex;
+		flex-flow: column;
+		gap: 1.5rem;
+}
+
+#result-info{
+	h2{
+		text-align: center;
+		color: clr(primary, darker);
+	}
+	
+	h3{
+		text-align: center;
+		color: clr(primary, darker);
+	}
+	
+	p{
+		font-size: 1.3rem;
+		font-weight: bold;
+		color: clr(primary, dark);
+	}
+	a{
+		@include regular-link;
+		margin-top: 1rem;
+		font-size: 1.3rem;
+		text-align: center;
+	}
+}

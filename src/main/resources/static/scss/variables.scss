@@ -1,0 +1,49 @@
+$my-gray: #8F8F8F;
+
+$primary: #055F76;
+
+$facebook: #1877F2;
+$youtube: #DF2016;
+$twitter: #1C9CEA;
+$instagram: #DD2A7B;
+$vk: #0177FF;
+
+$colors: (
+	primary: (base: $primary,
+		light: lighten($primary, 15),
+		lighter: lighten($primary, 20),
+		lightest: lighten($primary, 30),
+		dark: darken($primary, 10),
+		darker: darken($primary, 15)),
+	my-gray: (base: $my-gray,
+		light: lighten($my-gray, 15),
+		lighter: lighten($my-gray, 35),
+		lightest: lighten($my-gray, 40),
+		dark: darken($my-gray, 25))
+);
+
+@function clr($base, $shade: base) {
+	$color: map-get(map-get($colors, $base), $shade);
+	@return $color;
+}
+
+@mixin regular-link {
+	color: $primary;
+	font-weight: bold;
+	transition-property: color filter;
+	transition-duration: .2s;
+	
+	&.link-current {
+		color: clr(primary, lighter);
+	}
+
+	&:hover {
+		color: clr(primary, lighter);
+	}
+
+	&:active {
+		transition: none;
+		color: clr(primary, light);
+	}
+	
+}

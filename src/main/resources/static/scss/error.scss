@@ -1,0 +1,40 @@
+@import "variables.scss";
+
+#error-container{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	gap: 2rem;
+	margin: 5rem 5rem;
+	div{
+		flex:1;
+	}
+}
+
+#error-image-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	img{
+		width: 20rem;
+		height: 20rem;
+	}
+}
+
+#error-desc-container{
+	display: flex;
+	flex-flow: column;
+	align-items: start;
+
+	p:first-of-type{
+		font-size: 3rem;
+		font-weight: bold;
+		color: clr(primary, dark);
+		margin-bottom: 1rem;
+	}
+	p:last-of-type{
+		color: clr(primary);
+		font-weight: bold;
+		font-size: 1.5rem;
+	}	
+}

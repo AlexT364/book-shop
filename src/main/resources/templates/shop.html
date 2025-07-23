@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel=stylesheet th:href="@{/css/style.css}">
+<link rel=stylesheet th:href="@{/css/shop.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<script type="text/javascript" th:src="@{/js/shop-authors-lazy-loading.js}"></script>
+<script type="text/javascript" th:src="@{/js/shop-genres-lazy-loading.js}"></script>
+<title>Shop</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section id="shop-container">
+			<div id="filters">
+				<form id="filter-form" th:action="@{/shop}" method="get">
+					<h2>Genres:</h2>
+					<div id="genres-selection">
+						<ul id="genre-checkbox-list"></ul>
+						<button id="load-more-genres" class="btn" type="button">Load more</button>
+					</div>
+					<h2>Authors:</h2>
+					<div id="authors-selection">
+						<ul id="author-checkbox-list"></ul>
+						<button id="load-more-authors" class="btn" type="button">Load more</button>
+					</div>
+					<h2>Price:</h2>
+					<div id="price-filters">
+							<input type="number" name="minPrice" th:value="${filters.minPrice}">
+							<input type="number" name="maxPrice" th:value="${filters.maxPrice}">
+					</div>
+					<div class="page-size-selection">
+						<h2>Page size:</h2>
+						<div class="page-size-inputs">
+							<input id="page-pageSize-6" type="radio" name="pageSize" value="6" th:checked="${pageSize} == 6" />
+							<label for="page-pageSize-6">6</label>
+							<input id="page-pageSize-12" type="radio" name="pageSize" value="12" th:checked="${pageSize} == 12" />
+							<label for="page-pageSize-12">12</label>
+							<input id="page-pageSize-24" type="radio" name="pageSize" value="24" th:checked="${pageSize} == 24" />
+							<label for="page-pageSize-24">24</label>
+						</div>
+					</div>
+					<div class="sorting-selection">
+						<div class="sorting-dropdown">
+							<input id="sort-input" type="hidden" name="sort" th:value="${filters.sort.name}">
+							<button type="button">Order: <span id="sort-name" th:text="${filters.sort}"></span></button>
+							<ul class="dropdown-list">
+								<li><a th:href="@{/shop(pageNumber=${currentPage}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=PRICE_ASC)}">Price ascending</a></li>
+								<li><a th:href="@{/shop(pageNumber=${currentPage}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=PRICE_DESC)}">Price descending</a></li>
+								<li><a th:href="@{/shop(pageNumber=${currentPage}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=TITLE_ASC)}">Title ascending</a></li>
+								<li><a th:href="@{/shop(pageNumber=${currentPage}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=TITLE_DESC)}">Title descending</a></li>
+								<li><a th:href="@{/shop(pageNumber=${currentPage}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=DEFAULT)}">Default</a></li>
+							</ul>
+						</div>
+					</div>
+					<div id="submit-buttons">
+						<button onclick="resetCheckboxes()" class="btn btn-clr" type="button">Reset Filters</button>
+						<button class="btn" type="submit">Apply Filters</button>
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn-link" th:href="@{/admin/book/add}"
+							style="box-shadow: inset 0 0 15px white;">Add Book</a>
+					</div>
+				</form>
+			</div>
+			<div id="books-container">
+				<div id="books-list">
+					<div class="book-card" th:classappend="${book.unitsAvailable} == 0 ? 'out-of-stock'" th:each="book : ${books}" th:object="${book}">
+						<div class="book-cover">
+							<img th:src="@{/images/books/{isbn} (isbn=*{isbn})}" />
+						</div>
+						<div class="book-info">
+							<a th:href="'/book/' + *{id}" th:text="*{title}" th:title="*{title}">TITLE</a>
+							<p class="score" th:text="'★ ' + *{score}"></p>
+							<p th:text="'$' + *{price}">PRICE</p>
+							<p th:if="*{unitsAvailable} == 0" th:text="'OUT OF STOCK'"></p>
+						</div>
+						<div class="book-actions">
+							<form th:action="@{/cart}" method="POST">
+								<input type="hidden" name="bookId" th:value="*{id}"/>
+								<input type="hidden" name="quantity" value="1"/>
+								<button type="submit" class="btn">Add to Cart</button>
+							</form>
+							<form th:unless="*{favourite}" th:action="@{/favourite/{bookId} (bookId=*{id})}" method="POST">
+								<input type="hidden" name="bookId" th:value="*{id}"/>
+								<button type="submit" class="btn btn-clr">Add to favourite</button>
+							</form>
+							<form th:if="*{favourite}" th:action="@{/favourite/{bookId} (bookId=*{id})}" th:method="DELETE">
+								<input type="hidden" name="bookId" th:value="*{id}"/>
+								<button type="submit" class="btn btn-clr">Remove from Favorite</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="pagination" th:unless="${books.getTotalPages() <= 1}">
+
+			<!-- 		First-Page -->
+			<a th:if="${books.hasPrevious()}"
+				th:href="@{/shop(pageNumber=0, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=${filters.sort.name})}"
+				th:text="'First'" class="btn-link"></a>
+			<span th:unless="${books.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'First'"></span>
+
+			<!-- 		Previous-Page -->
+			<a th:if="${books.hasPrevious()}"
+				th:href="@{/shop(pageNumber=${books.number-1}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=${filters.sort.name})}"
+				th:text="'<'" class="btn-link"></a>
+			<span th:unless="${books.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'<'"></span> <span
+				th:if="${books.number > 2}">...</span>
+
+			<!-- Current page and neighboring pages -->
+			<a
+				th:each="page : ${#numbers.sequence(books.number > 2 ? books.number - 2 : 1, books.number + 2 < books.getTotalPages() ? books.number + 2 : books.getTotalPages())}"
+				th:text="${page}" class="btn-link" th:classappend="${page}-1 == ${books.number} ? 'current-page'"
+				th:href="@{/shop(pageNumber=${page-1}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=${filters.sort.name})}">
+			</a>
+
+
+			<span th:if="${books.number + 2 < books.getTotalPages()}">...</span>
+
+			<!-- 		Next-Page -->
+			<a th:if="${books.hasNext()}"
+				th:href="@{/shop(pageNumber=${books.number+1}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=${filters.sort.name})}"
+				th:text="'>'" class="btn-link"></a>
+			<span th:unless="${books.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'>'"></span>
+
+			<!-- 		Last-Page -->
+			<a th:if="${books.hasNext()}"
+				th:href="@{/shop(pageNumber=${books.getTotalPages()-1}, pageSize=${pageSize}, genres=${filters.genres}, authors=${filters.authors}, minPrice=${filters.minPrice}, maxPrice=${filters.maxPrice}, sort=${filters.sort.name})}"
+				th:text="'Last'" class="btn-link"></a>
+			<span th:unless="${books.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'Last'"></span>
+
+		</div>
+	</div>
+
+
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+
+	<script>
+		function resetCheckboxes() {
+		    const checkboxes = document.querySelectorAll('#filter-form input[type="checkbox"]');
+		    checkboxes.forEach(checkbox => {
+		      checkbox.checked = false;
+		    });
+		    const priceInputs = document.querySelectorAll('#filter-form input[type="number"]');
+		    priceInputs.forEach(input => {
+			input.value = 0;
+			});
+	  }
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

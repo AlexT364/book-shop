@@ -1,0 +1,66 @@
+section {
+  display: flex;
+  margin: 4rem 8rem;
+}
+
+table {
+  flex-grow: 1;
+  border-collapse: collapse;
+}
+
+thead tr {
+  border-top: 1px solid rgb(181.25, 181.25, 181.25);
+  border-bottom: 1px solid rgb(181.25, 181.25, 181.25);
+}
+thead th {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+  padding: 0.5rem 0;
+}
+
+tbody tr {
+  text-align: center;
+  border-bottom: 1px solid rgb(181.25, 181.25, 181.25);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+tbody td {
+  padding: 2rem 1rem;
+}
+tbody td:first-child {
+  width: 14rem;
+}
+tbody td:last-child {
+  width: 14rem;
+}
+
+tbody a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+}
+tbody a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+tbody a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+tbody a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+
+#page-container {
+  display: flex;
+  flex-flow: column;
+}
+
+#page-container .pagination {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 auto;
+  align-items: end;
+}

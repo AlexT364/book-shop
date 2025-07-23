@@ -1,0 +1,115 @@
+#cover-container {
+  justify-self: center;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  border-radius: 10px;
+  display: flex;
+  height: 33rem;
+  width: 22rem;
+}
+#cover-container img {
+  max-width: 22rem;
+  max-height: 33rem;
+  object-fit: contain;
+  place-self: center;
+  flex: 1;
+}
+
+#edit-form-container {
+  margin: 2rem;
+}
+
+#edit-form {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+#edit-form > div {
+  margin-top: 2rem;
+}
+#edit-form label {
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#edit-form-main {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.4rem;
+  flex-grow: 1;
+}
+#edit-form-main > div {
+  display: flex;
+  align-items: start;
+  border-bottom: 1px solid rgb(181.25, 181.25, 181.25);
+  padding: 0.5rem;
+}
+#edit-form-main > div input {
+  margin-left: auto;
+  width: 20rem;
+}
+
+#genres-input,
+#authors-input {
+  display: flex;
+  flex-flow: column;
+  max-height: 15rem;
+  overflow-y: scroll;
+  margin-left: auto;
+  padding: 0.5rem;
+}
+#genres-input div,
+#authors-input div {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+}
+#genres-input div:hover,
+#authors-input div:hover {
+  background-color: rgb(232.25, 232.25, 232.25);
+}
+#genres-input div label,
+#authors-input div label {
+  font-weight: normal;
+  align-self: center;
+  flex: 1;
+}
+#genres-input div input,
+#authors-input div input {
+  flex: 0;
+}
+
+#isbn {
+  display: flex;
+  flex-flow: row;
+}
+#isbn label {
+  flex: 1;
+}
+#isbn span {
+  flex: 0;
+  font-weight: bold;
+  padding-right: 0.2rem;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+
+#edit-form-description {
+  flex-grow: 6;
+  flex-shrink: 0;
+}
+
+#action-buttons {
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+textarea {
+  display: block;
+  justify-self: stretch;
+  resize: vertical;
+  padding: 1rem;
+}

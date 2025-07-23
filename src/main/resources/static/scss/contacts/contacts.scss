@@ -1,0 +1,150 @@
+@import "../variables.scss";
+
+
+section {
+	margin: 4rem;
+
+	#contacts-container {
+		display: flex;
+		flex-flow: row wrap;
+
+
+		&>div {
+			flex: 1;
+			padding: 2rem;
+		}
+
+		#contacts-info-container {
+			display: flex;
+			flex-flow: row wrap;
+			align-items: center;
+			justify-content: center;
+
+			&>div {
+				flex: 1;
+			}
+
+			h2 {
+				color: clr(primary, dark);
+				margin: 1rem 0;
+			}
+
+			ul li {
+				font-size: 1.1rem;
+				margin: .5rem 0 .5rem 1rem;
+			}
+
+
+		}
+
+		#contacts-form-container {
+			display: flex;
+			flex-flow: column nowrap;
+
+			h2 {
+				color: clr(primary, dark);
+				margin: 1rem 0;
+			}
+
+			p {
+				font-size: 1.1rem;
+			}
+
+			form {
+				display: flex;
+				flex-flow: column nowrap;
+				flex-grow: 0;
+
+				input[type=text] {
+					position: relative;
+					margin: .5rem;
+					font-size: 1.2rem;
+					padding: .4rem;
+					border-radius: 10px;
+					outline: none;
+					border: 1px solid clr(my-gray, light);
+					align-self: start;
+					transition-duration: .2s;
+
+
+					&:focus {
+						outline: none;
+						border: 1px solid clr(primary, dark);
+
+					}
+				}
+
+				#message-container {
+					display: flex;
+					flex-flow: column nowrap;
+
+					textarea {
+						margin: .5rem;
+						font-size: 1.2rem;
+						padding: .4rem;
+						border-radius: 10px;
+						outline: none;
+						border: 1px solid clr(my-gray, light);
+						resize: none;
+						min-height: 15rem;
+						transition-duration: .2s;
+
+						&:focus {
+							outline: none;
+							border: 1px solid clr(primary, dark);
+						}
+					}
+				}
+
+
+				button {
+					margin-left: .5rem;
+					place-self: start;
+				}
+
+			}
+		}
+	}
+}
+
+#name-email-container{
+	display: flex;
+	flex-flow: row;
+}
+
+.name-field-container,
+.email-field-container{
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

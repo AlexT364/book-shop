@@ -1,0 +1,106 @@
+@import "../variables.scss";
+
+#login-form-container {
+	display: flex;
+	justify-content: center;
+	margin: 6rem 0;
+}
+
+#login-form-container>div {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+
+	p {
+		font-size: 2.5rem;
+		color: clr(primary, dark);
+	}
+	a{
+		font-size: 1.5rem;
+	}
+}
+
+form {
+	display: flex;
+	flex-flow: column;
+	gap: 1.5rem;
+	border-radius: 10px;
+	box-shadow: 2px 2px 20px 2px clr(my-gray, light);
+	padding: 4rem 5rem;
+	font-size: 1.1rem;
+	font-weight: bold;
+	color: clr(primary, darker);
+}
+
+form>div {
+	display: flex;
+	flex-flow: column nowrap;
+
+	&>* {
+		flex-grow: 1;
+	}
+}
+
+form > h2{
+	text-align: center;
+}
+
+.log-input {
+	position: relative;
+	display: flex;
+	justify-content: stretch;
+
+	input {
+		flex-grow: 1;
+	}
+}
+
+input {
+	padding: 1rem;
+	position: relative;
+	transition-duration: .2s;
+	border-radius: 10px;
+	border: 2px solid clr(my-gray, light);
+}
+
+
+
+input + label {
+	pointer-events: none;
+	font-weight: normal;
+	position: absolute;
+	top: 30%;
+	left: 3%;
+	color: clr(my-gray);
+}
+
+input+label {
+	transition-duration: .4s;
+}
+
+input:focus+label {
+	font-size: 1rem;
+	transform: translateY(-1rem);
+	transition-duration: .4s;
+}
+
+input:not(:placeholder-shown) + label{
+	font-size: 1rem;
+	transform: translateY(-1rem);
+	transition-duration: .4s;
+}
+
+#login-form-footer{
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 1rem;
+	&>div{
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+
+a {
+	@include regular-link;
+}

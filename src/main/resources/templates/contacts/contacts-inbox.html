@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/contacts/contacts-inbox.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Inbox</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div class="sorting-container">
+				<form class="sorting-form" th:action="@{/admin/contacts/inbox}" method="GET" th:object="${inboxFilter}">
+					<label>Viewed sort:</label>
+					<select id="viewed-sort-select" th:field="*{viewedSort}">
+						<option value="ALL">All</option>
+						<option value="UNVIEWED">Only unviewed</option>
+						<option value="VIEWED">Only viewed</option>
+					</select>
+					<label>Date order:</label>
+					<select id="date-order-select" th:field="*{dateOrder}">
+						<option value="NEW_FIRST">New first</option>
+						<option value="OLD_FIRST">Old first</option>
+					</select>
+					<label for="email-input">Email:</label>
+					<input id="email-input" type="text" th:field="*{email}">
+					<label for="page-size-select">Page size:</label>
+					<select id="page-size-select" th:field="*{pageSize}">
+						<option value="12">12</option>
+						<option value="24">24</option>
+						<option value="48">48</option>
+					</select>
+					<button class="btn" type="submit">Apply</button>
+				</form>
+			</div>
+			<div class="messages-container">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Subject</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="message-info" th:classappend="${message.viewed == true ? 'viewed' : ''}" th:each="message : ${messages}" th:object="${message}" th:with="formattedDate=${#temporals.format(message.addedAt, 'dd-MMM-yyyy')}">
+						<td th:text="*{name}">
+						<td th:text="*{email}">
+						<td th:text="*{subject}">
+						<td th:text="${formattedDate}">
+						<td><a th:href="@{/admin/contacts/inbox/{messageId} (messageId=*{id})}">MORE</a></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</section>
+		<div class="pagination" th:unless="${messages.getTotalPages() <= 1}">
+
+			<!-- 		First-Page -->
+			<a th:if="${messages.hasPrevious()}"
+				th:href="@{/admin/contacts/inbox(pageNumber=0, pageSize=${pageSize})}"
+				th:text="'First'" class="btn-link"></a>
+			<span th:unless="${messages.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'First'"></span>
+
+			<!-- 		Previous-Page -->
+			<a th:if="${messages.hasPrevious()}"
+				th:href="@{/admin/contacts/inbox(pageNumber=${messages.number-1}, pageSize=${pageSize})}"
+				th:text="'<'" class="btn-link"></a>
+			<span th:unless="${messages.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'<'"></span> <span
+				th:if="${messages.number > 2}">...</span>
+
+			<!-- Current page and neighboring pages -->
+			<a
+				th:each="page : ${#numbers.sequence(messages.number > 2 ? messages.number - 2 : 1, messages.number + 2 < messages.getTotalPages() ? messages.number + 2 : messages.getTotalPages())}"
+				th:text="${page}" class="btn-link" th:classappend="${page}-1 == ${messages.number} ? 'current-page'"
+				th:href="@{/admin/contacts/inbox(pageNumber=${page-1}, pageSize=${pageSize})}">
+			</a>
+
+
+			<span th:if="${messages.number + 2 < messages.getTotalPages()}">...</span>
+
+			<!-- 		Next-Page -->
+			<a th:if="${messages.hasNext()}"
+				th:href="@{/admin/contacts/inbox(pageNumber=${messages.number+1}, pageSize=${pageSize})}"
+				th:text="'>'" class="btn-link"></a>
+			<span th:unless="${messages.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'>'"></span>
+
+			<!-- 		Last-Page -->
+			<a th:if="${messages.hasNext()}"
+				th:href="@{/admin/contacts/inbox(pageNumber=${messages.getTotalPages()-1}, pageSize=${pageSize})}"
+				th:text="'Last'" class="btn-link"></a>
+			<span th:unless="${messages.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'Last'"></span>
+
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

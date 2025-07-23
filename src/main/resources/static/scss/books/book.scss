@@ -1,0 +1,150 @@
+@import "../variables.scss";
+
+
+.book-description-container {
+	margin: 5rem 10%;
+	display: flex;
+	justify-content: center;
+
+	&>div {
+		flex: 1;
+
+	}
+
+	#book-cover-container {
+		display: flex;
+		justify-content: center;
+		align-self: start;
+		border: 1px solid clr(my-gray, light);
+		border-radius: 15px;
+
+		img {
+			max-width: 21rem;
+			max-height: 31rem;
+			object-fit: contain;
+			align-self: center;
+			justify-self: center;
+			padding: 2rem 4rem;
+		}
+	}
+
+	#book-info {
+		display: flex;
+		flex-flow: column;
+		padding: 1rem;
+		h2 {
+			padding: .5rem;
+			font-size: 4rem;
+			color: clr(primary, darker);
+		}
+
+		h4 {
+			padding: .5rem;
+			font-size: 2rem;
+			border-bottom: 2px solid clr(my-gray, lighter);
+			color: clr(primary, light);
+		}
+		
+		ul > li {
+			margin: .5rem 0;
+			color: clr(primary, dark);
+			font-weight: bold;
+			font-size: 1.2rem;
+			span{
+				color: clr(primary);
+			}
+			a{
+				@include regular_link;
+			}
+		}
+
+		#book-actions-container {
+			display: flex;
+			flex-flow: column wrap;
+			margin-top: .5rem;
+			gap: 1rem;
+			
+			.number-input {
+				color: clr(primary, dark);
+				font-weight: bold;
+				font-size: 1.2rem;
+				label{
+					margin: .5rem 0;
+				}
+				input{
+					text-align: center;
+					width: fit-content;
+				}
+			}
+
+			#book-actions {
+				display: flex;
+				flex-flow: row wrap;
+				align-items: stretch;
+				gap: .5rem;
+			}
+		}
+	}
+}
+
+#book-description{
+	color: clr(primary, darker);
+	border: 1px solid clr(my-gray, light);
+	border-radius: 20px;
+	margin: 0 4rem;
+	p{
+		font-size: 1.1rem;
+		line-height: 1.5rem;
+		padding: 1rem;
+	}
+}
+
+#reviews-link-container{
+	margin: 1rem 0;
+	text-align: center;
+	a{
+		@include regular-link;
+		font-size: 2rem;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

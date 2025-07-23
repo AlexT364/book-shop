@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/home.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Book Store</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+
+		<section id="latest-books-selection">
+			<div class="selection-header">
+				<h2>New Arrivals</h2>
+			</div>
+			<div class="books-container">
+				<div class="book-card" th:each="book : ${latestBooks}">
+					<div class="book-cover">
+						<img th:src="@{/images/books/{isbn} (isbn = ${book.isbn})}" alt="cover-image">
+					</div>
+					<div class="short-description">
+						<h4>
+							<a th:href="@{book/{id} (id=${book.id})}" th:text="${book.title}" th:title="${book.title}">War and Peace</a>
+						</h4>
+						<p th:text="'$' + ${book.price}"></p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="features">
+			<div class="feature-card">
+				<img th:src="@{/images/icons/features/daily-offers.svg}">
+				<div class="feature-description">
+					<h4>Daily offers</h4>
+					<p>New exclusive offers every day</p>
+				</div>
+			</div>
+			<div class="feature-card">
+				<img th:src="@{/images/icons/features/delivery.svg}">
+				<div class="feature-description">
+					<h4>Free delivery</h4>
+					<p>Free delivery even for one book</p>
+				</div>
+			</div>
+			<div class="feature-card">
+				<img th:src="@{/images/icons/features/quality.svg}">
+				<div class="feature-description">
+					<h4>Quality guarantee</h4>
+					<p>Or maybe not so much</p>
+				</div>
+			</div>
+			<div class="feature-card">
+				<img th:src="@{/images/icons/features/security.svg}">
+				<div class="feature-description">
+					<h4>100% secure payment</h4>
+					<p>Not so sure about that</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="small-selections">
+			<div class="small-selection" th:if="${popularBooks} AND ${#lists.size(popularBooks) > 0}">
+				<div class="selection-header">
+					<h2>Popular Books</h2>
+				</div>
+				<div class="books-container">
+					<div class="first-book" th:object="${popularBooks[0]}">
+						<div class="book-cover">
+							<img th:src="@{/images/books/{isbn} (isbn = *{isbn})}" alt="cover-image">
+						</div>
+						<div class="short-description">
+							<h4>
+								<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
+							</h4>
+							<p th:text="'$' + *{price}"></p>
+						</div>
+					</div>
+					<div class="other-books">
+						<div th:each="book, iterStat : ${popularBooks}" th:if="${iterStat.index > 0} AND ${#lists.size(popularBooks) > 1}" th:object="${book}">
+							<div class="book-cover">
+								<img th:src="@{/images/books/{isbn} (isbn = *{isbn})}" alt="cover-image">
+							</div>
+							<div class="short-description">
+								<h4>
+									<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
+								</h4>
+								<p th:text="'$' + *{price}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="small-selection" th:if="${highestRatedBooks} AND ${#lists.size(highestRatedBooks) > 0}">
+				<div class="selection-header">
+					<h2>Highest Rated Books</h2>
+				</div>
+				<div class="books-container">
+					<div class="first-book" th:object="${highestRatedBooks[0]}">
+						<div class="book-cover">
+							<img th:src="@{/images/books/{isbn} (isbn = *{isbn})}" alt="cover-image">
+						</div>
+						<div class="short-description">
+							<h4>
+								<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
+							</h4>
+							<p th:text="'$' + *{price}"></p>
+						</div>
+					</div>
+					<div class="other-books" th:if="${#lists.size(highestRatedBooks) > 1}">
+						<div th:each="book, iterStat : ${highestRatedBooks}" th:if="${iterStat.index > 0}" th:object="${book}">
+							<div class="book-cover">
+								<img th:src="@{/images/books/{isbn} (isbn = *{isbn})}" alt="cover-image">
+							</div>
+							<div class="short-description">
+								<h4>
+									<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
+								</h4>
+								<p th:text="'$' + *{price}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

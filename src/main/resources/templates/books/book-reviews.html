@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/books/book-reviews.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>[[${book.title}]] reviews</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div class="book-info-review-form-container">
+				<div class="book-cover-info-container">
+					<div class="book-cover-container">
+						<img alt="someimage" th:src="@{/images/books/{isbn} (isbn = ${book.isbn})}" />
+					</div>
+					<div class="book-info" th:object="${book}">
+						<ul class="book-info-list">
+							<li>
+								<h2 th:text="*{title}"></h2>
+							</li>
+							<li>
+								<span th:each="author : *{authors}" th:text="${author.name}"></span>
+							</li>
+							<li>
+								<span th:each="genre : *{genres}" th:text="${genre.name}"></span>
+							</li>
+							<li>
+								<h3 th:text="'$' + *{price}"></h3>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="review-form-container">
+					<a sec:authorize="not isAuthenticated()" th:href="@{/login}">You need to be logged in to post review.</a>
+					<form th:unless="${userReview}" sec:authorize="isAuthenticated()" 
+						th:action="@{/book/{bookId}/reviews (bookId=${book.id})}"
+						method="post"
+						th:object="${newReview}">
+						<div class="book-rating-container">
+							<label>Rating:</label>
+							<div class="book-rating-input">
+								<input id="rating-1" type="radio" name="score" value="1" />
+								<label for="rating-1">1</label>
+								<input id="rating-2" type="radio" name="score" value="2" />
+								<label for="rating-2">2</label>
+								<input id="rating-3" type="radio" name="score" value="3" />
+								<label for="rating-3">3</label>
+								<input id="rating-4" type="radio" name="score" value="4" />
+								<label for="rating-4">4</label>
+								<input id="rating-5" type="radio" name="score" value="5" checked="checked" />
+								<label for="rating-5">5</label>
+							</div>
+						</div>
+						<textarea name="review" rows="15" cols="50"></textarea>
+						<button class="btn" type="submit">Submit review</button>
+					</form>
+				</div>
+			</div>
+			<div class="reviews-section">
+				<div class="no-reviews-container" th:if="${reviews.isEmpty()}">
+					<h2>There are no reviews...</h2>
+					<h2>Be the first one to give your thoughts about this book!</h2>
+				</div>
+				<div th:if="${userReview}">
+					<div class="review user-review" th:object="${userReview}">
+						<div class="username-header">
+							<p>Your review:</p>
+							<p class="review-author" th:text="*{username}"></p>
+							<p class="review-score" th:text="*{score}"></p>
+							<span th:text="${#temporals.format(userReview.addedAt, 'dd-MMMM-yyyy HH:mm')}"></span>
+						</div>
+						<div class="review-text-container">
+							<span th:text="*{review}"></span>
+						</div>
+						<div>
+							<form th:action="@{/book/{bookId}/reviews (bookId=${book.id})}"
+							th:method="DELETE"
+							onclick="return confirm('Are you sure you want to delete your review?')">
+								<button class="btn" type="submit">Delete my review</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<ul th:unless="${reviews.isEmpty()}">
+					<li class="review" th:each="review : ${reviews}" th:object="${review}">
+						<div class="username-header">
+							<p class="review-author" th:text="*{username}"></p>
+							<p class="review-score" th:text="*{score}"></p>
+							<span th:text="${#temporals.format(review.addedAt, 'dd-MMMM-yyyy HH:mm')}"></span>
+						</div>
+						<div class="review-text-container">
+							<span th:text="*{review}"></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

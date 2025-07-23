@@ -1,0 +1,283 @@
+@import "variables.scss";
+
+#latest-books-selection{
+	margin: 3rem 0 5rem 0;
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 2rem;
+	
+	.books-container{
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-evenly;
+		align-items: center;
+		row-gap: 2rem;
+	}
+
+	.book-card {
+		width: 22rem;
+		height: 34rem;
+		display: flex;
+		flex-flow: column nowrap;
+		padding: 2rem;
+		background-color: clr(my-gray, lightest);
+		border-radius: 10px;
+		box-shadow: 4px 4px 6px 2px clr(my-gray, lighter);
+		transition-property: box-shadow;
+		transition: transform .5s;
+
+		.book-cover {
+			display: flex;
+			place-self: center;
+			flex-grow: 1;
+
+			img {
+				max-width: 21rem;
+				max-height: 30rem;
+				object-fit: contain;
+				place-self: center;
+			}
+		}
+
+		&:hover{
+			box-shadow: 2px 2px 30px  clr(my-gray, light);
+			transform: scale(1.1);
+		}
+
+	}
+
+}
+
+.short-description {
+	display: inline-block;
+	color: clr(primary, dark);
+	font-weight: bold;
+	overflow: hidden;
+
+	a {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		min-width: 18rem;
+	}
+	h4 {
+			margin: .5rem 0;
+			font-size: 1.2rem;
+
+			a {
+				@include regular-link();
+				text-transform: capitalize;
+				font-style: italic;
+			}
+		}
+}
+
+#features {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	margin: 6rem 0;
+
+	.feature-card {
+		display: flex;
+		flex-flow: row nowrap;
+		border-radius: 10px;
+		width: 14rem;
+		height: 14rem;
+		background-color: clr(my-gray, lightest);
+		box-shadow: 4px 4px 10px 5px clr(my-gray, lighter);
+		transition-property: box-shadow transform;
+		transition-duration: .4s;
+		cursor: default;
+
+		&:hover {
+			box-shadow: 2px 2px 20px  clr(my-gray, light);
+			transform: scale(1.1);
+
+			.feature-description h4 {
+				color: clr(primary, lighter);
+			}
+		}
+
+		.feature-description {
+			width: 50%;
+			align-self: center;
+			padding: .5rem 1rem;
+
+			h4 {
+				margin-bottom: .5rem;
+				color: $primary;
+				transition-property: color;
+				transition-duration: .2s;
+				text-align: center;
+			}
+
+			p {
+				text-align: center;
+			}
+		}
+
+		img {
+			width: 50%;
+			align-self: center;
+		}
+	}
+
+	img {
+		width: 55px;
+		height: 55px;
+	}
+}
+.selection-header {
+	text-align: center;
+
+	h2 {
+		color: clr(primary, dark);
+	}
+}
+
+#small-selections {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-evenly;
+
+}
+.small-selection {
+	display: flex;
+	flex-flow: column;
+	
+
+	.books-container {
+			display: flex;
+			flex-flow: column nowrap;
+			align-items: stretch;
+			row-gap: 1rem;
+			min-width: 34rem;
+			min-height: 46rem;
+			background-color: clr(my-gray, lightest);
+			border-radius: 10px;
+			box-shadow: 4px 4px 6px 2px clr(my-gray, lighter);
+			padding: 1rem 1rem;
+			transition-property: box-shadow;
+			transition-duration: .3s;
+		&:hover{
+			box-shadow: 2px 2px 20px  clr(my-gray, light);
+		}
+		
+	.first-book {
+			flex: 4 1 0%;
+			width: inherit;
+			height: max-content;
+			display: flex;
+			flex-flow: column;
+			
+	
+			.book-cover {
+				display: flex;
+				place-self: center;
+				flex-grow: 1;
+	
+				img {
+					max-width: 21rem;
+					max-height: 30rem;
+					object-fit: contain;
+					place-self: center;
+				}
+			}
+			.short-description{
+				text-align: center;
+			}
+		}
+	
+		.other-books {
+			flex: 4 1 0%;
+			width: inherit;
+			height: max-content;
+			display: flex;
+			flex-flow: column;
+			border-top: 1px solid clr(my-gray, light);
+	
+			&>div {
+				flex: 1;
+				display: flex;
+				padding: 1rem;
+				border-bottom: 1px solid clr(my-gray, light);
+				transition-property: background;
+				transition-duration: .1s;
+				
+				&:last-of-type{
+					border-bottom: none;
+				}		
+				&:hover{
+					background: clr(my-gray, lighter);
+				}		
+			}
+	
+			.book-cover {
+				flex: 1 1 0%;
+	
+				img {
+					max-width: 5rem;
+					max-height: 10rem;
+					object-fit: contain;
+					place-self: center;
+				}
+			}
+	
+			.short-description {
+				flex: 4 1 0%;
+				display: flex;
+				flex-flow: column;
+				place-self: center;
+			}
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

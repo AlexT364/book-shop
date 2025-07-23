@@ -1,0 +1,56 @@
+#author-edit-container {
+  margin: 4rem 6rem;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+#author-edit-container label {
+  font-size: 1.5rem;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+  font-weight: bold;
+}
+
+.author-edit-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+.author-edit-form button {
+  align-self: self-start;
+}
+
+.author-image-form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.author-image-form img {
+  height: 18rem;
+  width: 18rem;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: center;
+}
+.author-image-form button {
+  margin: 0.2rem;
+  align-self: center;
+}
+
+.author-info-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+}
+.author-info-container input, .author-info-container textarea {
+  font-size: 1.2rem;
+}
+
+.bio-input {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+}
+.bio-input textarea {
+  resize: vertical;
+  height: 15rem;
+  min-height: 5rem;
+  max-height: 30rem;
+  padding: 1rem;
+}

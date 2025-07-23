@@ -1,0 +1,43 @@
+package shop.mapping.mappers;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
+import shop.dto.author.AuthorDto;
+import shop.dto.author.CreateEditAuthorDto;
+import shop.dto.author.ShortAuthorDto;
+import shop.persistence.entities.Author;
+
+@Component
+@RequiredArgsConstructor
+public class AuthorMapper {
+	
+	private final ModelMapper modelMapper;
+	
+	public Author mapForCreate(CreateEditAuthorDto source) {
+		Author entity = new Author();
+		entity.setFirstName(source.getFirstName());
+		entity.setLastName(source.getLastName());
+		entity.setBio(source.getBio());
+		return entity;
+	}
+	
+	public void mapForUpdate(CreateEditAuthorDto source, Author destination) {
+		
+	}
+	
+	public ShortAuthorDto toShortDto(Author entity) {
+		ShortAuthorDto dto = new ShortAuthorDto(entity.getId(), entity.getFirstName() + " " + entity.getLastName());
+		return dto;
+	}
+	
+	public AuthorDto toAuthorDto(Author entity) {
+		AuthorDto dto = new AuthorDto(entity.getId(), entity.getFirstName() + " " + entity.getLastName(), entity.getBio());
+		return dto;
+	}
+
+	public CreateEditAuthorDto toCreateEditAuthorDto(Author entity) {
+		return modelMapper.map(entity, CreateEditAuthorDto.class);
+	} 
+}

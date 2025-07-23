@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/contacts/contacts.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Contacts</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+
+		<section>
+			<div id="contacts-container">
+				<div id="contacts-info-container">
+					<div >
+						<h2>Office:</h2>
+						<ul>
+							<li>730 Glenstone Ave 65802, Springfield, US</li>
+							<li>+123 987 321</li>
+							<li>+123 123 654</li>
+							<li>info@yourinfo.com</li>
+						</ul>
+					</div>
+					<div>
+						<h2>Management:</h2>
+						<ul>
+							<li>730 Glenstone Ave 65802, Springfield, US</li>
+							<li>+123 987 321</li>
+							<li>+123 123 654</li>
+							<li>info@yourinfo.com</li>
+						</ul>
+					</div>
+				</div>
+				<div id="contacts-form-container">
+					<div>
+						<h2>Any Questions?</h2>
+						<p>Use the form below to get in touch with us.</p>
+						<form th:action="@{/contacts}" method="POST" th:object="${contactForm}">
+							<div id="name-email-container">
+								<div class="name-field-container">
+									<input type="text" th:field="*{name}" placeholder="Write your name *">
+									<span class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+								</div>
+								<div class="email-field-container">
+									<input type="text" th:field="*{email}" placeholder="Write your email *">
+									<span class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+								</div>
+							</div>
+							<div id="message-container">
+								<input type="text" th:field="*{phone}" placeholder="Phone number">
+								<input type="text" th:field="*{subject}" placeholder="Subject">
+								<span class="field-error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></span>
+								<textarea  th:field="*{message}" rows="5" placeholder="Write your message here *"></textarea>
+							</div>
+							<button class="btn" type="submit">Send</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<h2>Stores</h2>
+			<p>You can also directly buy products from our stores.</p>
+			<div>
+				<h3>Moscow</h3>
+				<ul>
+					<li>730 Glenstone Ave 65802, US</li>
+					<li>+123 666 777 88</li>
+					<li>info@yourinfo.com</li>
+				</ul>
+			</div>
+		</section>
+
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

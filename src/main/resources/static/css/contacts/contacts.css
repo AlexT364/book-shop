@@ -1,0 +1,93 @@
+section {
+  margin: 4rem;
+}
+section #contacts-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+section #contacts-container > div {
+  flex: 1;
+  padding: 2rem;
+}
+section #contacts-container #contacts-info-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+section #contacts-container #contacts-info-container > div {
+  flex: 1;
+}
+section #contacts-container #contacts-info-container h2 {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  margin: 1rem 0;
+}
+section #contacts-container #contacts-info-container ul li {
+  font-size: 1.1rem;
+  margin: 0.5rem 0 0.5rem 1rem;
+}
+section #contacts-container #contacts-form-container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+section #contacts-container #contacts-form-container h2 {
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  margin: 1rem 0;
+}
+section #contacts-container #contacts-form-container p {
+  font-size: 1.1rem;
+}
+section #contacts-container #contacts-form-container form {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 0;
+}
+section #contacts-container #contacts-form-container form input[type=text] {
+  position: relative;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  align-self: start;
+  transition-duration: 0.2s;
+}
+section #contacts-container #contacts-form-container form input[type=text]:focus {
+  outline: none;
+  border: 1px solid rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+section #contacts-container #contacts-form-container form #message-container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+section #contacts-container #contacts-form-container form #message-container textarea {
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid rgb(181.25, 181.25, 181.25);
+  resize: none;
+  min-height: 15rem;
+  transition-duration: 0.2s;
+}
+section #contacts-container #contacts-form-container form #message-container textarea:focus {
+  outline: none;
+  border: 1px solid rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+section #contacts-container #contacts-form-container form button {
+  margin-left: 0.5rem;
+  place-self: start;
+}
+
+#name-email-container {
+  display: flex;
+  flex-flow: row;
+}
+
+.name-field-container,
+.email-field-container {
+  display: flex;
+  flex-flow: column nowrap;
+}

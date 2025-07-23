@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/registration.css}">
+<title>Registration</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<div id="reg-form-container">
+			<div sec:authorize="isAuthenticated()">
+				<p th:text="${message}"></p>
+				<a th:href="@{/shop}">Continue shopping</a>
+			</div>
+			<form sec:authorize="not isAuthenticated()" th:action="@{/registration}" method="post"
+				th:object="${registrationRequest}">
+				<h3>Registration form:</h3>
+				<div>
+					<div class="reg-input">
+						<input type="text" name="username" autofocus="autofocus" th:value="*{username}" placeholder=" "/>
+						<label>Username</label>
+					</div>
+					<p class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+				</div>
+				<div>
+
+					<div class="reg-input">
+						<input type="email" name="email" th:value="*{email}" placeholder=" "/>
+						<label>email@address.com</label>
+					</div>
+					<p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></p>
+				</div>
+				<div id="password-inputs">
+
+					<div class="reg-input">
+						<input type="password" name="password" th:value="*{password}" placeholder=" ">
+						<label>Password</label>
+					</div>
+					<p class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+					<div class="reg-input">
+						<input type="password" name="passwordConfirm" th:value="*{passwordConfirm}" placeholder=" ">
+						<label>Password confirm</label>
+					</div>
+					<p class="field-error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
+				</div>
+				<div>
+					<button class="btn" type="submit">Register</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+</body>
+</html>

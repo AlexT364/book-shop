@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/reg-auth-result.css}">
+<title>Confirmation success</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div id="reg-auth-info">
+				<h2>Email was succesfully confirmed</h2>
+				<a th:href="@{/login}">Login page</a>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+
+</body>
+</html>

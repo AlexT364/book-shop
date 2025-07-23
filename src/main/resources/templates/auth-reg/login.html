@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/login.css}">
+<title>Log In</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section id="login-form-container">
+		      <div sec:authorize="isAuthenticated()">
+		          <p th:text="${message}"></p>
+		          <a th:href="@{/shop}">Continue shopping</a>
+		      </div>
+			<form sec:authorize="not isAuthenticated()" action="/login" method="post">
+				<h2>Log in:</h2>
+				<div>
+					<div class="log-input">
+						<input type="text" name="username" autofocus="autofocus" placeholder=" "/>
+						<label>Username</label>
+					</div>
+				</div>
+				<div>
+					<div class="log-input">
+						<input type="password" name="password" placeholder=" ">
+						<label>Password</label>
+					</div>
+					<p th:if="${errorMessage}" th:text="${errorMessage}" class="field-error"></p>
+				</div>
+				<div>
+					<button class="btn" type="submit">Log In</button>
+				</div>
+				<div id="login-form-footer">
+					<div>
+						<label>Not registered?</label>
+						<a th:href="@{/registration}" class="lnk">&nbsp Registration page</a>
+					</div>
+					<div>
+						<label>Forgot password?</label>
+						<a th:href="@{/password/forgot}" class="lnk">&nbsp Change password</a>
+					</div>
+				</div>
+			</form>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+</body>
+</html>

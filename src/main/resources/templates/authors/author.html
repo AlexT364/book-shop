@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/authors/author.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>[[${author.name}]]</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<div id="author-container">
+			<div class="author-card" th:object="${author}">
+				<div class="author-image-container">
+					<img alt="author image" th:src="@{/images/authors/{authorId} (authorId = *{id})}">
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/authors/{authorId} (authorId = *{id})}">Edit page</a>
+				</div>
+				<div class="author-info">
+					<p class="author-name" th:text="*{name}"></p>
+					<p class="author-bio" th:text="*{bio}"></p>
+				</div>
+			</div>
+		</div>
+		<div th:if="${highRatedBook}" class="highest-rated-book-container" th:object="${highRatedBook}">
+			<h2>[[${author.name}]]('s) highest rated book</h2>
+			<div class="book-card">
+				<div class="book-cover-container">
+					<img alt="book cover image" th:src="@{/images/books/{isbn} (isbn = *{isbn})}">
+				</div>
+				<div class="book-info">
+					<a th:href="'/book/' + *{id}" th:text="*{title}" th:title="*{title}"></a>
+					<p th:text="'$' + *{price}"></p>
+					<p th:text="'★ ' + *{score}"></p>
+				</div>
+			</div>
+		</div>
+		<div class="shop-link-container">
+			<a th:href="@{/shop(authors=${author.id})}">Shop for [[${author.name}]]'s books</a>
+		</div>
+
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

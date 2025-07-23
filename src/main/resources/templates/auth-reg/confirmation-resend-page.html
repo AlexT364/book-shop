@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/reg-auth-result.css}">
+<title>Confirmation failure</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div id="reg-auth-info">
+				<p th:text="${errorMessage}"></p>
+				<h2>Your account is not confirmed via email.</h2>
+				<h3>New confirmation link was sent to your email</h3>
+				<a th:href="@{/login}">Login page</a>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+</body>
+</html>

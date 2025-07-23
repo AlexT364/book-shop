@@ -1,0 +1,24 @@
+@import "../variables.scss";
+
+section {
+	display: flex;
+	justify-content: center;
+	margin: 4rem 0 4rem 0;
+}
+
+section>div {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	gap: 1rem;
+
+	h2 {
+		color: clr(primary, dark);
+		font-size: 2rem
+	}
+
+	a {
+		@include regular-link;
+		font-size: 1.5rem;
+	}
+}

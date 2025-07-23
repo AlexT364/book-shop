@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/orders/orders.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Orders</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<table>
+				<thead>
+					<tr>
+						<th>Order Id</th>
+						<th>Date</th>
+						<th>Phone</th>
+						<th>Num. of Items</th>
+						<th>Total price</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${orders}" th:object="${order}" th:with="formattedDate=${#temporals.format(order.orderDate, 'dd-MMM-yyyy')}">
+						<td th:text="*{id}"></td>
+						<td th:text="${formattedDate}">
+						<td th:text="*{phone}">
+						<td th:text="*{numOfItems}">
+						<td th:text="'$' + *{totalPrice}"></td>
+						<td class="order-status" th:classappend="*{status}" th:text="*{status}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/orders/{orderId} (orderId=*{id})}">MORE</a></td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/orders/{orderId} (orderId=*{id})}">MORE</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		
+		<div class="pagination" th:unless="${orders.getTotalPages() <= 1}">
+
+			<!-- 		First-Page -->
+			<a th:if="${orders.hasPrevious()}"
+				th:href="@{/orders(pageNumber=0)}"
+				th:text="'First'" class="btn-link"></a>
+			<span th:unless="${orders.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'First'"></span>
+
+			<!-- 		Previous-Page -->
+			<a th:if="${orders.hasPrevious()}"
+				th:href="@{/orders(pageNumber=${orders.number-1})}"
+				th:text="'<'" class="btn-link"></a>
+			<span th:unless="${orders.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'<'"></span> <span
+				th:if="${orders.number > 2}">...</span>
+
+			<!-- Current page and neighboring pages -->
+			<a
+				th:each="page : ${#numbers.sequence(orders.number > 2 ? orders.number - 2 : 1, orders.number + 2 < orders.getTotalPages() ? orders.number + 2 : orders.getTotalPages())}"
+				th:text="${page}" class="btn-link" th:classappend="${page}-1 == ${orders.number} ? 'current-page'"
+				th:href="@{/orders(pageNumber=${page-1})}">
+			</a>
+
+
+			<span th:if="${orders.number + 2 < orders.getTotalPages()}">...</span>
+
+			<!-- 		Next-Page -->
+			<a th:if="${orders.hasNext()}"
+				th:href="@{/orders(pageNumber=${orders.number+1})}"
+				th:text="'>'" class="btn-link"></a>
+			<span th:unless="${orders.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'>'"></span>
+
+			<!-- 		Last-Page -->
+			<a th:if="${orders.hasNext()}"
+				th:href="@{/orders(pageNumber=${orders.getTotalPages()-1})}"
+				th:text="'Last'" class="btn-link"></a>
+			<span th:unless="${orders.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'Last'"></span>
+
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

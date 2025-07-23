@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/orders/order-detailed.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Order details</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section id="order-container">
+			<div>
+				<div id="order-books">
+					<div id="book" th:each="orderItem : ${orderItems}" th:object="${orderItem}">
+						<div>
+							<img alt="book cover" th:src="@{/images/books/{isbn} (isbn = *{isbn})}">
+						</div>
+						<div>
+							<a th:href="@{/book/{bookId} (bookId = *{id})}" th:text="*{title}"></a>
+							<p th:text="'Book price: $' + *{unitPrice}">
+							<p id="quantity" th:text="'Qantity: ' + *{quantity}">
+							<p id="subtotal-price" th:text="'$' + *{subtotalPrice}">
+						</div>
+					</div>
+				</div>
+				<div id="order-total">
+					<label>Total price:</label>
+					<p th:text="'$' + ${order.totalPrice}">
+				</div>
+			</div>
+			<div sec:authorize="hasRole('ROLE_USER')" id="order-info-container">
+				<div id="order-info" th:object="${order}">
+					<div>
+						<label>Phone Number: </label>
+						<p th:text="*{phone}">
+					</div>
+					<div>
+						<label>Ship Address:</label>
+						<p th:text="*{shipAddress}">
+					</div>
+					<div>
+						<label>Ship City:</label>
+						<p th:text="*{shipCity}">
+					</div>
+					<div>
+						<label>Ship Country:</label>
+						<p th:text="*{shipCountry}">
+					</div>
+					<div>
+						<label>Order Date:</label>
+						<p th:text="*{orderDate}">
+					</div>
+					<div>
+						<label>Status:</label>
+						<p class="order-status" th:classappend="*{status.toString()}" th:text="*{status}">
+					</div>
+				</div>
+			</div>
+			<div sec:authorize="hasRole('ROLE_ADMIN')" id="order-info-container">
+				<form id="order-info-form" 
+					th:action="@{/admin/orders/{orderId} (orderId=*{id})}" 
+					th:method="put"
+					th:object="${order}">
+					<div id="form-fields">
+						<div>
+							<label>Phone Number: </label>
+							<input type="text" th:field="*{phone}">
+						</div>
+						<div>
+							<label>Ship Address:</label>
+							<input type="text" th:field="*{shipAddress}">
+						</div>
+						<div>
+							<label>Ship City:</label>
+							<input type="text" th:field="*{shipCity}">
+						</div>
+						<div>
+							<label>Ship Country:</label>
+							<input type="text" th:field="*{shipCountry}">
+						</div>
+						<div>
+							<label>Order Date:</label>
+							<p th:text="*{orderDate}">
+						</div>
+						<div>
+							<label>Status:</label>
+							<select name="status">
+								<option th:selected="*{status.toString()} == 'NEW'" class="order-status NEW" value="NEW">NEW</option>
+								<option th:selected="*{status.toString()} == 'CONFIRMED'" class="order-status CONFIRMED" value="CONFIRMED">CONFIRMED</option>
+								<option th:selected="*{status.toString()} == 'SHIPPED'? selected" class="order-status SHIPPED" value="SHIPPED">SHIPPED</option>
+								<option th:selected="*{status.toString()} == 'COMPLETE'? selected" class="order-status COMPLETE" value="COMPLETE">COMPLETE</option>
+								<option th:selected="*{status.toString()} == 'CANCELLED'? selected" class="order-status CANCELLED" value="CANCELLED">CANCELLED</option>
+							</select>
+						</div>
+						<input type="hidden" th:field="*{username}">
+						<input type="hidden" th:field="*{id}">
+					</div>
+					<button class="btn" type="submit">Edit Order</button>
+				</form>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

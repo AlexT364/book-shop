@@ -1,0 +1,48 @@
+section {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+#result-info {
+  margin-top: 6rem;
+  padding: 4rem 4rem;
+  box-shadow: 2px 2px 15px 2px rgb(181.25, 181.25, 181.25);
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 1.5rem;
+}
+
+#result-info h2 {
+  text-align: center;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+#result-info h3 {
+  text-align: center;
+  color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
+}
+#result-info p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+#result-info a {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  text-align: center;
+}
+#result-info a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#result-info a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+#result-info a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/books/book-add-edit.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Edit: [[${book.title}]]</title>
+</head>
+<body>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+
+		<div id="cover-container">
+			<img th:src="@{/images/books/{isbn} (isbn = ${book.isbn})}">
+		</div>
+
+		<div id="edit-form-container">
+			<form id="edit-form" th:action="@{/admin/book/{bookId} (bookId = ${book.id})}" th:method="PATCH" th:object="${book}"
+				enctype="multipart/form-data">
+				<div id="edit-form-main">
+					<div>
+						<label>Cover image: </label>
+						<input type="file" name="coverImage" accept="image/*">
+						<span class="field-error" th:if="${coverImageError}" th:text="${coverImageError}">ERROR</span>
+					</div>
+					<div>
+						<label>Title: <span class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">INCORRECT
+								TITLE</span></label>
+						<input type="text" th:field="*{title}">
+						<input type="hidden" th:field="*{id}">
+					</div>
+
+					
+					<div>
+						<label>Genres: </label>
+						<div id="genres-input">
+							<div th:each="genre : ${genres}">
+								<label th:text="${genre.name}"></label>
+								<input type="checkbox" name="genres" th:value="${genre.id}" 
+								th:checked="${#lists.contains(book.genres, genre.id)}" />
+							</div>
+						</div>
+					</div>
+					
+					<div>
+						<label>Author: </label>
+						<div id="authors-input">
+							<div th:each="author : ${authors}">
+								<label th:text="${author.name}"></label>
+								<input type="checkbox" name="authors" th:value="${author.id}"
+									th:checked="${#lists.contains(book.authors, author.id)}" />
+							</div>
+						</div>
+					</div>
+
+
+					<div id="isbn">
+						<label>ISBN: <span class="field-error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">INCORRECT
+								ISBN</span></label>
+							<span th:text="*{isbn}"></span>
+							<input type="hidden" th:field="*{isbn}" />
+					</div>
+
+					<div>
+						<label>Price: <span class="field-error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">INCORRECT
+								PRICE</span></label>
+						<input type="text" th:field="*{price}" />
+					</div>
+
+					<div>
+						<label>Units in stock: <span class="field-error" th:if="${#fields.hasErrors('unitsInStock')}"
+							th:errors="*{unitsInStock}">INCORRECT QUANTITY</span></label>
+						<input type="number" th:field="*{unitsInStock}" />
+					</div>
+				</div>
+				<div id="edit-form-description">
+					<label>Description: </label>
+					<textarea rows="20" th:field="*{description}"></textarea>
+				</div>
+
+			</form>
+			<div id="action-buttons">
+				<button class="btn" form="edit-form" type="submit">Submit</button>
+				<form th:action="@{/admin/book/{bookId} (bookId=${book.id})}" th:method="DELETE">
+					<button class="btn" type="submit">Delete book</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

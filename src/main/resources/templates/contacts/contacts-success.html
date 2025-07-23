@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/contacts/contacts-success.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Contacts</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div id="contact-result-container">
+				<h2>Message sent. We'll reply or contact you as soon as possible.</h2>
+				<a th:href="@{/}">Back to home page</a>
+			</div>
+		</section>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>

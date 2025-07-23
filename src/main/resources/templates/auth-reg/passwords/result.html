@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/auth-reg/passwords/forgot-result.css}">
+<title>Forgot password result</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section>
+			<div id="result-info">
+				<h2 th:text="${message}"></h2>
+				<a th:href="@{/}">Home page</a>
+			</div>
+		</section>
+		</div>
+	<footer th:replace="~{fragments/footer}">Footer</footer>
+</body>
+</html>
