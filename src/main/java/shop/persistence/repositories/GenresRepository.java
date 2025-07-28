@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import shop.dto.genre.GenreDto;
 import shop.persistence.entities.Genre;
 
-public interface GenresRepository extends JpaRepository<Genre, Integer>{
+public interface GenresRepository extends JpaRepository<Genre, Long>{
 	
 	@Query("""
 			SELECT new shop.dto.genre.GenreDto(g.id, g.name) FROM Genre g ORDER BY g.name ASC
@@ -17,5 +17,5 @@ public interface GenresRepository extends JpaRepository<Genre, Integer>{
 	public List<GenreDto> findAllSortByName();
 	
 	@Query("SELECT g FROM Genre g WHERE g.id IN :genreIds")
-    Set<Genre> findGenresByIds(Set<Integer> genreIds);
+    Set<Genre> findGenresByIds(Set<Long> genreIds);
 }

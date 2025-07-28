@@ -41,7 +41,7 @@ public class CreateEditBookDto {
 	
 	private Set<Long> authors = new HashSet<>();
 	
-	private Set<Integer> genres = new HashSet<>();
+	private Set<Long> genres = new HashSet<>();
 	
 	@Override
 	public String toString() {
