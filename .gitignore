@@ -4,7 +4,7 @@ application-dev.properties
 .env
 
 #Demonstration data
-book_covers/
+book_covers/*
 !book_covers/0008567123.jpg 
 !book_covers/0198800533.jpg 
 !book_covers/0553108034.jpg 
@@ -31,7 +31,7 @@ book_covers/
 !book_covers/1853261750.jpg 
 !book_covers/1956221697.jpg
 
-author_images/
+author_images/*
 !author_images/13.jpg 
 !author_images/14.jpg  
 !author_images/15.jpg  
