@@ -45,7 +45,26 @@
 		}
 
 	}
+	
 
+}
+
+#book-price {
+	display: flex;
+
+	#price {
+		font-size: 1rem;
+		font-weight: bold;
+		color: clr(primary, dark);
+	}
+
+	#price-without-discount {
+		padding-left: .5rem;
+		font-size: 1rem;
+		font-weight: bold;
+		color: red;
+		text-decoration: line-through 2px;
+	}
 }
 
 .short-description {
@@ -186,7 +205,12 @@
 			}
 			.short-description{
 				text-align: center;
+				#book-price {
+						justify-content: center;
+					}
 			}
+			
+			
 		}
 	
 		.other-books {

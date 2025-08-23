@@ -21,66 +21,81 @@
   justify-self: center;
   padding: 2rem 4rem;
 }
-.book-description-container #book-info {
+
+#book-info {
   display: flex;
   flex-flow: column;
   padding: 1rem;
 }
-.book-description-container #book-info h2 {
+#book-info h2 {
   padding: 0.5rem;
   font-size: 4rem;
   color: rgb(1.8902439024, 35.9146341463, 44.6097560976);
 }
-.book-description-container #book-info h4 {
-  padding: 0.5rem;
-  font-size: 2rem;
-  border-bottom: 2px solid rgb(232.25, 232.25, 232.25);
-  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
-}
-.book-description-container #book-info ul > li {
+#book-info ul > li {
   margin: 0.5rem 0;
   color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
   font-weight: bold;
   font-size: 1.2rem;
 }
-.book-description-container #book-info ul > li span {
+#book-info ul > li span {
   color: #055F76;
 }
-.book-description-container #book-info ul > li a {
+#book-info ul > li a {
   color: #055F76;
   font-weight: bold;
   transition-property: color filter;
   transition-duration: 0.2s;
 }
-.book-description-container #book-info ul > li a.link-current {
+#book-info ul > li a.link-current {
   color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
 }
-.book-description-container #book-info ul > li a:hover {
+#book-info ul > li a:hover {
   color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
 }
-.book-description-container #book-info ul > li a:active {
+#book-info ul > li a:active {
   transition: none;
   color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
 }
-.book-description-container #book-info #book-actions-container {
+
+#book-price {
+  display: flex;
+}
+#book-price #price {
+  padding: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  border-bottom: 2px solid rgb(232.25, 232.25, 232.25);
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+#book-price #price-without-discount {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-bottom: 2px solid rgb(232.25, 232.25, 232.25);
+  color: red;
+  text-decoration: line-through 2px;
+}
+
+#book-actions-container {
   display: flex;
   flex-flow: column wrap;
   margin-top: 0.5rem;
   gap: 1rem;
 }
-.book-description-container #book-info #book-actions-container .number-input {
+#book-actions-container .number-input {
   color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
   font-weight: bold;
   font-size: 1.2rem;
 }
-.book-description-container #book-info #book-actions-container .number-input label {
+#book-actions-container .number-input label {
   margin: 0.5rem 0;
 }
-.book-description-container #book-info #book-actions-container .number-input input {
+#book-actions-container .number-input input {
   text-align: center;
   width: fit-content;
 }
-.book-description-container #book-info #book-actions-container #book-actions {
+#book-actions-container #book-actions {
   display: flex;
   flex-flow: row wrap;
   align-items: stretch;

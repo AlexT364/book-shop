@@ -237,6 +237,21 @@
   gap: 1rem;
   row-gap: 2rem;
 }
+#books-container #book-price {
+  display: flex;
+}
+#books-container #book-price #price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+#books-container #book-price #price-without-discount {
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+  text-decoration: line-through 2px;
+}
 
 #message-container {
   display: flex;

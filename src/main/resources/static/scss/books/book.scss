@@ -28,62 +28,76 @@
 		}
 	}
 
-	#book-info {
-		display: flex;
-		flex-flow: column;
-		padding: 1rem;
-		h2 {
-			padding: .5rem;
-			font-size: 4rem;
-			color: clr(primary, darker);
-		}
+}
 
-		h4 {
+#book-info {
+	display: flex;
+	flex-flow: column;
+	padding: 1rem;
+	h2 {
+		padding: .5rem;
+		font-size: 4rem;
+		color: clr(primary, darker);
+	}
+
+	ul > li {
+		margin: .5rem 0;
+		color: clr(primary, dark);
+		font-weight: bold;
+		font-size: 1.2rem;
+		span{
+			color: clr(primary);
+		}
+		a{
+			@include regular_link;
+		}
+	}
+}
+
+#book-price{
+	display: flex;
+	#price {
 			padding: .5rem;
 			font-size: 2rem;
+			font-weight: bold;
 			border-bottom: 2px solid clr(my-gray, lighter);
 			color: clr(primary, light);
 		}
-		
-		ul > li {
+	#price-without-discount {
+		padding: .5rem;
+		font-size: 1.2rem;
+		font-weight: bold;
+		border-bottom: 2px solid clr(my-gray, lighter);
+		color: red;
+		text-decoration: line-through 2px;
+	}
+}
+
+
+#book-actions-container {
+	display: flex;
+	flex-flow: column wrap;
+	margin-top: .5rem;
+	gap: 1rem;
+	
+	.number-input {
+		color: clr(primary, dark);
+		font-weight: bold;
+		font-size: 1.2rem;
+		label{
 			margin: .5rem 0;
-			color: clr(primary, dark);
-			font-weight: bold;
-			font-size: 1.2rem;
-			span{
-				color: clr(primary);
-			}
-			a{
-				@include regular_link;
-			}
 		}
-
-		#book-actions-container {
-			display: flex;
-			flex-flow: column wrap;
-			margin-top: .5rem;
-			gap: 1rem;
-			
-			.number-input {
-				color: clr(primary, dark);
-				font-weight: bold;
-				font-size: 1.2rem;
-				label{
-					margin: .5rem 0;
-				}
-				input{
-					text-align: center;
-					width: fit-content;
-				}
-			}
-
-			#book-actions {
-				display: flex;
-				flex-flow: row wrap;
-				align-items: stretch;
-				gap: .5rem;
-			}
+		input{
+			text-align: center;
+			width: fit-content;
 		}
+	}
+
+	#book-actions {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: stretch;
+		gap: .5rem;
 	}
 }
 

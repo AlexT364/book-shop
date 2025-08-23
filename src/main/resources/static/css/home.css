@@ -39,6 +39,22 @@
   transform: scale(1.1);
 }
 
+#book-price {
+  display: flex;
+}
+#book-price #price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+#book-price #price-without-discount {
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+  text-decoration: line-through 2px;
+}
+
 .short-description {
   display: inline-block;
   color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
@@ -177,6 +193,9 @@
 }
 .small-selection .books-container .first-book .short-description {
   text-align: center;
+}
+.small-selection .books-container .first-book .short-description #book-price {
+  justify-content: center;
 }
 .small-selection .books-container .other-books {
   flex: 4 1 0%;
