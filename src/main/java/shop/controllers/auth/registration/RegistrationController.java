@@ -52,8 +52,10 @@ public class RegistrationController extends UriAwareController {
 	}
 
 	@PostMapping
-	public String registerUser(@ModelAttribute(name = "registrationRequest") @Valid RegisterUserRequest registrationRequest,
-			BindingResult bindingResult, Model model) {
+	public String registerUser(
+			@ModelAttribute(name = "registrationRequest") @Valid RegisterUserRequest registrationRequest,
+			BindingResult bindingResult, 
+			Model model) {
 		if (bindingResult.hasErrors()) {
 			if (!registrationRequest.passwordsAreEqual()) {
 				bindingResult.addError(new FieldError("registrationRequest", "passwordConfirm", "Passwords do not match."));

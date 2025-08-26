@@ -26,7 +26,6 @@ public class BookViewController {
 		BookDto bookDto = securityUser == null ? 
 				bookQueryService.getBookById(bookId) : 
 				bookQueryService.getBookById(bookId, securityUser.getUsername());
-		System.out.println(bookDto);
 		return bookDto;
 	}
 
