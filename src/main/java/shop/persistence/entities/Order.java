@@ -37,14 +37,14 @@ public class Order implements Serializable{
 	@Column(name="order_id")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
 	private User user;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime orderDate;
 	
-	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	private List<OrderDetails> orderDetails;
 	
 	private String shipAddress;
