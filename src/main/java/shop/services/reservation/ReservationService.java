@@ -6,4 +6,5 @@ public interface ReservationService {
 
 	void checkAndReserve(Book book, int quantity);
 	void releaseReservation(Book book, int quantity);
+	void checkAvailability(Book book, int quantity);
 }

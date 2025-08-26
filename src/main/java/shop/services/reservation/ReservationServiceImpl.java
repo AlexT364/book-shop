@@ -13,7 +13,6 @@ import shop.exceptions.NotEnoughItemsException;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.CartItem;
 import shop.persistence.repositories.CartRepository;
-import shop.persistence.repositories.book.BookRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +21,6 @@ public class ReservationServiceImpl implements ReservationService{
 
 	private final CartRepository cartRepository;
 	private static final long FIFTEEN_MINUTES = 15 * 60 * 1000;
-	//TODO DELETE LATER. Maybe move to application.properties
-	private static final long TEN_SECONDS = 10 * 1000;
 	
 	/**
 	 * Checks amount of books available for reservation and reserves them. 
@@ -33,7 +30,6 @@ public class ReservationServiceImpl implements ReservationService{
 	 * @throws NotEnoughItemsException if there are not enough books in stock.
 	 */
 	@Override
-	@Transactional
 	public void checkAndReserve(Book book, int quantity) {
 		int booksAvailable = book.getUnitsInStock() - book.getUnitsReserved();
 		if(booksAvailable < quantity) {
@@ -42,15 +38,27 @@ public class ReservationServiceImpl implements ReservationService{
 					book.getTitle(),
 					quantity,
 					booksAvailable);
-			throw new NotEnoughItemsException("Not enough books in stock.");
+			throw new NotEnoughItemsException("Not enough books in stock for bookId = " + book.getId());
 		}
 		book.setUnitsReserved(book.getUnitsReserved() + quantity);
 	}
 
 	@Override
-	@Transactional
 	public void releaseReservation(Book book, int quantity) {
 		book.setUnitsReserved(book.getUnitsReserved() - quantity);
+	}
+	
+	@Override
+	public void checkAvailability(Book book, int quantity) {
+		int booksAvailable = book.getUnitsInStock() - book.getUnitsReserved();
+		if(booksAvailable < quantity) {
+			log.error("Availability check failed: bookdId={}, title={}, requested={}, available={}",
+					book.getId(),
+					book.getTitle(),
+					quantity,
+					booksAvailable);
+			throw new NotEnoughItemsException("Not enough books available for bookId = " + book.getId());
+		}
 	}
 	
 	@Scheduled(fixedRate = FIFTEEN_MINUTES)
@@ -68,7 +76,6 @@ public class ReservationServiceImpl implements ReservationService{
 			cartRepository.saveAll(expiredItems);
 		}
 	}
-	
-	
+
 
 }
