@@ -3,7 +3,6 @@ package shop.controllers.cart;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,6 @@ import shop.controllers.UriAwareController;
 import shop.dto.cart.CartItemDto;
 import shop.exceptions.NotEnoughItemsException;
 import shop.exceptions.user.UserNotFoundException;
-import shop.persistence.entities.CartItem;
 import shop.security.SecurityUser;
 import shop.services.cart.CartService;
 
@@ -31,17 +29,15 @@ import shop.services.cart.CartService;
 public class CartController extends UriAwareController{
 	
 	private final CartService cartService;
-	private final ModelMapper modelMapper;
 	
 	@GetMapping
 	public String cartPage(Model model, @AuthenticationPrincipal SecurityUser userDetails) {
 		if(userDetails == null) {
 			return "redirect:/login";
 		}
-		List<CartItem> booksEntities = cartService.getBooksInCart(userDetails.getUsername());
-		List<CartItemDto> books = booksEntities.stream().map(cb -> modelMapper.map(cb, CartItemDto.class)).toList();
-		BigDecimal totalPrice = books.stream().map(b -> b.getSubtotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
-		model.addAttribute("cart", books);
+		List<CartItemDto> booksDtos = cartService.getAllBooksInCart(userDetails.getUsername());
+		BigDecimal totalPrice = booksDtos.stream().map(b -> b.getSubtotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		model.addAttribute("cart", booksDtos);
 		model.addAttribute("totalPrice", totalPrice);
 		return "cart.html";
 	}

@@ -3,7 +3,6 @@ package shop.controllers.checkout;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,16 +26,12 @@ import shop.services.order.OrderService;
 public class CheckoutController {
 
 	private final CartService cartService;
-	private final ModelMapper modelMapper;
 	private final OrderService orderService;
 
-	@ModelAttribute(name="cart")
-	public void checkoutData(Model model, @AuthenticationPrincipal SecurityUser user) {
+	@GetMapping
+	public String checkoutPage(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
 		CheckoutFormDto orderForm = new CheckoutFormDto();
-		List<CartItemDto> cart = cartService.getBooksInCart(user.getUsername())
-				.stream()
-				.map(cartBook -> modelMapper.map(cartBook, CartItemDto.class))
-				.toList();
+		List<CartItemDto> cart = cartService.getAllBooksInCart(securityUser.getUsername());
 		BigDecimal totalPrice = cart
 				.stream()
 				.map(cartBookDto -> cartBookDto.getSubtotalPrice())
@@ -45,10 +40,6 @@ public class CheckoutController {
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("checkoutForm", orderForm);
 		model.addAttribute("cart", cart);
-	}
-	
-	@GetMapping
-	public String checkoutPage(Model model) {
 		
 		return "checkout.html";
 	}
@@ -61,7 +52,6 @@ public class CheckoutController {
 			Model model) {
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("errors", bindingResult);
 			model.addAttribute("checkoutForm", checkoutForm);
 			return "checkout.html";
 		}

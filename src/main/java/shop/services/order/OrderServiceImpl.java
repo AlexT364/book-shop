@@ -1,17 +1,12 @@
 package shop.services.order;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import shop.dto.CheckoutFormDto;
 import shop.dto.order.OrderDto;
+import shop.exceptions.NotEnoughItemsException;
 import shop.exceptions.OrderNotFoundException;
 import shop.exceptions.cart.CartIsEmptyException;
 import shop.exceptions.user.UserNotFoundException;
@@ -53,78 +49,32 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void createOrder(CheckoutFormDto orderRequest, String username) {
+		//Load user and its cart
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Not found"));
-		//Loading items from user's cart
-		List<CartItem> cart = cartRepository.findByUsername(username);
-		if (cart.isEmpty()) {
-			throw new CartIsEmptyException("Cart is empty");
-		}
+		List<CartItem> cart = this.loadCart(username);
 		
-		//Creating order
-		Order order = orderMapper.toOrder(orderRequest);
-		order.setUser(user);
-		order.setOrderDate(LocalDateTime.now());
-		order.setStatus(OrderStatus.NEW);
-		order = orderRepository.save(order);
+		//Load books from users' cart and check availability 
+		Map<Long, Integer> quantityByBookId = this.aggregateQuantities(cart);
+		Map<Long, Book> booksById = this.loadBooks(quantityByBookId.keySet());
 		
-		List<Long> bookIds = cart.stream()
-				.map(cartItem -> cartItem.getId().getBookId())
-				.toList();
-		List<Book> booksToUpdateUnitsInStock = bookRepository.findAllByIds(bookIds);
-		Map<Long, Book> booksInCart = booksToUpdateUnitsInStock.stream()
-				.collect(Collectors.toMap(Book::getId, Function.identity()));
-
-		List<OrderDetails> orderDetailsList = new ArrayList<>();
-
-		//Checking book availability and managing reserves
-		for (CartItem cartItem : cart) {
-			Long bookId = cartItem.getBook().getId();
-			Book book = booksInCart.get(bookId);
-			if (cartItem.isExpired()) {
-				reservationService.checkAndReserve(book, cartItem.getQuantity());
-			}
-
-			int newUnitsInStock = book.getUnitsInStock() - cartItem.getQuantity();
-			book.setUnitsInStock(newUnitsInStock);
-			reservationService.releaseReservation(book, cartItem.getQuantity());
-			
-			OrderDetails od = this.createOrderDetails(order, book, cartItem.getQuantity());
-			orderDetailsList.add(od);
-			
-		}
-		bookRepository.saveAll(booksToUpdateUnitsInStock);
+		this.checkAndHandleReservations(cart, booksById);
+		
+		//Build order and orderDetails
+		Order orderToCreate = this.initOrder(orderRequest, user);
+		List<OrderDetails> orderDetailsList = this.buildOrderDetails(orderToCreate, booksById, quantityByBookId);
+		
+		this.updateStock(booksById, quantityByBookId);
+		
+		bookRepository.saveAll(booksById.values());
 		orderDetailsRepository.saveAll(orderDetailsList);
 		cartRepository.deleteAllByUsername(username);
-
 	}
 	
 	@Override
-	public Page<Order> getOrderByUsername(String username, int pageNumber) {
-		Pageable byOrderDateDesc = PageRequest.of(pageNumber, 10, Sort.by("orderDate").descending());
-		return orderRepository.findUsersOrders(byOrderDateDesc, username);
-	}
-
-	@Override
-	public Order getOrderByUsernameAndId(String username, Long orderId) {
-		Order order = orderRepository.findByIdAndUsername(orderId, username).orElseThrow(
-				() -> new OrderNotFoundException("Order with id: %d not found or access denied.".formatted(orderId)));
-		return order;
-	}
-
-	@Override
-	@Transactional
-	public Page<Order> getAllOrders(int pageNumber) {
-		Pageable byOrderDateDesc = PageRequest.of(pageNumber, 10, Sort.by("orderDate").descending());
-		Page<Order> orders = orderRepository.findAll(byOrderDateDesc);
-		return orders;
-	}
-
-	@Override
 	@Transactional
 	public void editOrder(OrderDto orderDto) {
-		Order orderEntity = orderRepository.findByIdAndUsername(orderDto.getId(), orderDto.getUsername())
-				.orElseThrow(() -> new OrderNotFoundException("Order not found."
-						.formatted(orderDto.getId(), orderDto.getUsername())));
+		Order orderEntity = orderRepository.findById(orderDto.getId())
+				.orElseThrow(() -> new OrderNotFoundException("Order not found.".formatted(orderDto.getId(), orderDto.getUsername())));
 
 		orderEntity.setPhone(orderDto.getPhone());
 		OrderStatus newStatus = orderDto.getStatus();
@@ -132,7 +82,6 @@ public class OrderServiceImpl implements OrderService {
 			this.returnBooksToStock(orderEntity);
 		}
 		orderEntity.setStatus(orderDto.getStatus());
-		//
 		orderEntity.setShipAddress(orderDto.getShipAddress());
 		orderEntity.setShipCity(orderDto.getShipCity());
 		orderEntity.setShipCountry(orderDto.getShipCountry());
@@ -140,13 +89,7 @@ public class OrderServiceImpl implements OrderService {
 		orderRepository.save(orderEntity);
 	}
 
-	@Override
-	public Order getOrderById(Long orderId) {
-		Order orderEntity = orderRepository.findById(orderId)
-				.orElseThrow(() -> new OrderNotFoundException("Order with id: %d not found.".formatted(orderId)));
-
-		return orderEntity;
-	}
+	// --Helper methods--
 	
 	private OrderDetails createOrderDetails(Order order, Book book, int quantity) {
 		OrderDetails od = new OrderDetails();
@@ -172,4 +115,70 @@ public class OrderServiceImpl implements OrderService {
 			b.setUnitsInStock(updatedUnitsInStock);
 		}
 	}
+
+	private List<CartItem> loadCart(String username) {
+		List<CartItem> userCart = cartRepository.findByUsername(username);
+		if (userCart.isEmpty()) {
+			throw new CartIsEmptyException("Cart is empty");
+		}
+		return userCart;
+	}
+	
+	private Order initOrder(CheckoutFormDto orderRequest, User user) {
+		Order order = orderMapper.toOrder(orderRequest);
+		order.setUser(user);
+		order.setOrderDate(LocalDateTime.now());
+		order.setStatus(OrderStatus.NEW);
+		return orderRepository.save(order);
+	}
+
+	private List<OrderDetails> buildOrderDetails(Order order, Map<Long, Book> booksById, Map<Long, Integer> qtyByBookId) {
+		return qtyByBookId.entrySet()
+				.stream()
+				.map(e -> createOrderDetails(order, booksById.get(e.getKey()), e.getValue()))
+				.toList();
+	}
+
+	private Map<Long, Book> loadBooks(Collection<Long> ids) {
+		return bookRepository.findAllByIds(ids)
+				.stream()
+				.collect(Collectors.toMap(Book::getId, Function.identity()));
+	}
+	    
+	private Map<Long, Integer> aggregateQuantities(List<CartItem> cart) {
+		return cart.stream()
+				.collect(Collectors.toMap(
+						item -> item.getBook().getId(),
+						CartItem::getQuantity)
+						);
+	}
+	
+	private void checkAndHandleReservations(List<CartItem> cart, Map<Long, Book> booksById) {
+		for(var item : cart) {
+			Book book = booksById.get(item.getBook().getId());
+			if(book == null) {
+				throw new NotEnoughItemsException("Book not found: " + item.getBook().getId());
+			}
+			
+			int available = book.getUnitsInStock() - book.getUnitsReserved();
+			if (available < item.getQuantity()) {
+				throw new NotEnoughItemsException("Not enough stock for bookId = " + book.getId());
+			}
+			
+			if(item.isExpired()) {
+				reservationService.checkAvailability(book, item.getQuantity());
+			}
+			
+			reservationService.releaseReservation(book, item.getQuantity());
+		}
+	}
+
+
+	private void updateStock(Map<Long, Book> booksById, Map<Long, Integer> quantityByBookId) {
+		quantityByBookId.forEach((bookId, qty) -> {
+			Book book = booksById.get(bookId);
+			book.setUnitsInStock(book.getUnitsInStock() - qty);
+		});
+	}
+
 }

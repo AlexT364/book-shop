@@ -2,7 +2,6 @@ package shop.controllers.orders;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import shop.dto.order.OrderDetailsDto;
 import shop.dto.order.OrderDto;
-import shop.persistence.entities.Order;
+import shop.services.order.OrderQueryService;
 import shop.services.order.OrderService;
+import shop.services.orderdetails.OrderDetailsService;
 
 @Controller
 @RequestMapping(path = "/admin/orders")
@@ -26,16 +26,15 @@ import shop.services.order.OrderService;
 public class OrderAdminController {
 	
 	private final OrderService orderService;
-	private final ModelMapper modelMapper;
+	private final OrderQueryService orderQueryService;
+	private final OrderDetailsService orderDetailsService;
 	
-	// TODO ADD PAGINATION
+	//TODO: Return dtos from service, not entities
 	@GetMapping
 	public String adminOrdersPage(Model model, @RequestParam(defaultValue = "0") int pageNumber) {
-		Page<Order> ordersEnt = orderService
+		Page<OrderDto> orders = orderQueryService
 				.getAllOrders(pageNumber);
 		
-		Page<OrderDto> orders = ordersEnt.map(order -> modelMapper.map(order, OrderDto.class));
-				
 		
 		model.addAttribute("orders", orders);
 		model.addAttribute("currentPage", orders.getNumber());
@@ -46,12 +45,8 @@ public class OrderAdminController {
 	
 	@GetMapping(path = "/{orderId:\\d+}")
 	public String userOrder(@PathVariable Long orderId, Model model) {
-		Order orderEntity = null;
-		orderEntity = orderService.getOrderById(orderId);
-
-		List<OrderDetailsDto> orderItems = orderEntity.getOrderDetails().stream()
-				.map(orderDetail -> modelMapper.map(orderDetail, OrderDetailsDto.class)).toList();
-		OrderDto orderDto = modelMapper.map(orderEntity, OrderDto.class);
+		OrderDto orderDto = orderQueryService.getOrderById(orderId);
+		List<OrderDetailsDto> orderItems = orderDetailsService.findByOrderId(orderDto.getId());
 		
 		model.addAttribute("order", orderDto);
 		model.addAttribute("orderItems", orderItems);

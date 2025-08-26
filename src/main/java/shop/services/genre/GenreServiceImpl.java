@@ -8,22 +8,24 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import shop.dto.genre.GenreDto;
+import shop.mapping.mappers.GenreMapper;
 import shop.persistence.repositories.GenresRepository;
 
 @Service
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService{
 	
-	private final GenresRepository jpaGenresRepository;
+	private final GenresRepository genresRepository;
+	private final GenreMapper genreMapper;
 
 	@Override
 	public List<GenreDto> getAllGenres() {
-		return jpaGenresRepository.findAllSortByName();
+		return genresRepository.findAllSortByName();
 	}
 
 	@Override
 	public Page<GenreDto> getGenres(Pageable pageable) {
-		return jpaGenresRepository.findAll(pageable).map(genre -> new GenreDto(genre.getId(), genre.getName()));
+		return genresRepository.findAll(pageable).map(genreMapper::toGenreDto);
 	}
 
 }

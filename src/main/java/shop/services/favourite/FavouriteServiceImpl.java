@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +20,7 @@ import shop.dto.book.ShortBookDto;
 import shop.dto.genre.GenreDto;
 import shop.exceptions.book.BookNotFoundException;
 import shop.exceptions.user.UserNotFoundException;
+import shop.mapping.mappers.FavouriteMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.Favourite;
 import shop.persistence.entities.User;
@@ -36,13 +36,13 @@ public class FavouriteServiceImpl implements FavouriteService {
 	private final FavouriteRepository favouriteRepository;
 	private final UserRepository userRepository;
 	private final BookRepository bookRepository;
-	private final ModelMapper modelMapper;
+	private final FavouriteMapper favouriteMapper;
 
 	@Override
 	public Page<ShortBookDto> getFavouriteBooks(ShopRequestDto request, String username) {
 		Pageable pageable = formFavouritePageable(request);
 		Page<Favourite> favouritesEntities = favouriteRepository.findFavouriteBooks(request, username, pageable);
-		Page<ShortBookDto> favouritesDtos = favouritesEntities.map(favourite -> modelMapper.map(favourite, ShortBookDto.class));
+		Page<ShortBookDto> favouritesDtos = favouritesEntities.map(favouriteMapper::toShortBookDto);
 		return favouritesDtos;
 	}
 	

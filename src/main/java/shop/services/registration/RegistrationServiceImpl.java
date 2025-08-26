@@ -15,6 +15,7 @@ import shop.exceptions.security.TokenExpiredException;
 import shop.exceptions.user.UserAlreadyExistsException;
 import shop.exceptions.user.UserNotFoundException;
 import shop.exceptions.user.UserStatusException;
+import shop.mapping.mappers.UserMapper;
 import shop.messaging.email.dto.EmailConfirmationPayload;
 import shop.messaging.email.producer.EmailConfirmationSender;
 import shop.persistence.entities.Authority;
@@ -29,6 +30,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final EmailConfirmationSender emailConfirmationSender;
+	private final UserMapper userMapper;
 	private static final String DEFAULT_ROLE = "ROLE_USER";
 
 	private static final long TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000;// 24 hours
@@ -40,9 +42,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new UserAlreadyExistsException("Username or email already exists.");
 		}
 		
-		User userToCreate = new User();
-		userToCreate.setUsername(registrationRequest.getUsername());
-		userToCreate.setEmail(registrationRequest.getEmail());
+		User userToCreate = userMapper.toUser(registrationRequest);
 		userToCreate.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 		userToCreate.setEnabled(false);
 
