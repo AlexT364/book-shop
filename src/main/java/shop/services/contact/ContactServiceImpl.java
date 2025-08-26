@@ -18,18 +18,15 @@ import shop.dto.contact.ReplyFormDto;
 import shop.dto.contact.ShortContactMessageDto;
 import shop.exceptions.contact.MessageNotFoundException;
 import shop.mapping.mappers.ContactMessageMapper;
-import shop.messaging.email.consumer.EmailContactReplyReceiver;
 import shop.messaging.email.dto.EmailContactReplyPayload;
 import shop.messaging.email.producer.EmailContactReplySender;
 import shop.persistence.entities.ContactMessage;
 import shop.persistence.repositories.contact.ContactMessageRepository;
-import shop.services.email.EmailService;
 
 @Service
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService{
 	
-	private final EmailService emailService;
 	private final ContactMessageRepository contactMessagesRepository;
 	private final ContactMessageMapper contactMessageMapper;
 	private final EmailContactReplySender contactReplySender;
@@ -62,7 +59,7 @@ public class ContactServiceImpl implements ContactService{
 	@Transactional
 	public void saveMessage(ContactFormDto contactForm) {
 		
-		ContactMessage messageToSave = contactMessageMapper.toEntity(contactForm);
+		ContactMessage messageToSave = contactMessageMapper.toContactMessage(contactForm);
 		messageToSave.setAddedAt(LocalDateTime.now());
 		messageToSave.setViewed(false);
 		
