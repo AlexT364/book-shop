@@ -5,18 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 import shop.security.CustomAuthenticationFailureHandler;
-import shop.security.CustomUserDetailsManager;
 import shop.security.CustomUsernamePasswordAuthenticationProvider;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final CustomUserDetailsManager userDetailsManager;
+	private final UserDetailsService userDetailsService;
 	private final CustomUsernamePasswordAuthenticationProvider authenticationProvider;
 	private final CustomAuthenticationFailureHandler failureHandler;
 
@@ -24,7 +24,7 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.formLogin(c -> c.loginPage("/login").failureHandler(failureHandler))
-				.userDetailsService(userDetailsManager)
+				.userDetailsService(userDetailsService)
 				.authenticationProvider(authenticationProvider)
 				
 				.authorizeHttpRequests(c -> c.requestMatchers("/admin/**").hasRole("ADMIN"))
