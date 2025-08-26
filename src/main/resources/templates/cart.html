@@ -37,8 +37,8 @@
 						<td>
 							<a th:href="@{book/{id} (id = ${item.id})}" th:text="${item.title}"></a>
 						</td>
-						<td th:text="${item.quantity}"></td>
-						<td class="book-price" th:text="'$' + ${item.subtotalPrice}"></td>
+						<td th:text="${item.quantity}">QUANTITY</td>
+						<td class="book-price" th:text="'$' + ${item.subtotalPrice}">PRICE</td>
 						<td>
 							<form th:action="@{cart/{bookId} (bookId=${item.id})}" th:method="DELETE">
 								<input type="image" alt="remove" th:src="@{/images/icons/cart-remove-item.png}">

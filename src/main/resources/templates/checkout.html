@@ -23,7 +23,6 @@
 						</div>
 						<div>
 							<a th:href="@{/book/{bookId} (bookId = *{id})}" th:text="*{title}"></a>
-<!-- 							<p th:each="author : *{book.authors}" th:text="'Author: ' + ${author.name}"> -->
 							<p id="quantity" th:text="'Qantity: ' + *{quantity}">
 							<p id="subtotal-price" th:text="'$' + *{subtotalPrice}">
 						</div>

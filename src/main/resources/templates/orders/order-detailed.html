@@ -18,7 +18,7 @@
 							<img alt="book cover" th:src="@{/images/books/{isbn} (isbn = *{isbn})}">
 						</div>
 						<div>
-							<a th:href="@{/book/{bookId} (bookId = *{id})}" th:text="*{title}"></a>
+							<a th:href="@{/book/{bookId} (bookId = *{bookId})}" th:text="*{title}"></a>
 							<p th:text="'Book price: $' + *{unitPrice}">
 							<p id="quantity" th:text="'Qantity: ' + *{quantity}">
 							<p id="subtotal-price" th:text="'$' + *{subtotalPrice}">
@@ -95,7 +95,6 @@
 							</select>
 						</div>
 						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{id}">
 					</div>
 					<button class="btn" type="submit">Edit Order</button>
 				</form>
