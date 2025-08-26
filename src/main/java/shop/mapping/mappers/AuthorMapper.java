@@ -1,6 +1,5 @@
 package shop.mapping.mappers;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,6 @@ import shop.persistence.entities.Author;
 @Component
 @RequiredArgsConstructor
 public class AuthorMapper {
-	
-	private final ModelMapper modelMapper;
 	
 	public Author mapForCreate(CreateEditAuthorDto source) {
 		Author entity = new Author();
@@ -33,11 +30,22 @@ public class AuthorMapper {
 	}
 	
 	public AuthorDto toAuthorDto(Author entity) {
-		AuthorDto dto = new AuthorDto(entity.getId(), entity.getFirstName() + " " + entity.getLastName(), entity.getBio());
+		AuthorDto dto = new AuthorDto();
+		dto.setId(entity.getId());
+		String fullName = entity.getFirstName() + " " + entity.getLastName();
+		dto.setName(fullName);
+		dto.setBio(entity.getBio());
 		return dto;
 	}
 
 	public CreateEditAuthorDto toCreateEditAuthorDto(Author entity) {
-		return modelMapper.map(entity, CreateEditAuthorDto.class);
+		CreateEditAuthorDto dto = new CreateEditAuthorDto();
+		
+		dto.setId(entity.getId());
+		dto.setFirstName(entity.getFirstName());
+		dto.setLastName(entity.getLastName());
+		dto.setBio(entity.getBio());
+		
+		return dto;
 	} 
 }

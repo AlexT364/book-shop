@@ -1,6 +1,5 @@
 package shop.mapping.mappers;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -12,14 +11,28 @@ import shop.persistence.entities.ContactMessage;
 @RequiredArgsConstructor
 public class ContactMessageMapper {
 	
-	private final ModelMapper modelMapper;
-	
-	public ContactMessage toEntity(ContactFormDto dto) {
-		return modelMapper.map(dto, ContactMessage.class);
+	public ContactMessage toContactMessage(ContactFormDto dto) {
+		ContactMessage entity = new ContactMessage();
+		
+		entity.setName(dto.getName());
+		entity.setEmail(dto.getEmail());
+		entity.setPhone(dto.getPhone());
+		entity.setSubject(dto.getSubject());
+		entity.setMessage(dto.getMessage());
+		
+		return entity;
 	}
 	
 	public ContactMessageDto toContactMessageDto(ContactMessage entity) {
-		return modelMapper.map(entity, ContactMessageDto.class);
+		ContactMessageDto dto = new ContactMessageDto();
+		
+		dto.setName(entity.getName());
+		dto.setEmail(entity.getEmail());
+		dto.setPhone(entity.getPhone());
+		dto.setSubject(entity.getSubject());
+		dto.setMessage(entity.getMessage());
+		
+		return dto;
 	}
 	
 }

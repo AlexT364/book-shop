@@ -1,8 +1,8 @@
 package shop.mapping.mappers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -11,34 +11,60 @@ import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.dto.book.ShortBookDto;
 import shop.dto.genre.GenreDto;
+import shop.persistence.entities.Author;
 import shop.persistence.entities.Book;
+import shop.persistence.entities.Genre;
 
 @Component
 @RequiredArgsConstructor
 public class BookMapper{
 	
 	private final AuthorMapper authorMapper;
-	private final ModelMapper modelMapper;
+	private final GenreMapper genreMapper;
 	
 	public BookDto toBookDto(Book entity) {
-		BookDto dto = modelMapper.map(entity, BookDto.class);
+		BookDto dto = new BookDto();
+		
+		dto.setId(entity.getId());
+		dto.setTitle(entity.getTitle());
+		dto.setDescription(entity.getDescription());
+		dto.setIsbn(entity.getIsbn());
+		dto.setPrice(entity.getPrice());
+		
 		List<AuthorDto> authorDtos = entity.getAuthors().stream().map(author -> authorMapper.toAuthorDto(author)).toList();
-		List<GenreDto> genresDtos = entity.getGenres().stream().map(genre -> modelMapper.map(genre, GenreDto.class)).toList();
+		List<GenreDto> genresDtos = entity.getGenres().stream().map(genreMapper::toGenreDto).toList();
 		dto.setAuthors(authorDtos);
 		dto.setGenres(genresDtos);
+		
 		return dto;
 	}
 	
 	public CreateEditBookDto toCreateEditDto(Book entity) {
-		return modelMapper.map(entity, CreateEditBookDto.class);
+		CreateEditBookDto dto = new CreateEditBookDto();
+		
+		dto.setId(entity.getId());
+		dto.setTitle(entity.getTitle());
+		dto.setDescription(entity.getDescription());
+		dto.setIsbn(entity.getIsbn());
+		dto.setUnitsInStock(entity.getUnitsInStock());
+		dto.setPrice(entity.getPrice());
+		
+		dto.setAuthors(entity.getAuthors().stream().map(Author::getId).collect(Collectors.toSet()));
+		dto.setGenres(entity.getGenres().stream().map(Genre::getId).collect(Collectors.toSet()));
+		
+		return dto;
 	}
 	
 	public ShortBookDto toShortDto(Book entity) {
-		return modelMapper.map(entity, ShortBookDto.class);
-	}
-	
-	public void map(Book source, Book destination) {
-		modelMapper.map(source, destination);
+		ShortBookDto dto = new ShortBookDto();
+		dto.setId(entity.getId());
+		dto.setTitle(entity.getTitle());
+		dto.setIsbn(entity.getIsbn());
+		dto.setPrice(entity.getPrice());
+		
+		dto.setUnitsAvailable(entity.getUnitsInStock() - entity.getUnitsReserved());
+		
+		return dto;
 	}
 	
 	public void mapForUpdate(CreateEditBookDto source, Book destination) {
@@ -57,10 +83,6 @@ public class BookMapper{
 		entity.setUnitsInStock(dto.getUnitsInStock());
 		entity.setUnitsReserved(0);
 		return entity;
-	}
-	
-	public Book toEntity(BookDto dto) {
-		return modelMapper.map(dto, Book.class);
 	}
 	
 }
