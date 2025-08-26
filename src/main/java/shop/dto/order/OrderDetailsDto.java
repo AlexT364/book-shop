@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import shop.persistence.entities.Book;
 
 @Getter
 @Setter
@@ -14,11 +13,12 @@ import shop.persistence.entities.Book;
 @NoArgsConstructor
 public class OrderDetailsDto {
 	
-	private Long id;
+	private Long bookId;
 	private String title;
 	private String isbn;
 	
 	private int quantity;
 	private BigDecimal unitPrice;
 	private BigDecimal subtotalPrice;
+	
 }
