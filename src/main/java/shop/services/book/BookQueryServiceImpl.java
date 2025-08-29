@@ -21,10 +21,13 @@ import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.dto.book.ShortBookDto;
 import shop.exceptions.book.BookNotFoundException;
-import shop.mapping.mappers.BookMapper;
+import shop.mapping.mappers.book.BookMapper;
 import shop.persistence.entities.Book;
+import shop.persistence.entities.Discount;
 import shop.persistence.repositories.book.BookRepository;
 import shop.services.book.cache.BookCacheService;
+import shop.services.discount.DiscountPriceCalculator;
+import shop.services.discount.DiscountQueryService;
 import shop.services.favourite.FavouriteService;
 import shop.services.reviews.BookReviewService;
 
@@ -37,6 +40,8 @@ public class BookQueryServiceImpl implements BookQueryService {
 	private final FavouriteService favouriteService;
 	private final BookCacheService bookCacheService;
 	private final BookMapper bookMapper;
+	private final DiscountQueryService discountQueryService;
+	private final DiscountPriceCalculator discountPriceCalculator;
 
 	@Override
 	public BookDto getBookById(long bookId) {
@@ -47,7 +52,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 	public BookDto getBookById(long bookId, String username) {
 		BookDto bookDto = bookCacheService.getCachedBook(bookId).orElse(null);
 
-		// Cache miss
+		// Cache miss for BookDto
 		if (bookDto == null) {
 			Book bookEntity = bookRepository.findByIdWithAuthorsAndGenres(bookId)
 					.orElseThrow(() -> new BookNotFoundException("Book not found."));
@@ -58,18 +63,27 @@ public class BookQueryServiceImpl implements BookQueryService {
 		bookDto.setUnitsAvailable(bookRepository.findUnitAvailableById(bookDto.getId()));
 
 		Double score = bookCacheService.getCachedScore(bookId).orElse(null);
+		//Cache miss for BookDto.score
 		if (score == null) {
 			score = bookReviewService.findAvgScoreForBook(bookId).orElse(0.0);
 			if (score != 0.0) {
 				bookCacheService.cacheScore(bookId, score);
 			}
 		}
-
 		bookDto.setScore(score);
-
+		
+		//Setting BookDto.favourite field
 		boolean isFavourite = username == null ? false
 				: favouriteService.checkIfBookInUsersFavourites(username, bookId);
 		bookDto.setFavourite(isFavourite);
+		
+		//Setting BookDto.priceWithDiscount
+		Set<Discount> discounts = discountQueryService.findDiscountsForBook(bookDto.getId());
+		BigDecimal priceWithDiscount = discountPriceCalculator.calculateBestPrice(discounts, bookDto.getPrice());
+		if(priceWithDiscount.compareTo(bookDto.getPrice()) < 0) {
+			bookDto.setPriceWithDiscount(priceWithDiscount);
+		}
+		
 		return bookDto;
 	}
 
@@ -94,6 +108,9 @@ public class BookQueryServiceImpl implements BookQueryService {
 		Page<Book> page = bookRepository.findCriteriaBooks(pageable, shopRequestDto, false);
 		List<Long> bookIds = page.map(Book::getId).toList();
 
+		Map<Long, Set<Discount>> discountsByBookId = discountQueryService.findDiscountsForBooks(bookIds);
+		
+		//Setting ShortBookDto.score and ShortBookDto.favourite
 		Map<Long, Double> booksScores = bookReviewService.findAvgScoresForBooks(bookIds);
 		Set<Long> favouriteIds = username == null ? Set.of()
 				: favouriteService.findFavouriteBookIdsForUser(username, bookIds);
@@ -102,10 +119,25 @@ public class BookQueryServiceImpl implements BookQueryService {
 			ShortBookDto dto = bookMapper.toShortDto(book);
 			dto.setScore(booksScores.getOrDefault(book.getId(), 0.0));
 			dto.setFavourite(favouriteIds.contains(book.getId()));
+			
+			BigDecimal priceWithDiscount = discountPriceCalculator.calculateBestPrice(discountsByBookId.get(book.getId()), book.getPrice());
+			dto.setPriceWithDiscount(priceWithDiscount.compareTo(book.getPrice()) < 0 ? priceWithDiscount : null);
 			return dto;
 		});
-
+		
 		return dtoPage;
+	}
+
+	private Pageable formShopPageable(ShopRequestDto shopRequestDto) {
+		Order order = switch (shopRequestDto.getSort()) {
+		case PRICE_ASC -> Order.asc("price");
+		case PRICE_DESC -> Order.desc("price");
+		case TITLE_ASC -> Order.asc("title");
+		case TITLE_DESC -> Order.desc("title");
+		default -> new Order(Direction.DESC, "id");
+		};
+
+		return PageRequest.of(shopRequestDto.getPageNumber(), shopRequestDto.getPageSize(), Sort.by(order));
 	}
 
 	@Override
@@ -127,46 +159,38 @@ public class BookQueryServiceImpl implements BookQueryService {
 	
 	@Override
 	public List<ShortBookDto> getLatestBooks() {
-		Pageable pageable = PageRequest.of(0, 3);
-		List<ShortBookDto> latestBooks = bookRepository.findLatestBooks(pageable)
-				.stream()
-				.map(bookMapper::toShortDto)
-				.toList();
-		return latestBooks;
+		List<Book> latestBooksEntities = bookRepository.findLatestBooks();
+		
+		return this.mapBooksToShortDtosWithDiscounts(latestBooksEntities);
 	};
-
-	private Pageable formShopPageable(ShopRequestDto shopRequestDto) {
-		Order order = switch (shopRequestDto.getSort()) {
-		case PRICE_ASC -> Order.asc("price");
-		case PRICE_DESC -> Order.desc("price");
-		case TITLE_ASC -> Order.asc("title");
-		case TITLE_DESC -> Order.desc("title");
-		default -> new Order(Direction.DESC, "id");
-		};
-
-		return PageRequest.of(shopRequestDto.getPageNumber(), shopRequestDto.getPageSize(), Sort.by(order));
-	}
 
 	@Override
 	public List<ShortBookDto> getPopularBooks() {
-		Pageable pageable = PageRequest.of(0, 3);
-		List<ShortBookDto> popularBooks = bookRepository.findPopularBooks(pageable)
-				.stream()
-				.map(bookMapper::toShortDto)
-				.toList();
-		return popularBooks;
+		List<Book> popularBooksEntities = bookRepository.findLatestBooks();
+		
+		return this.mapBooksToShortDtosWithDiscounts(popularBooksEntities);
 	}
 
 	@Override
 	public List<ShortBookDto> getHighestRatedBooks() {
-		Pageable pageable = PageRequest.of(0, 3);
-		List<ShortBookDto> highestRatedBooks = bookRepository.findHighestRatedBooks(pageable)
-				.stream()
-				.map(bookMapper::toShortDto)
-				.toList();
-		return highestRatedBooks;
+		List<Book> highestRatedBooksEntities = bookRepository.findHighestRatedBooks();
+		
+		return this.mapBooksToShortDtosWithDiscounts(highestRatedBooksEntities);
 	}
 	
+	private List<ShortBookDto> mapBooksToShortDtosWithDiscounts(List<Book> bookList){
+		List<Long> bookIds = bookList.stream().map(Book::getId).toList();
+		Map<Long, Set<Discount>> discountsByBookId = discountQueryService.findDiscountsForBooks(bookIds);
+		
+		List<ShortBookDto> dtoList = bookList.stream().map(book -> {
+			ShortBookDto dto = bookMapper.toShortDto(book);
+			BigDecimal priceWithDiscount = discountPriceCalculator
+					.calculateBestPrice(discountsByBookId.get(book.getId()), book.getPrice());
+			dto.setPriceWithDiscount(priceWithDiscount.compareTo(book.getPrice()) < 0 ? priceWithDiscount : null);
+			return dto;
+		}).toList();
+		return dtoList;
+	}
 	
 }
 	
