@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import shop.assemblers.OrderDetailsAssembler;
 import shop.dto.CheckoutFormDto;
 import shop.dto.order.OrderDto;
 import shop.exceptions.NotEnoughItemsException;
 import shop.exceptions.OrderNotFoundException;
 import shop.exceptions.cart.CartIsEmptyException;
 import shop.exceptions.user.UserNotFoundException;
-import shop.mapping.mappers.OrderMapper;
+import shop.mapping.mappers.order.OrderMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.CartItem;
 import shop.persistence.entities.Order;
 import shop.persistence.entities.OrderDetails;
 import shop.persistence.entities.User;
-import shop.persistence.entities.embeddables.OrderDetailsPK;
 import shop.persistence.entities.enums.OrderStatus;
 import shop.persistence.repositories.CartRepository;
 import shop.persistence.repositories.OrderDetailsRepository;
@@ -45,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderDetailsRepository orderDetailsRepository;
 	private final ReservationService reservationService;
 	private final OrderMapper orderMapper;
+	private final OrderDetailsAssembler orderDetailsAssembler;
 
 	@Override
 	@Transactional
@@ -53,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Not found"));
 		List<CartItem> cart = this.loadCart(username);
 		
-		//Load books from users' cart and check availability 
+		//Load books from user's cart and check availability 
 		Map<Long, Integer> quantityByBookId = this.aggregateQuantities(cart);
 		Map<Long, Book> booksById = this.loadBooks(quantityByBookId.keySet());
 		
@@ -61,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		//Build order and orderDetails
 		Order orderToCreate = this.initOrder(orderRequest, user);
-		List<OrderDetails> orderDetailsList = this.buildOrderDetails(orderToCreate, booksById, quantityByBookId);
+		List<OrderDetails> orderDetailsList = orderDetailsFactory.assembleOrderDetails(orderToCreate, booksById, quantityByBookId);
 		
 		this.updateStock(booksById, quantityByBookId);
 		
@@ -90,19 +91,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	// --Helper methods--
-	
-	private OrderDetails createOrderDetails(Order order, Book book, int quantity) {
-		OrderDetails od = new OrderDetails();
-		OrderDetailsPK pk = new OrderDetailsPK(order.getId(), book.getId());
-		od.setPk(pk);
-		od.setOrder(order);
-		od.setBook(book);
-		od.setQuantity(quantity);
-		od.setUnitPrice(book.getPrice());
-		return od;
-	}
-
-
 	private void returnBooksToStock(Order order) {
 		Map<Long, Integer> bookIdsAndQuantity = order.getOrderDetails()
 				.stream()
@@ -130,13 +118,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderDate(LocalDateTime.now());
 		order.setStatus(OrderStatus.NEW);
 		return orderRepository.save(order);
-	}
-
-	private List<OrderDetails> buildOrderDetails(Order order, Map<Long, Book> booksById, Map<Long, Integer> qtyByBookId) {
-		return qtyByBookId.entrySet()
-				.stream()
-				.map(e -> createOrderDetails(order, booksById.get(e.getKey()), e.getValue()))
-				.toList();
 	}
 
 	private Map<Long, Book> loadBooks(Collection<Long> ids) {
