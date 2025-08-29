@@ -1,10 +1,10 @@
-package shop.services.book.helper;
+package shop.assemblers;
 
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import shop.dto.book.CreateEditBookDto;
-import shop.mapping.mappers.BookMapper;
+import shop.mapping.mappers.book.BookMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.repositories.AuthorRepository;
 import shop.persistence.repositories.GenresRepository;
