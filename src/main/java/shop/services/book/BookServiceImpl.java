@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import shop.assemblers.BookAssembler;
 import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.exceptions.book.BookAlreadyExistsException;
 import shop.exceptions.book.BookNotFoundException;
-import shop.mapping.mappers.BookMapper;
+import shop.mapping.mappers.book.BookMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.repositories.book.BookRepository;
-import shop.services.book.helper.BookAssembler;
 import shop.services.image.CoversImageService;
 
 @Service
@@ -26,7 +26,7 @@ public class BookServiceImpl implements BookService {
 	private final BookMapper bookMapper;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public BookDto addBook(CreateEditBookDto dto, byte[] coverImage) {
 		if(bookRepository.existsByIsbn(dto.getIsbn())) {
 			throw new BookAlreadyExistsException(dto.getIsbn());

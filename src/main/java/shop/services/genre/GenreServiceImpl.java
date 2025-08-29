@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import shop.dto.genre.GenreDto;
-import shop.mapping.mappers.GenreMapper;
+import shop.mapping.mappers.genre.GenreMapper;
 import shop.persistence.repositories.GenresRepository;
 
 @Service

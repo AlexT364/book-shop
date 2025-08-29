@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import shop.dto.reviews.BookReviewDto;
 import shop.exceptions.book.BookNotFoundException;
 import shop.exceptions.user.UserNotFoundException;
-import shop.mapping.mappers.BookReviewMapper;
+import shop.mapping.mappers.book.BookReviewMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.BookReview;
 import shop.persistence.entities.User;

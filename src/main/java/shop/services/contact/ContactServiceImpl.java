@@ -17,7 +17,7 @@ import shop.dto.contact.InboxMessagesFilterDto.DateOrder;
 import shop.dto.contact.ReplyFormDto;
 import shop.dto.contact.ShortContactMessageDto;
 import shop.exceptions.contact.MessageNotFoundException;
-import shop.mapping.mappers.ContactMessageMapper;
+import shop.mapping.mappers.contact.ContactMessageMapper;
 import shop.messaging.email.dto.EmailContactReplyPayload;
 import shop.messaging.email.producer.EmailContactReplySender;
 import shop.persistence.entities.ContactMessage;

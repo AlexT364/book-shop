@@ -16,7 +16,7 @@ import shop.dto.author.AuthorFilterRequestDto.AuthorOrder;
 import shop.dto.author.CreateEditAuthorDto;
 import shop.dto.author.ShortAuthorDto;
 import shop.exceptions.author.AuthorNotFoundException;
-import shop.mapping.mappers.AuthorMapper;
+import shop.mapping.mappers.author.AuthorMapper;
 import shop.persistence.entities.Author;
 import shop.persistence.repositories.AuthorRepository;
 

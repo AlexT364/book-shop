@@ -15,7 +15,7 @@ import shop.exceptions.security.TokenExpiredException;
 import shop.exceptions.user.UserAlreadyExistsException;
 import shop.exceptions.user.UserNotFoundException;
 import shop.exceptions.user.UserStatusException;
-import shop.mapping.mappers.UserMapper;
+import shop.mapping.mappers.user.UserMapper;
 import shop.messaging.email.dto.EmailConfirmationPayload;
 import shop.messaging.email.producer.EmailConfirmationSender;
 import shop.persistence.entities.Authority;

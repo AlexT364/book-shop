@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import shop.dto.order.OrderDto;
 import shop.exceptions.OrderNotFoundException;
-import shop.mapping.mappers.OrderMapper;
+import shop.mapping.mappers.order.OrderMapper;
 import shop.persistence.entities.Order;
 import shop.persistence.repositories.OrderRepository;
 

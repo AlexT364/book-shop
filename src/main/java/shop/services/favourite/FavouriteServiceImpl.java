@@ -20,7 +20,7 @@ import shop.dto.book.ShortBookDto;
 import shop.dto.genre.GenreDto;
 import shop.exceptions.book.BookNotFoundException;
 import shop.exceptions.user.UserNotFoundException;
-import shop.mapping.mappers.FavouriteMapper;
+import shop.mapping.mappers.favourite.FavouriteMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.Favourite;
 import shop.persistence.entities.User;
