@@ -53,8 +53,6 @@ public class SecurityConfig {
 				);
 
 		http.httpBasic(Customizer.withDefaults());
-		//TODO:REMOVE WHEN DEPLOYED
-		http.csrf(c -> c.disable());
 
 		return http.build();
 	}
