@@ -5,8 +5,6 @@
 <link rel=stylesheet th:href="@{/css/style.css}">
 <link rel=stylesheet th:href="@{/css/shop.css}">
 <link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
-<script type="text/javascript" th:src="@{/js/shop-authors-lazy-loading.js}"></script>
-<script type="text/javascript" th:src="@{/js/shop-genres-lazy-loading.js}"></script>
 <title>Shop</title>
 </head>
 <body>
@@ -71,7 +69,13 @@
 						<div class="book-info">
 							<a th:href="'/book/' + *{id}" th:text="*{title}" th:title="*{title}">TITLE</a>
 							<p class="score" th:text="'★ ' + *{score}"></p>
-							<p th:text="'$' + *{price}">PRICE</p>
+							<div th:if="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + *{priceWithDiscount}">PRICE WITH DISCOUNT</p>
+								<p id="price-without-discount" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
+							<div th:unless="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + ${book.price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
 							<p th:if="*{unitsAvailable} == 0" th:text="'OUT OF STOCK'"></p>
 						</div>
 						<div class="book-actions">
@@ -149,6 +153,8 @@
 			});
 	  }
 	</script>
+	<script type="text/javascript" th:src="@{/js/shop-authors-lazy-loading.js}"></script>
+	<script type="text/javascript" th:src="@{/js/shop-genres-lazy-loading.js}"></script>
 </body>
 </html>
 

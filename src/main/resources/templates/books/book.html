@@ -5,7 +5,6 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/books/book.css}">
 <link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
-<script type="text/javascript" th:src="@{/js/book-actions.js}"></script>
 <title>[[${book.title}]]</title>
 </head>
 <body>
@@ -18,7 +17,13 @@
 			</div>
 			<div id="book-info">
 				<h2 th:text="${book.title}">TITLE</h2>
-				<h4 th:text="'$' + ${book.price}"></h4>
+				<div th:if="${book.priceWithDiscount}" id="book-price">
+					<p id="price" th:text="'$' + ${book.priceWithDiscount}">PRICE WITH DISCOUNT</p>
+					<p id="price-without-discount" th:text="'$' + ${book.price}">PRICE WITHOUT DISCOUNT</p>
+				</div>
+				<div th:unless="${book.priceWithDiscount}" id="book-price">
+					<p id="price" th:text="'$' + ${book.price}">PRICE</p>
+				</div>
 				<ul>
 					<li>
 						<label>Author: </label> <a th:each="author : ${book.authors}" th:text="${author.name}" th:href="@{/authors/{authorId} (authorId = ${author.id})}"></a>
@@ -46,7 +51,7 @@
 					<div id="book-actions">
 						<form th:unless="${book.unitsAvailable} == 0" id="cartForm" th:action="@{/cart}" method="POST">
 							<input type="hidden" name="bookId" th:value="${book.id}">
-							<input type="hidden" id="quantityCart" name="quantity">
+							<input type="hidden" id="quantityCart" name="quantity" value="1">
 							<button class="btn" type="submit">Add to cart</button>
 						</form>
 						<form th:unless="${book.favourite}" th:action="@{/favourite/{bookId} (bookId=${book.id})}" method="POST">
@@ -72,5 +77,6 @@
 		</div>
 	</div>
 	<footer th:replace="~{fragments/footer}"> Footer </footer>
+	<script type="text/javascript" th:src="@{/js/book-actions.js}"></script>
 </body>
 </html>

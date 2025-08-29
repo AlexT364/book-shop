@@ -17,7 +17,7 @@
   display: flex;
   flex-flow: column nowrap;
   padding: 2rem;
-  background-color: whitesmoke;
+  background-color: rgb(247.55, 247.55, 247.55);
   border-radius: 10px;
   box-shadow: 4px 4px 6px 2px rgb(232.25, 232.25, 232.25);
   transition-property: box-shadow;
@@ -102,7 +102,7 @@
   border-radius: 10px;
   width: 14rem;
   height: 14rem;
-  background-color: whitesmoke;
+  background-color: rgb(247.55, 247.55, 247.55);
   box-shadow: 4px 4px 10px 5px rgb(232.25, 232.25, 232.25);
   transition-property: box-shadow transform;
   transition-duration: 0.4s;
@@ -163,7 +163,7 @@
   row-gap: 1rem;
   min-width: 34rem;
   min-height: 46rem;
-  background-color: whitesmoke;
+  background-color: rgb(247.55, 247.55, 247.55);
   border-radius: 10px;
   box-shadow: 4px 4px 6px 2px rgb(232.25, 232.25, 232.25);
   padding: 1rem 1rem;

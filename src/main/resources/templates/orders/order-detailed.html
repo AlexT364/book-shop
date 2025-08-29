@@ -19,9 +19,15 @@
 						</div>
 						<div>
 							<a th:href="@{/book/{bookId} (bookId = *{bookId})}" th:text="*{title}"></a>
-							<p th:text="'Book price: $' + *{unitPrice}">
+							<div id="book-price" th:if="*{discountUnit} > 0">
+								<p id="price" th:text="'Book price: $' + *{finalUnitPrice}"></p>
+								<p id="price-without-discount" th:text="'$' + *{unitPrice}"></p>
+							</div>
+							<div id="book-price" th:if="*{discountUnit} == 0">
+								<p id="price" th:text="'Book price: $' + *{unitPrice}"></p>
+							</div>
 							<p id="quantity" th:text="'Qantity: ' + *{quantity}">
-							<p id="subtotal-price" th:text="'$' + *{subtotalPrice}">
+							<p id="subtotal-price" th:text="'$' + *{subtotal}">
 						</div>
 					</div>
 				</div>

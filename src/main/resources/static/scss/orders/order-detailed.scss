@@ -54,6 +54,22 @@
 	}
 }
 
+#book-price{
+	display: flex;
+	#price {
+			font-size: 1.1rem;
+			font-weight: bold;
+			color: clr(primary, dark);
+		}
+	#price-without-discount {
+		margin-left: .5rem;
+		font-size: 1rem;
+		font-weight: bold;
+		color: red;
+		text-decoration: line-through 2px;
+	}
+}
+
 #order-total{
 	padding: 2rem;
 	display: flex;

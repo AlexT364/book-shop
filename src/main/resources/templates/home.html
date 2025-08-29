@@ -24,7 +24,13 @@
 						<h4>
 							<a th:href="@{book/{id} (id=${book.id})}" th:text="${book.title}" th:title="${book.title}">War and Peace</a>
 						</h4>
-						<p th:text="'$' + ${book.price}"></p>
+						<div th:if="${book.priceWithDiscount}" id="book-price">
+							<p id="price" th:text="'$' + ${book.priceWithDiscount}">PRICE WITH DISCOUNT</p>
+							<p id="price-without-discount" th:text="'$' + ${book.price}">PRICE WITHOUT DISCOUNT</p>
+						</div>
+						<div th:unless="${book.priceWithDiscount}" id="book-price">
+							<p id="price" th:text="'$' + ${book.price}">PRICE WITHOUT DISCOUNT</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -75,11 +81,18 @@
 							<h4>
 								<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
 							</h4>
-							<p th:text="'$' + *{price}"></p>
+							<div th:if="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + *{priceWithDiscount}">PRICE WITH DISCOUNT</p>
+								<p id="price-without-discount" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
+							<div th:unless="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
 						</div>
 					</div>
 					<div class="other-books">
-						<div th:each="book, iterStat : ${popularBooks}" th:if="${iterStat.index > 0} AND ${#lists.size(popularBooks) > 1}" th:object="${book}">
+						<div th:each="book, iterStat : ${popularBooks}" th:if="${iterStat.index > 0} AND ${#lists.size(popularBooks) > 1}"
+							th:object="${book}">
 							<div class="book-cover">
 								<img th:src="@{/images/books/{isbn} (isbn = *{isbn})}" alt="cover-image">
 							</div>
@@ -87,7 +100,13 @@
 								<h4>
 									<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
 								</h4>
-								<p th:text="'$' + *{price}"></p>
+								<div th:if="*{priceWithDiscount}" id="book-price">
+									<p id="price" th:text="'$' + *{priceWithDiscount}">PRICE WITH DISCOUNT</p>
+									<p id="price-without-discount" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+								</div>
+								<div th:unless="*{priceWithDiscount}" id="book-price">
+									<p id="price" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -106,7 +125,13 @@
 							<h4>
 								<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
 							</h4>
-							<p th:text="'$' + *{price}"></p>
+							<div th:if="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + *{priceWithDiscount}">PRICE WITH DISCOUNT</p>
+								<p id="price-without-discount" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
+							<div th:unless="*{priceWithDiscount}" id="book-price">
+								<p id="price" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+							</div>
 						</div>
 					</div>
 					<div class="other-books" th:if="${#lists.size(highestRatedBooks) > 1}">
@@ -118,7 +143,13 @@
 								<h4>
 									<a th:href="@{book/{id} (id=*{id})}" th:text="*{title}" th:title="*{title}">War and Peace</a>
 								</h4>
-								<p th:text="'$' + *{price}"></p>
+								<div th:if="*{priceWithDiscount}" id="book-price">
+									<p id="price" th:text="'$' + *{priceWithDiscount}">PRICE WITH DISCOUNT</p>
+									<p id="price-without-discount" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+								</div>
+								<div th:unless="*{priceWithDiscount}" id="book-price">
+									<p id="price" th:text="'$' + *{price}">PRICE WITHOUT DISCOUNT</p>
+								</div>
 							</div>
 						</div>
 					</div>
