@@ -1,0 +1,132 @@
+#page-container > h1 {
+  text-align: center;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  margin: 1rem 0;
+}
+
+form {
+  max-width: 45rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgb(181.25, 181.25, 181.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  /* Search autocomplete */
+}
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+form .form-group label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+form .form-group input[type=text],
+form .form-group input[type=number],
+form .form-group input[type=date],
+form .form-group input[type=datetime-local],
+form .form-group textarea,
+form .form-group #genre-select {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #8F8F8F;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+form .form-group input[type=text]:focus,
+form .form-group input[type=number]:focus,
+form .form-group input[type=date]:focus,
+form .form-group input[type=datetime-local]:focus,
+form .form-group textarea:focus,
+form .form-group #genre-select:focus {
+  border-color: #055F76;
+  box-shadow: 0 0 0 2px rgb(8.1097560976, 154.0853658537, 191.3902439024);
+  outline: none;
+}
+form .form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+form .form-group input[type=checkbox] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+form #genre-select > div {
+  padding: 0.3rem;
+  display: flex;
+}
+form #genre-select > div:hover {
+  background-color: rgb(232.25, 232.25, 232.25);
+}
+form #genre-select > div label {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+form button[type=submit] {
+  align-self: flex-end;
+  background: #055F76;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+form button[type=submit]:hover {
+  background: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+form #bookResults {
+  list-style: none;
+  margin: 0.3rem 0 0;
+  padding: 0;
+  border: 1px solid #8F8F8F;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+}
+form #bookResults li {
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+form #bookResults li:hover {
+  background: rgb(232.25, 232.25, 232.25);
+}
+form #selectedBooks {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+form #selectedBooks li {
+  background: rgb(232.25, 232.25, 232.25);
+  border: 1px solid rgb(8.1097560976, 154.0853658537, 191.3902439024);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+form #selectedBooks li button {
+  background: transparent;
+  border: none;
+  color: #055F76;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+form #selectedBooks li button:hover {
+  color: #cc0000;
+}

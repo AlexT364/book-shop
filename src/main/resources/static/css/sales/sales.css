@@ -1,0 +1,72 @@
+.no-discounts-container {
+  text-align: center;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+}
+
+.new-sale-ref-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+.new-sale-ref-container a {
+  font-size: 1.5rem;
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+}
+.new-sale-ref-container a.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.new-sale-ref-container a:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.new-sale-ref-container a:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+
+.discounts-section {
+  padding: 2rem 0;
+}
+.discounts-section .section-title {
+  margin: 1rem 0;
+  text-align: center;
+  color: rgb(2.9268292683, 55.6097560976, 69.0731707317);
+  font-size: 2rem;
+}
+.discounts-section .discounts-grid {
+  display: flex;
+  flex-flow: column;
+  gap: 1.5rem;
+}
+.discounts-section .discounts-grid .discount-card {
+  background-color: rgb(247.55, 247.55, 247.55);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 4px 4px 6px 2px rgb(232.25, 232.25, 232.25);
+  text-align: center;
+  margin: 0 15rem;
+}
+.discounts-section .discounts-grid .discount-card .discount-name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.discounts-section .discounts-grid .discount-card .discount-description {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.discounts-section .discounts-grid .discount-card .discount-dates {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.discount-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pagination {
+  justify-self: center;
+}

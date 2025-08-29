@@ -1,0 +1,65 @@
+@import "../variables.scss";
+
+.no-discounts-container{
+	text-align: center;
+	color: clr(primary, dark);
+}
+.new-sale-ref-container{
+	text-align: center;
+	margin: 1rem 0;
+	a{
+		font-size: 1.5rem;
+		@include regular-link;
+	}
+}
+
+.discounts-section {
+  padding: 2rem 0;
+  .section-title {
+	margin: 1rem 0;
+    text-align: center;
+	color: clr(primary, dark);
+    font-size: 2rem;
+  }
+  .discounts-grid {
+    display: flex;
+	flex-flow: column;
+    gap: 1.5rem;
+
+    .discount-card {
+      background-color: clr(my-gray, lightest);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 4px 4px 6px 2px clr(my-gray, lighter);
+      text-align: center;
+	  margin: 0 15rem;
+
+      .discount-name {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .discount-description {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .discount-dates {
+        font-size: 0.9rem;
+        color: #555;
+      }
+    }
+  }
+}
+
+.discount-actions{
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.pagination{
+	justify-self: center;
+}
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/sales/sales-add.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>New Sale</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<h1>New sale</h1>
+		<form th:action="@{/admin/sales}" th:object="${discountRequest}" th:method="POST">
+			<div class="form-group">
+				<label>Name</label>
+				<input type="text" th:field="*{name}" />
+			</div>
+
+			<div class="form-group">
+				<label>Description</label>
+				<textarea th:field="*{description}"></textarea>
+			</div>
+			
+			<div class="form-group">
+				<label>Type</label> <select th:field="*{type}">
+					<option th:each="type : ${discountTypes}" th:value="${type.name}" th:text="${type}"></option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Amount</label>
+				<input type="number" step="0.01" th:field="*{amount}" />
+			</div>
+
+
+			<div class="form-group">
+				<label>Start Date</label>
+				<input type="datetime-local" th:field="*{startDate}" />
+			</div>
+
+			<div class="form-group">
+				<label>End Date</label>
+				<input type="datetime-local" th:field="*{endDate}" />
+			</div>
+
+			<div class="form-group">
+				<label>Active
+				<input type="checkbox" th:field="*{active}"/>
+				</label>
+			</div>
+
+			<div class="form-group">
+				<label for="bookSearch">Add books</label>
+				<input type="text" id="bookSearch" placeholder="Start typing book title..." />
+				<ul id="bookResults" class="results-list"></ul>
+				<ul id="selectedBooks" class="selected-list"></ul>
+				<input type="hidden" th:field="*{bookIds}" id="bookIds" />
+			</div>
+
+			<div class="form-group">
+				<label>Genres</label>
+				<div id="genre-select">
+					<div th:each="genre : ${genres}">
+						<label th:for="'genre-'+${genre.name}" th:text="${genre.name}"></label>
+						<input th:id="'genre-'+${genre.name}" type="checkbox" name="genreIds" th:value="${genre.id}" />
+					</div>
+				</div>
+			</div>
+
+			<button type="submit">Save</button>
+		</form>
+
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+	<script type="text/javascript" th:src="@{/js/sales-books-search.js}"></script>
+</body>
+</html>

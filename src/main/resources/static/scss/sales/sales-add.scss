@@ -1,0 +1,146 @@
+@import "../variables.scss";
+
+#page-container>h1{
+	text-align: center;
+	color: clr(primary, dark);
+	margin: 1rem 0;
+}
+
+form {
+  max-width: 45rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px clr(my-gray, light);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: clr(primary, dark);
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    textarea,
+	#genre-select {
+      padding: 0.6rem 0.8rem;
+      border: 1px solid clr(my-gray);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        border-color: clr(primary);
+        box-shadow: 0 0 0 2px clr(primary, light);
+        outline: none;
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+  }
+ 
+#genre-select > div{
+	padding: .3rem;
+	display: flex;
+	&:hover{
+		background-color: clr(my-gray, lighter);
+	}
+	label {
+	  display: block;   
+	  width: 100%;      
+	  cursor: pointer; 
+	}
+}
+
+  button[type="submit"] {
+    align-self: flex-end;
+    background: clr(primary);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: clr(primary, dark);
+    }
+  }
+
+  /* Search autocomplete */
+  #bookResults {
+    list-style: none;
+    margin: 0.3rem 0 0;
+    padding: 0;
+    border: 1px solid clr(my-gray);
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #fff;
+
+    li {
+      padding: 0.5rem 0.8rem;
+      cursor: pointer;
+      transition: background 0.15s;
+
+      &:hover {
+        background: clr(my-gray, lighter);
+      }
+    }
+  }
+
+  #selectedBooks {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    li {
+      background: clr(my-gray, lighter);
+      border: 1px solid clr(primary, light);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      button {
+        background: transparent;
+        border: none;
+        color: clr(primary);
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9rem;
+
+        &:hover {
+          color: #cc0000;
+        }
+      }
+    }
+  }
+}

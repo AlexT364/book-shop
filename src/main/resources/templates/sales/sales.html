@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/sales/sales.css}">
+<link rel="icon" th:href="@{/images/icons/logo-tiny.png}">
+<title>Sales</title>
+</head>
+<body>
+	<div id="page-container">
+		<header th:replace="~{fragments/navigation}"></header>
+		<section class="discounts-section">
+			<div class="no-discounts-container" th:if="${discounts.isEmpty()}">
+				<h1>There are no sales right now :(</h1>
+			</div>
+			<div class="new-sale-ref-container" sec:authorize="hasRole('ROLE_ADMIN')">
+				<a th:href="@{/admin/sales}">Admin sales page</a>
+			</div>
+			<div th:unless="${discounts.isEmpty()}" class="container">
+				<h2 class="section-title">Current Sales</h2>
+				<div class="discounts-grid">
+					<div class="discount-card" th:each="discount : ${discounts}">
+						<h3 class="discount-name" th:text="${discount.name}">Discount Name</h3>
+						<p class="discount-description" th:text="${discount.description}">Description of the discount</p>
+						<p class="discount-dates">
+							<span th:text="${#temporals.format(discount.startDate, 'dd MMM yyyy')}">start date</span> &mdash; <span
+								th:text="${#temporals.format(discount.endDate, 'dd MMM yyyy')}">End Date</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="pagination" th:unless="${discounts.getTotalPages() <= 1}">
+
+			<!-- 		First-Page -->
+			<a th:if="${discounts.hasPrevious()}" 
+				th:href="@{/sales(pageNumber=0)}"
+				th:text="'First'" class="btn-link"></a>
+			<span th:unless="${discounts.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'First'"></span>
+
+			<!-- 		Previous-Page -->
+			<a th:if="${discounts.hasPrevious()}"
+				th:href="@{/sales(pageNumber=${discounts.number-1})}" th:text="'<'"
+				class="btn-link"></a>
+			<span th:unless="${discounts.hasPrevious()}" class="btn-link btn-link-clr disabled" th:text="'<'"></span> <span
+				th:if="${discounts.number > 2}">...</span>
+
+			<!-- Current page and neighboring pages -->
+			<a
+				th:each="page : ${#numbers.sequence(discounts.number > 2 ? discounts.number - 2 : 1, discounts.number + 2 < discounts.getTotalPages() ? discounts.number + 2 : discounts.getTotalPages())}"
+				th:text="${page}" class="btn-link" th:classappend="${page}-1 == ${discounts.number} ? 'current-page'"
+				th:href="@{/sales(pageNumber=${page-1})}"> </a>
+
+
+			<span th:if="${discounts.number + 2 < discounts.getTotalPages()}">...</span>
+
+			<!-- 		Next-Page -->
+			<a th:if="${discounts.hasNext()}"
+				th:href="@{/sales(pageNumber=${discounts.number+1})}" th:text="'>'"
+				class="btn-link"></a>
+			<span th:unless="${discounts.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'>'"></span>
+
+			<!-- 		Last-Page -->
+			<a th:if="${discounts.hasNext()}"
+				th:href="@{/sales(pageNumber=${discounts.getTotalPages()-1})}" th:text="'Last'"
+				class="btn-link"></a>
+			<span th:unless="${discounts.hasNext()}" class="btn-link btn-link-clr disabled" th:text="'Last'"></span>
+
+		</div>
+	</div>
+	<footer th:replace="~{fragments/footer}"> Footer </footer>
+</body>
+</html>
