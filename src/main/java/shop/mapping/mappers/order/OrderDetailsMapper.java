@@ -1,6 +1,4 @@
-package shop.mapping.mappers;
-
-import java.math.BigDecimal;
+package shop.mapping.mappers.order;
 
 import org.springframework.stereotype.Component;
 
@@ -9,7 +7,7 @@ import shop.persistence.entities.OrderDetails;
 
 @Component
 public class OrderDetailsMapper {
-	
+
 	public OrderDetailsDto toOrderDetailsDto(OrderDetails entity) {
 		OrderDetailsDto dto = new OrderDetailsDto();
 		
@@ -19,8 +17,9 @@ public class OrderDetailsMapper {
 		dto.setQuantity(entity.getQuantity());
 		dto.setUnitPrice(entity.getUnitPrice());
 		
-		BigDecimal subtotalPrice = entity.getUnitPrice().multiply(BigDecimal.valueOf(entity.getQuantity()));
-		dto.setSubtotalPrice(subtotalPrice);
+		dto.setDiscountUnit(entity.getDiscountPerUnit());
+		dto.setFinalUnitPrice(entity.getFinalUnitPrice());
+		dto.setSubtotal(entity.getSubtotal());
 		
 		return dto;
 	}

@@ -1,4 +1,4 @@
-package shop.mapping.mappers;
+package shop.mapping.mappers.book;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,8 @@ import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.dto.book.ShortBookDto;
 import shop.dto.genre.GenreDto;
+import shop.mapping.mappers.author.AuthorMapper;
+import shop.mapping.mappers.genre.GenreMapper;
 import shop.persistence.entities.Author;
 import shop.persistence.entities.Book;
 import shop.persistence.entities.Genre;

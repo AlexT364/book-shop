@@ -1,4 +1,4 @@
-package shop.mapping.mappers;
+package shop.mapping.mappers.genre;
 
 import org.springframework.stereotype.Component;
 

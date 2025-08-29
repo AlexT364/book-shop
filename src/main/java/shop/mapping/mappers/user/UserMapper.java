@@ -1,4 +1,4 @@
-package shop.mapping.mappers;
+package shop.mapping.mappers.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
