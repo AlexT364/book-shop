@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		//Build order and orderDetails
 		Order orderToCreate = this.initOrder(orderRequest, user);
-		List<OrderDetails> orderDetailsList = orderDetailsFactory.assembleOrderDetails(orderToCreate, booksById, quantityByBookId);
+		List<OrderDetails> orderDetailsList = orderDetailsAssembler.assembleOrderDetails(orderToCreate, booksById, quantityByBookId);
 		
 		this.updateStock(booksById, quantityByBookId);
 		
