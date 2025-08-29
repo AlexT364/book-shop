@@ -15,7 +15,7 @@
 		          <p th:text="${message}"></p>
 		          <a th:href="@{/shop}">Continue shopping</a>
 		      </div>
-			<form sec:authorize="not isAuthenticated()" action="/login" method="post">
+			<form sec:authorize="not isAuthenticated()" th:action="@{/login}" th:method="POST">
 				<h2>Log in:</h2>
 				<div>
 					<div class="log-input">

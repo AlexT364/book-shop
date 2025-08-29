@@ -30,6 +30,9 @@
 					<li>
 						<a th:classappend="${requestUri} == '/contacts'? link-current" th:href="@{/contacts}">Contacts</a>
 					</li>
+					<li>
+						<a th:classappend="${requestUri} == '/sales'? link-current" th:href="@{/sales}">Sales</a>
+					</li>
 				</ul>
 			</div>
 			<div sec:authorize="!isAuthenticated()" id="nav-user-link">

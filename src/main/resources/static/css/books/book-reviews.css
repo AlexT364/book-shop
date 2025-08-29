@@ -166,7 +166,7 @@ section > div {
 }
 
 .review.user-review {
-  background-color: whitesmoke;
+  background-color: rgb(247.55, 247.55, 247.55);
   margin-bottom: 1rem;
 }
 .review.user-review .username-header > p:first-child {

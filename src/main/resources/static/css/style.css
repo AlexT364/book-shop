@@ -431,7 +431,7 @@ header .pre-header > ul li a:active {
   flex-flow: column;
   position: absolute;
   z-index: 1;
-  background-color: whitesmoke;
+  background-color: rgb(247.55, 247.55, 247.55);
 }
 .main-header nav #user-actions:hover #user-dropdown a {
   text-transform: capitalize;

@@ -37,8 +37,8 @@
 				</div>
 			</div>
 		</section>
+		
 		<div class="pagination" th:unless="${authors.getTotalPages() <= 1}">
-
 			<!-- 		First-Page -->
 			<a th:if="${authors.hasPrevious()}" th:href="@{/authors(pageNumber=0, pageSize=${pageSize})}"
 				th:text="'First'" class="btn-link"></a>

@@ -18,7 +18,7 @@ $colors: (
 	my-gray: (base: $my-gray,
 		light: lighten($my-gray, 15),
 		lighter: lighten($my-gray, 35),
-		lightest: lighten($my-gray, 40),
+		lightest: lighten($my-gray, 41),
 		dark: darken($my-gray, 25))
 );
 
