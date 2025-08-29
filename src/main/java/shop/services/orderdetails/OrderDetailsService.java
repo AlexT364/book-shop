@@ -2,9 +2,9 @@ package shop.services.orderdetails;
 
 import java.util.List;
 
-import shop.persistence.entities.OrderDetails;
+import shop.dto.order.OrderDetailsDto;
 
 public interface OrderDetailsService {
 	
-	public List<OrderDetails> findByOrderId(Long orderId);
+	public List<OrderDetailsDto> findByOrderId(Long orderId);
 }
