@@ -28,6 +28,8 @@ public class BookDto {
 	
 	private BigDecimal price;
 	
+	private BigDecimal priceWithDiscount;
+	
 	private int unitsAvailable;
 	
 	private List<AuthorDto> authors;

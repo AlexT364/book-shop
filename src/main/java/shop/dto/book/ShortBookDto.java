@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ShortBookDto {
 	
 	private Long id;
@@ -20,6 +22,8 @@ public class ShortBookDto {
 	private String isbn;
 	
 	private BigDecimal price;
+	
+	private BigDecimal priceWithDiscount;
 	
 	private int unitsAvailable;
 	

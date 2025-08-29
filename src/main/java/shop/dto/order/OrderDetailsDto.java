@@ -19,6 +19,8 @@ public class OrderDetailsDto {
 	
 	private int quantity;
 	private BigDecimal unitPrice;
-	private BigDecimal subtotalPrice;
+	private BigDecimal discountUnit;
+	private BigDecimal finalUnitPrice;
+	private BigDecimal subtotal;
 	
 }
