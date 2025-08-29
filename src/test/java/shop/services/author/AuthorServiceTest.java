@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import shop.dto.author.AuthorDto;
 import shop.dto.author.CreateEditAuthorDto;
 import shop.exceptions.author.AuthorNotFoundException;
-import shop.mapping.mappers.AuthorMapper;
+import shop.mapping.mappers.author.AuthorMapper;
 import shop.persistence.entities.Author;
 import shop.persistence.repositories.AuthorRepository;
 import shop.services.image.AuthorImageService;

@@ -16,14 +16,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import shop.assemblers.BookAssembler;
 import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.exceptions.book.BookAlreadyExistsException;
 import shop.exceptions.book.BookNotFoundException;
-import shop.mapping.mappers.BookMapper;
+import shop.mapping.mappers.book.BookMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.repositories.book.BookRepository;
-import shop.services.book.helper.BookAssembler;
 import shop.services.image.CoversImageService;
 
 @ExtendWith(MockitoExtension.class)
