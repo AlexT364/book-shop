@@ -1,5 +1,6 @@
 package shop.persistence.repositories.book;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.persistence.LockModeType;
+import shop.dto.book.BookDto;
 import shop.persistence.entities.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long>, CustomBookRepository{
@@ -60,25 +62,32 @@ public interface BookRepository extends JpaRepository<Book, Long>, CustomBookRep
 	public int findUnitAvailableById(Long id);
 
 	@Query("""
-			SELECT b FROM Book b ORDER BY b.addedAt DESC
+			SELECT b 
+			FROM Book b 
+			ORDER BY b.addedAt DESC
+			LIMIT 3
 			""")
-	public List<Book> findLatestBooks(Pageable pageable);
+	public List<Book> findLatestBooks();
 
 	@Query("""
 			SELECT b FROM OrderDetails od 
 			JOIN od.book b
 			GROUP BY b
 			ORDER BY SUM(od.quantity) DESC
+			LIMIT 3
 			""")
-	public List<Book> findPopularBooks(Pageable pageable);
+	public List<Book> findPopularBooks();
 	
 	@Query("""
 			SELECT b FROM BookReview br 
 			JOIN br.book b
 			GROUP BY b
 			ORDER BY AVG(br.score) DESC
+			LIMIT 3
 			""")
-	public List<Book> findHighestRatedBooks(Pageable pageable);
+	public List<Book> findHighestRatedBooks();
+
+	public List<Book> findTop10ByTitleContainingIgnoreCase(String query);
 
 }
 
