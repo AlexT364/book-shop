@@ -55,6 +55,9 @@ public class Book{
 	@BatchSize(size = 10)
 	private Set<Genre> genres = new HashSet<>();
 	
+	@ManyToMany(mappedBy = "books")
+	private Set<Discount> discounts = new HashSet<>();
+	
 	private Integer unitsReserved;
 	
 	@Column(insertable = false, updatable = false)

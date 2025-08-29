@@ -2,6 +2,7 @@ package shop.persistence.entities;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -36,5 +37,9 @@ public class OrderDetails {
 	
 	private int quantity;
 	private BigDecimal unitPrice;
-	private BigDecimal discount;
+	@Column(name="discount_unit")
+	private BigDecimal discountPerUnit;
+	@Column(name = "final_unit")
+	private BigDecimal finalUnitPrice;
+	private BigDecimal subtotal;
 }
