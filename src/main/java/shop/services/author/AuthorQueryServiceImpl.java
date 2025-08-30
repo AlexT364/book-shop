@@ -55,15 +55,15 @@ public class AuthorQueryServiceImpl implements AuthorQueryService {
 	@Override
 	@Cacheable(cacheNames = "authors", key = "#authorId")
 	public AuthorDto getAuthor(Long authorId) {
-		Author author = authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException());
-		AuthorDto dto = authorMapper.toAuthorDto(author);
+		AuthorDto dto = authorRepository.findDtoById(authorId)
+				.orElseThrow(() -> new AuthorNotFoundException("Author with id = %d not found".formatted(authorId)));
 		return dto;
 	}
 
 	@Override
 	public CreateEditAuthorDto getAuthorByIdForEdit(Long authorId) {
-		Author author = authorRepository.findById(authorId).orElseThrow(() -> new AuthorNotFoundException());
-		CreateEditAuthorDto dto = authorMapper.toCreateEditAuthorDto(author);
+		CreateEditAuthorDto dto = authorRepository.findDtoByIdForEdit(authorId)
+				.orElseThrow(() -> new AuthorNotFoundException("Author with id = %d not found".formatted(authorId)));;
 		return dto;
 	}
 }
