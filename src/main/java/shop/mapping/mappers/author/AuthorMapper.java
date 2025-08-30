@@ -14,27 +14,38 @@ public class AuthorMapper {
 	
 	public Author mapForCreate(CreateEditAuthorDto source) {
 		Author entity = new Author();
+		
 		entity.setFirstName(source.getFirstName());
 		entity.setLastName(source.getLastName());
 		entity.setBio(source.getBio());
+		
 		return entity;
 	}
 	
 	public void mapForUpdate(CreateEditAuthorDto source, Author destination) {
-		
+		destination.setFirstName(source.getFirstName());
+		destination.setLastName(source.getLastName());
+		destination.setBio(source.getBio());
 	}
 	
 	public ShortAuthorDto toShortDto(Author entity) {
-		ShortAuthorDto dto = new ShortAuthorDto(entity.getId(), entity.getFirstName() + " " + entity.getLastName());
+		ShortAuthorDto dto = new ShortAuthorDto();
+		
+		dto.setId(entity.getId());
+		String fullName = entity.getFirstName() + " " + entity.getLastName();
+		dto.setName(fullName);
+		
 		return dto;
 	}
 	
 	public AuthorDto toAuthorDto(Author entity) {
 		AuthorDto dto = new AuthorDto();
+		
 		dto.setId(entity.getId());
 		String fullName = entity.getFirstName() + " " + entity.getLastName();
 		dto.setName(fullName);
 		dto.setBio(entity.getBio());
+		
 		return dto;
 	}
 
