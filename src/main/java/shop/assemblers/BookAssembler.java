@@ -19,6 +19,7 @@ public class BookAssembler {
 	
 	public Book createBookFromDto(CreateEditBookDto dto) {
 		Book entity = bookMapper.mapForCreate(dto);
+		entity.setUnitsReserved(0);
 		entity.setAuthors(authorRepository.findAuthorsByIds(dto.getAuthors()));
 		entity.setGenres(genreRepository.findGenresByIds(dto.getGenres()));
 		return entity;
