@@ -333,6 +333,15 @@ footer {
 	pointer-events: none;
 }
 
+.log-out-btn{
+	@include regular-link;
+	background: none;
+	cursor: pointer;
+	border: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
 .btn-link.current-page {
 	background-color: clr(primary, light);
 	border-color: clr(primary, light);

@@ -677,6 +677,28 @@ footer #footer-bottom div:first-child {
   pointer-events: none;
 }
 
+.log-out-btn {
+  color: #055F76;
+  font-weight: bold;
+  transition-property: color filter;
+  transition-duration: 0.2s;
+  background: none;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.log-out-btn.link-current {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.log-out-btn:hover {
+  color: rgb(9.1463414634, 173.7804878049, 215.8536585366);
+}
+.log-out-btn:active {
+  transition: none;
+  color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
+}
+
 .btn-link.current-page {
   background-color: rgb(8.1097560976, 154.0853658537, 191.3902439024);
   border-color: rgb(8.1097560976, 154.0853658537, 191.3902439024);

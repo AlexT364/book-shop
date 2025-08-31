@@ -50,7 +50,9 @@
 				</div>
 						<a href="#" th:classappend="${requestUri} == '/cart'? link-current" th:href="@{/cart}">Cart</a>
 				<div>
-					<a th:href="@{/logout}">Log out</a>
+					<form th:action="@{/logout}" th:method="POST">
+						<button class="log-out-btn" type="submit">Log out</button>
+					</form>
 				</div>
 			</div>
 		</nav>
