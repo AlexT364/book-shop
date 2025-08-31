@@ -23,7 +23,7 @@ public interface FavouriteService {
 
 	Set<Long> findFavouriteBookIdsForUser(String username, List<Long> bookIds);
 
-	boolean checkIfBookInUsersFavourites(String username, Long bookId);
+	boolean isFavourite(String username, Long bookId);
 
 	List<GenreDto> getDistinctGenresInUserFavourites(String username);
 	

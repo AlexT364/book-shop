@@ -82,7 +82,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	}
 
 	@Override
-	public boolean checkIfBookInUsersFavourites(String username, Long bookId) {
+	public boolean isFavourite(String username, Long bookId) {
 		return favouriteRepository.existsByUsernameAndId(username, bookId);
 	}
 	
