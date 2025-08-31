@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CreateEditBookDto {
 	
-	private long id;
+	private Long id;
 	
 	@NotBlank(message = "Title required.")
 	@Size(min = 2, message = "Title length minimum 2 letters.")
@@ -37,7 +37,7 @@ public class CreateEditBookDto {
 	
 	@NotNull(message = "Units in stock required.")
 	@Min(value = 0, message="Minimum quantity is 0.")
-	private int unitsInStock;
+	private Integer unitsInStock;
 	
 	private Set<Long> authors = new HashSet<>();
 	

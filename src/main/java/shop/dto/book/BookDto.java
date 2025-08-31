@@ -30,13 +30,13 @@ public class BookDto {
 	
 	private BigDecimal priceWithDiscount;
 	
-	private int unitsAvailable;
+	private Integer unitsAvailable;
 	
 	private List<AuthorDto> authors;
 	
 	private List<GenreDto> genres;
 	
-	private double score;
+	private Double score;
 	
 	private boolean favourite;
 
