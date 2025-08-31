@@ -11,6 +11,7 @@ import shop.dto.book.BookDto;
 import shop.dto.book.CreateEditBookDto;
 import shop.dto.book.ShortBookDto;
 import shop.exceptions.book.BookNotFoundException;
+import shop.persistence.repositories.book.BookRepository;
 
 public interface BookQueryService {
 	/**
@@ -84,8 +85,30 @@ public interface BookQueryService {
 	
 	BigDecimal findMaxPriceByFilters(ShopRequestDto shopRequestDto);
 
+	/**
+	 * Returns list that contains 3 latest added books and maps them to {@link ShortBookDto}.
+	 * <p>
+	 * Each resulting DTO may contain a discounted price, if applicable.
+	 * 
+	 * @return a non-null, possibly empty list of {@link ShortBookDto}
+	 */
 	public List<ShortBookDto> getLatestBooks();
+	
+	/**
+	 * Returns list that contains 3 most popular books.
+	 * <p>
+	 * Popularity criteria are defined in {@link BookRepository#findPopularBooks()}.
+	 * Each resulting DTO may contain a discounted price, if applicable.
+	 * @return a non-null, possibly empty list of {@link ShortBookDto}
+	 */
 	public List<ShortBookDto> getPopularBooks();
+	
+	/**
+	 * Returns list that contains 3 highest-rated books and maps them to {@link ShortBookDto}.
+	 * <p>
+	 * Rating criteria are defined in {@link BookRepository#findHighestRatedBooks()}.
+	 * @return a non-null, possibly empty list of {@link ShortBookDto}
+	 */
 	public List<ShortBookDto> getHighestRatedBooks();
 }
 
