@@ -36,12 +36,12 @@ public class BookQueryServiceImpl implements BookQueryService {
 
 	@Override
 	public BookDto getBookById(Long bookId) {
-		return this.loadBookDto(bookId, null);
+		return loadBookDto(bookId, null);
 	}
 
 	@Override
 	public BookDto getBookById(Long bookId, String username) {
-		return this.loadBookDto(bookId, username);
+		return loadBookDto(bookId, username);
 	}
 
 	private BookDto loadBookDto(Long bookId, String username){
@@ -66,17 +66,25 @@ public class BookQueryServiceImpl implements BookQueryService {
 	
 	@Override
 	public Page<ShortBookDto> getBooksPageByFilter(ShopRequestDto shopRequestDto) {
-		return this.getBooksPageByFilter(shopRequestDto, null);
+		return loadBooksPageByFilter(shopRequestDto, null);
 	}
 
 	@Override
 	public Page<ShortBookDto> getBooksPageByFilter(ShopRequestDto shopRequestDto, String username) {
+		return loadBooksPageByFilter(shopRequestDto, username);
+	}
+
+	private Page<ShortBookDto> loadBooksPageByFilter(ShopRequestDto shopRequestDto, String username) {
 		Pageable pageable = formShopPageable(shopRequestDto);
 
 		Page<Book> page = bookRepository.findCriteriaBooks(pageable, shopRequestDto, false);
 		Page<ShortBookDto> dtoPage = page.map(bookMapper::toShortDto);
 
-		bookDtoPopulator.populateShortBookDtos(dtoPage.getContent(), username);
+		if (username != null) {
+			bookDtoPopulator.populateShortBookDtos(dtoPage.getContent(), username);
+		} else {
+			bookDtoPopulator.populateShortBookDtos((dtoPage.getContent()));
+		}
 		
 		return dtoPage;
 	}

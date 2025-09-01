@@ -15,12 +15,8 @@ import shop.persistence.repositories.book.BookRepository;
 
 public interface BookQueryService {
 	/**
-	 * Returns {@link BookDto} without user-specific data (e.g. favourite status).
+	 * Returns {@link BookDto}.
 	 *
-	 * This method is a convenience wrapper for
-	 * {@link #getBookById(long, String)} with {@code null} as
-	 * the username.
-	 * 
 	 * @param bookId the unique identifier of the book
 	 * @return a {@link BookDto} with general book information
 	 * @throws BookNotFoundException if book with specified id was not found
@@ -31,15 +27,9 @@ public interface BookQueryService {
 	 * Returns {@link BookDto} object with all information about specific book
 	 * 
 	 * @param bookId   the unique identifier of the book
-	 * @param username string used to determine if book is marked as favourite by
-	 *                 the user; if {@code null}, the {@code favourite} field in
-	 *                 {@link BookDto} will be set to {@code false}
-	 * 
+	 * @param username string used to determine if book is marked as favourite by the user; 
 	 * @return a {@link BookDto} containing all information about the specified book
 	 * @throws BookNotFoundException if book with specified id was not found
-	 * @implNote it is recommended to call {@link #getBookById(long)} method if no
-	 *           username is available, instead of passing {@code null} string
-	 *           explicitly.
 	 */
 	public BookDto getBookById(Long bookId, String username);
 	
