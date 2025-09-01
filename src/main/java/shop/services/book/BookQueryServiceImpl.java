@@ -34,25 +34,32 @@ public class BookQueryServiceImpl implements BookQueryService {
 	private final BookReviewService bookReviewService;
 	private final BookCacheService bookCacheService;
 	private final BookMapper bookMapper;
-	private final BookDtoPopulator bookDtoEnricher;
+	private final BookDtoPopulator bookDtoPopulator;
 
 	@Override
-	public BookDto getBookById(long bookId) {
-		return this.getBookById(bookId, null);
+	public BookDto getBookById(Long bookId) {
+		return this.loadBookDto(bookId, null);
 	}
 
 	@Override
-	public BookDto getBookById(long bookId, String username) {
-		BookDto bookDto = this.getOrLoadBook(bookId);
-		
+	public BookDto getBookById(Long bookId, String username) {
+		return this.loadBookDto(bookId, username);
+	}
+
+	private BookDto loadBookDto(Long bookId, String username){
+		BookDto bookDto = this.getBookFromCacheOrLoad(bookId);
 		bookDto.setUnitsAvailable(bookRepository.findUnitAvailableById(bookDto.getId()));
-		bookDtoEnricher.populateBookDto(bookDto, username);
+		if(username != null){
+			bookDtoPopulator.populateBookDto(bookDto, username);
+		}else{
+			bookDtoPopulator.populateBookDto(bookDto);
+		}
 		
 		return bookDto;
 	}
 
 	@Override
-	public CreateEditBookDto getBookByIdForEdit(long bookId) {
+	public CreateEditBookDto getBookByIdForEdit(Long bookId) {
 		Book bookEntity = bookRepository.findByIdWithAuthorsAndGenres(bookId)
 				.orElseThrow(() -> new BookNotFoundException("Book with id=%d not found".formatted(bookId)));
 		CreateEditBookDto bookDto = bookMapper.toCreateEditDto(bookEntity);
@@ -72,7 +79,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 		Page<Book> page = bookRepository.findCriteriaBooks(pageable, shopRequestDto, false);
 		Page<ShortBookDto> dtoPage = page.map(bookMapper::toShortDto);
 
-		bookDtoEnricher.populateShortBookDtos(dtoPage.getContent(), username);
+		bookDtoPopulator.populateShortBookDtos(dtoPage.getContent(), username);
 		
 		return dtoPage;
 	}
@@ -101,7 +108,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.map(bookMapper::toShortDto)
 				.toList();
 		
-		bookDtoEnricher.populateShortBookDtos(latestBookDtos);
+		bookDtoPopulator.populateShortBookDtos(latestBookDtos);
 		return latestBookDtos;
 	}
 	
@@ -112,7 +119,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.map(bookMapper::toShortDto)
 				.toList();
 		
-		bookDtoEnricher.populateShortBookDtos(popularBooksDtos);
+		bookDtoPopulator.populateShortBookDtos(popularBooksDtos);
 		return popularBooksDtos;
 	}
 	
@@ -123,7 +130,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.map(bookMapper::toShortDto)
 				.toList();
 		
-		bookDtoEnricher.populateShortBookDtos(highestRatedBooksDtos);
+		bookDtoPopulator.populateShortBookDtos(highestRatedBooksDtos);
 		return highestRatedBooksDtos;
 	}
 	
@@ -139,7 +146,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 		return PageRequest.of(shopRequestDto.getPageNumber(), shopRequestDto.getPageSize(), Sort.by(order));
 	}
 	
-	private BookDto getOrLoadBook(long bookId) {
+	private BookDto getBookFromCacheOrLoad(long bookId) {
 		return bookCacheService.getCachedBook(bookId)
 				.orElseGet(() -> {
 					Book bookEntity = bookRepository.findByIdWithAuthorsAndGenres(bookId)

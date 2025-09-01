@@ -25,7 +25,7 @@ public interface BookQueryService {
 	 * @return a {@link BookDto} with general book information
 	 * @throws BookNotFoundException if book with specified id was not found
 	 */
-	public BookDto getBookById(long bookId);
+	public BookDto getBookById(Long bookId);
 
 	/**
 	 * Returns {@link BookDto} object with all information about specific book
@@ -41,7 +41,7 @@ public interface BookQueryService {
 	 *           username is available, instead of passing {@code null} string
 	 *           explicitly.
 	 */
-	public BookDto getBookById(long bookId, String username);
+	public BookDto getBookById(Long bookId, String username);
 	
 	/**
 	 * Returns a paginated list of books filtered to the specified criteria.
@@ -81,7 +81,7 @@ public interface BookQueryService {
 
 	public Optional<BookDto> getAuthorsHighestRatedBook(Long authorId);
 
-	CreateEditBookDto getBookByIdForEdit(long bookId);
+	CreateEditBookDto getBookByIdForEdit(Long bookId);
 	
 	BigDecimal findMaxPriceByFilters(ShopRequestDto shopRequestDto);
 
