@@ -50,6 +50,11 @@ author_images/*
 *.jar
 *.war
 
+#VSCode
+launch.json
+settings.json
+.vscode
+
 .apt_generated
 .classpath
 .factorypath
