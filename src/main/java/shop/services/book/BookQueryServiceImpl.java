@@ -24,14 +24,12 @@ import shop.mapping.mappers.book.BookMapper;
 import shop.persistence.entities.Book;
 import shop.persistence.repositories.book.BookRepository;
 import shop.services.book.cache.BookCacheService;
-import shop.services.reviews.BookReviewService;
 
 @Service
 @RequiredArgsConstructor
 public class BookQueryServiceImpl implements BookQueryService {
 
 	private final BookRepository bookRepository;
-	private final BookReviewService bookReviewService;
 	private final BookCacheService bookCacheService;
 	private final BookMapper bookMapper;
 	private final BookDtoPopulator bookDtoPopulator;
@@ -47,7 +45,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 	}
 
 	private BookDto loadBookDto(Long bookId, String username){
-		BookDto bookDto = this.getBookFromCacheOrLoad(bookId);
+		BookDto bookDto = getBookFromCacheOrLoad(bookId);
 		bookDto.setUnitsAvailable(bookRepository.findUnitAvailableById(bookDto.getId()));
 		if(username != null){
 			bookDtoPopulator.populateBookDto(bookDto, username);
@@ -62,9 +60,8 @@ public class BookQueryServiceImpl implements BookQueryService {
 	public CreateEditBookDto getBookByIdForEdit(Long bookId) {
 		Book bookEntity = bookRepository.findByIdWithAuthorsAndGenres(bookId)
 				.orElseThrow(() -> new BookNotFoundException("Book with id=%d not found".formatted(bookId)));
-		CreateEditBookDto bookDto = bookMapper.toCreateEditDto(bookEntity);
 
-		return bookDto;
+		return bookMapper.toCreateEditDto(bookEntity);
 	}
 	
 	@Override
@@ -86,17 +83,15 @@ public class BookQueryServiceImpl implements BookQueryService {
 	
 	@Override
 	public BigDecimal findMaxPriceByFilters(ShopRequestDto request) {
-		BigDecimal result = bookRepository.findMaxPriceWithFilters(request);
-		return result;
+		return bookRepository.findMaxPriceWithFilters(request);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<BookDto> getAuthorsHighestRatedBook(Long authorId) {
-		return bookRepository.findAuthorsHighestRatedBook(authorId).map(highestRatedBook -> {
-			Double avgScore = bookReviewService.findAvgScoreForBook(highestRatedBook.getId()).get();
-			BookDto dto = bookMapper.toBookDto(highestRatedBook);
-			dto.setScore(avgScore);
+		 return bookRepository.findAuthorsHighestRatedBook(authorId).map(book -> {
+			BookDto dto = bookMapper.toBookDto(book);
+			bookDtoPopulator.populateBookDto(dto);
 			return dto;
 		});
 	}
@@ -109,6 +104,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.toList();
 		
 		bookDtoPopulator.populateShortBookDtos(latestBookDtos);
+
 		return latestBookDtos;
 	}
 	
@@ -120,6 +116,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.toList();
 		
 		bookDtoPopulator.populateShortBookDtos(popularBooksDtos);
+
 		return popularBooksDtos;
 	}
 	
@@ -131,6 +128,7 @@ public class BookQueryServiceImpl implements BookQueryService {
 				.toList();
 		
 		bookDtoPopulator.populateShortBookDtos(highestRatedBooksDtos);
+		
 		return highestRatedBooksDtos;
 	}
 	
