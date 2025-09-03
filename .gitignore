@@ -1,6 +1,4 @@
 target/
-application-prod.properties
-application-dev.properties
 .env
 
 #Demonstration data
