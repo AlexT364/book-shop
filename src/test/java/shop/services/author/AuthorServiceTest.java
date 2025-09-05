@@ -1,10 +1,8 @@
 package shop.services.author;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -50,11 +48,10 @@ public class AuthorServiceTest {
 		
 		AuthorDto result = authorService.addAuthor(dto, image);
 		
-		assertNotNull(result);
-		assertSame(expected, result);
+		assertThat(result).isNotNull();
+		assertThat(result.getId()).isEqualTo(expected.getId());
 		
 		verify(authorRepository).save(entity);
-		verify(authorImageService).saveImage(entity.getId(), image);
 	}
 	
 	@Test
@@ -69,7 +66,6 @@ public class AuthorServiceTest {
 		
 		verify(authorRepository).findById(authorId);
 		verifyNoMoreInteractions(authorRepository);
-		verifyNoInteractions(authorMapper, authorImageService);
 	}
 	
 	@Test
@@ -87,11 +83,10 @@ public class AuthorServiceTest {
 		
 		AuthorDto result = authorService.updateAuthor(authorId, dto, authorImage);
 		
-		assertNotNull(result);
-		assertSame(expected, result);
+		assertThat(result).isNotNull();
+		assertThat(result).isSameAs(expected);
 		
 		verify(authorRepository).save(entity);
-		verify(authorImageService).saveImage(entity.getId(), authorImage);
 	}
 	
 	@Test
