@@ -14,7 +14,7 @@
 			<div id="reply-form-container">
 				<form th:action="@{/admin/contacts/inbox/{messageId} (messageId=${message.id})}" 
 				th:object="${reply}"
-				method="POST">
+				th:method="POST">
 					<div id="name-email-inputs">
 						<div>
 							<label>Name:</label>
