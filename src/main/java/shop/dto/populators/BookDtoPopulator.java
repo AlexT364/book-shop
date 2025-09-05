@@ -29,43 +29,43 @@ public class BookDtoPopulator {
 	private final BookReviewService bookReviewService;
 	
 	public void populateBookDto(BookDto dtoTopopulate) {
-		applyPopulationToBookDto(dtoTopopulate, null);
+		populateBookDtoInternal(dtoTopopulate, null);
 	}
 	
 	public void populateBookDto(BookDto dtoTopopulate, String username) {
-		applyPopulationToBookDto(dtoTopopulate, username);
+		populateBookDtoInternal(dtoTopopulate, username);
 	}
 	
-	private void applyPopulationToBookDto(BookDto dtoTopopulate, String username) {
+	private void populateBookDtoInternal(BookDto dtoToPopulate, String username) {
 		if(username != null) {
-			populateWithFavourite(dtoTopopulate, username);
+			populateWithFavourite(dtoToPopulate, username);
 		}else {
-			dtoTopopulate.setFavourite(false);
+			dtoToPopulate.setFavourite(false);
 		}
-		populateWithScore(dtoTopopulate);
-		populateWithDiscount(dtoTopopulate);
+		populateWithScore(dtoToPopulate);
+		populateWithDiscount(dtoToPopulate);
 	}
 	
-	public void populateShortBookDtos(Collection<ShortBookDto> dtosTopopulate) {
-		applyPopulationToShortBookDtos(dtosTopopulate, null);
+	public void populateShortBookDtos(Collection<ShortBookDto> dtosToPopulate) {
+		populateShortBookDtosInternal(dtosToPopulate, null);
 	}
 	
-	public void populateShortBookDtos(Collection<ShortBookDto> dtosTopopulate, String username) {
-		applyPopulationToShortBookDtos(dtosTopopulate, username);
+	public void populateShortBookDtos(Collection<ShortBookDto> dtosToPopulate, String username) {
+		populateShortBookDtosInternal(dtosToPopulate, username);
 	}
 	
-	private void applyPopulationToShortBookDtos(Collection<ShortBookDto> dtosTopopulate, String username) {
-		List<Long> bookIds = dtosTopopulate.stream()
+	private void populateShortBookDtosInternal(Collection<ShortBookDto> dtosToPopulate, String username) {
+		List<Long> bookIds = dtosToPopulate.stream()
 				.map(ShortBookDto::getId)
 				.toList();
 		
 		if(username != null) {
-			populateWithFavourites(dtosTopopulate, bookIds, username);
+			populateWithFavourites(dtosToPopulate, bookIds, username);
 		}else {
-			dtosTopopulate.forEach(dto -> dto.setFavourite(false));
+			dtosToPopulate.forEach(dto -> dto.setFavourite(false));
 		}
-		populateWithScores(dtosTopopulate, bookIds);
-		populateWithDiscounts(dtosTopopulate, bookIds);
+		populateWithScores(dtosToPopulate, bookIds);
+		populateWithDiscounts(dtosToPopulate, bookIds);
 	}
 	
 	//-- Helper methods --
