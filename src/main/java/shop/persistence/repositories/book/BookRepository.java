@@ -1,18 +1,17 @@
 package shop.persistence.repositories.book;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import jakarta.persistence.LockModeType;
-import shop.dto.book.BookDto;
 import shop.persistence.entities.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long>, CustomBookRepository{
@@ -60,6 +59,14 @@ public interface BookRepository extends JpaRepository<Book, Long>, CustomBookRep
 			SELECT b.unitsInStock - b.unitsReserved FROM Book b WHERE id = :id
 			""")
 	public int findUnitAvailableById(Long id);
+	
+	@EntityGraph(attributePaths = {"authors", "genres"})
+	@Query("""
+			SELECT b 
+			FROM Book b
+			WHERE b.id = :bookId
+			""")
+	public Optional<Book> findByIdWithAuthorsAndGenres(Long bookId);
 
 	@Query("""
 			SELECT b 

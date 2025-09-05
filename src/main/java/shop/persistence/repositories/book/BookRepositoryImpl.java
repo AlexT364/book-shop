@@ -2,17 +2,12 @@ package shop.persistence.repositories.book;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityGraph;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -128,22 +123,5 @@ public class BookRepositoryImpl implements CustomBookRepository {
 			return BigDecimal.ZERO;
 		}
 	}
-	
-	
-	
-	@Override
-	@Transactional
-	public Optional<Book> findByIdWithAuthorsAndGenres(Long id) {
-		
-		 EntityGraph<Book> graph = entityManager.createEntityGraph(Book.class);
-		    graph.addAttributeNodes("authors", "genres");
-		    
-		    Map<String, Object> hints = new HashMap<>();
-		    hints.put("jakarta.persistence.fetchgraph", graph);
-		    
-		    Book book = entityManager.find(Book.class, id, hints);
-		    return Optional.ofNullable(book);
-	}
-	
 	
 }
