@@ -26,6 +26,7 @@ public class ContactMessageMapper {
 	public ContactMessageDto toContactMessageDto(ContactMessage entity) {
 		ContactMessageDto dto = new ContactMessageDto();
 		
+		dto.setId(entity.getId());
 		dto.setName(entity.getName());
 		dto.setEmail(entity.getEmail());
 		dto.setPhone(entity.getPhone());
